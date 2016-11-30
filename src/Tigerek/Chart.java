@@ -126,12 +126,12 @@ public class Chart extends Application {
                 // add a item of random data to queue
                 //dataQ.add(Math.random());
                 try {
-                    System.out.println(Communicator.x);
-                    dataQ.add(Double.parseDouble(Communicator.x));
+                    //System.out.println(Communicator.x);
+                    dataQ.add(Double.parseDouble(Communicator.temporary));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
-                Thread.sleep(2500);
+                Thread.sleep(1500);
                 executor.execute(this);
             } catch (InterruptedException ex) {
                 //Logger.getLogger(AreaChartSample.class.getName()).log(Level.SEVERE, null, ex);

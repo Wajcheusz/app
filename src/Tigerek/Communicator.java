@@ -17,7 +17,9 @@ import java.io.OutputStream;
 import java.util.*;
 
 public class Communicator implements SerialPortEventListener {
-    public static String x="10";
+    public static String x = "30";
+    public static String temp = "30";
+    public static String temporary = "30";
     GUI window = null;
     private Enumeration ports = null;
     private HashMap portMap = new HashMap();
@@ -183,8 +185,10 @@ public class Communicator implements SerialPortEventListener {
 //
 //    }
 
-    static StringBuffer z = new StringBuffer();
-    public void serialEvent(SerialPortEvent evt) {
+    String liczba = "";
+
+    static StringBuffer z;
+    public synchronized void serialEvent(SerialPortEvent evt) {
 
         if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
         {
@@ -197,9 +201,16 @@ public class Communicator implements SerialPortEventListener {
                     //if(logText.equals(" ")) {return;}
                     logText = new String(new byte[] {singleData});
                     x=logText;
-                    x=x.trim();
+                    //x=x.trim();
+                    //String zmien = x.replace('.', ',');
+                    //x = zmien;
+//                        double a = Double.parseDouble(x);
+//                        int b = (int)a;
+//                        x = String.valueOf(b);
                     //System.out.print(logText);
                     System.out.print(x);
+                    liczba = liczba + x;
+
                     //window.txtLog.append(logText);
                 }
                 else
@@ -214,7 +225,14 @@ public class Communicator implements SerialPortEventListener {
 //                    }
 //                    x=z.toString();
                     //z.substring(0,3);
+                    z = new StringBuffer(liczba);
+                    z.substring(1,4);
+                    temporary = z.toString();
                     System.out.print("\n");
+                    System.out.print(temporary + "temp po enterze");
+                    System.out.print(liczba + "liczba po enterze");
+                    System.out.print("\n");
+                    liczba = "";
                 }
             }
             catch (Exception e)
