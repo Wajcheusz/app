@@ -5,6 +5,7 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,11 +14,11 @@ import java.util.concurrent.Executors;
  * Created by E6420 on 2016-11-30.
  */
 public class Chartek {
+    private ArrayList<String> out = new ArrayList<>();
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
     private ExecutorService executor;
     private AddToQueue addToQueue;
     private int xSeriesData = 0;
-
     private static final int MAX_DATA_POINTS = 50;
     private NumberAxis xAxis;
     private XYChart.Series series;
@@ -46,9 +47,14 @@ public class Chartek {
         sc.getData().add(series);
     }
 
-//    public static void main(String[] args) {
-//        launch(args);
-//    }
+    public void createChart() {
+        //-- Prepare Executor Services
+        executor = Executors.newCachedThreadPool();
+        addToQueue = new AddToQueue();
+        executor.execute(addToQueue);
+        //-- Prepare Timeline
+        prepareTimeline();
+    }
 
     private class AddToQueue implements Runnable {
         public void run() {
@@ -56,6 +62,7 @@ public class Chartek {
                 // add a item of random data to queue
                 //dataQ.add(Math.random());
                 try {
+                    out.add(Communicator.temporary);
                     dataQ.add(Double.parseDouble(Communicator.temporary));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -92,13 +99,11 @@ public class Chartek {
         xAxis.setUpperBound(xSeriesData-1);
     }
 
+    public ArrayList<String> getOut() {
+        return out;
+    }
 
-    public void createChart() {
-        //-- Prepare Executor Services
-        executor = Executors.newCachedThreadPool();
-        addToQueue = new AddToQueue();
-        executor.execute(addToQueue);
-        //-- Prepare Timeline
-        prepareTimeline();
+    public void setOut(ArrayList<String> out) {
+        this.out = out;
     }
 }

@@ -8,6 +8,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Created by E6420 on 2016-11-30.
  */
@@ -29,15 +36,10 @@ public class Main extends Application {
     private void init(Stage primaryStage) {
         communicator = new Communicator();
         HBox topMenu = new HBox();
-        Button button1 = new Button("File");
-        Button button2 = new Button("Edit");
+        Button button1 = new Button("Start");
+        Button button2 = new Button("Nagraj przebieg");
         Button button3 = new Button("View");
-        button1.setOnAction(event ->{
-            communicator.connect();
-            if(communicator.getConnected() && communicator.initIOStream()) {
-                communicator.initListener();
-            }
-        });
+
         topMenu.getChildren().addAll(button1, button2, button3);
 
         VBox leftMenu = new VBox();
@@ -53,6 +55,22 @@ public class Main extends Application {
         Chartek chartek = new Chartek();
         chartek.createChart();
         borderPane.setRight(chartek.sc);
+
+        button1.setOnAction(event ->{
+            communicator.connect();
+            if(communicator.getConnected() && communicator.initIOStream()) {
+                communicator.initListener();
+            }
+        });
+        button2.setOnAction(event ->{
+            try {
+                String nazwaPliku = "test.csv";
+                Path sciezka = Paths.get(nazwaPliku);
+                Files.write(sciezka, chartek.getOut());
+            } catch (IOException ex) {
+                System.out.println("Nie mogę zapisać pliku!");
+            }
+        });
 
         primaryStage.setScene(new Scene((borderPane)));
     }
