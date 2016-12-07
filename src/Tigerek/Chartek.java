@@ -5,7 +5,14 @@ import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -17,7 +24,8 @@ public class Chartek {
     private ArrayList<String> out = new ArrayList<>();
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
     private ExecutorService executor;
-    private AddToQueue addToQueue;
+//    private AddToQueue addToQueue;
+    private AddToQueueFromText addToQueue;
     private int xSeriesData = 0;
     private static final int MAX_DATA_POINTS = 50;
     private NumberAxis xAxis;
@@ -25,8 +33,8 @@ public class Chartek {
     private NumberAxis yAxis;
     final AreaChart<Number, Number> sc;
 
-    public Chartek(){
-        xAxis = new NumberAxis(0,MAX_DATA_POINTS,MAX_DATA_POINTS/10);
+    public Chartek() {
+        xAxis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
         xAxis.setForceZeroInRange(false);
         xAxis.setAutoRanging(false);
 
@@ -35,7 +43,9 @@ public class Chartek {
 
         sc = new AreaChart<Number, Number>(xAxis, yAxis) {
             // Override to remove symbols on each data point
-            @Override protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {}
+            @Override
+            protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
+            }
         };
         sc.setAnimated(false);
         sc.setId("liveAreaChart");
@@ -50,7 +60,7 @@ public class Chartek {
     public void createChart() {
         //-- Prepare Executor Services
         executor = Executors.newCachedThreadPool();
-        addToQueue = new AddToQueue();
+        addToQueue = new AddToQueueFromText();
         executor.execute(addToQueue);
         //-- Prepare Timeline
         prepareTimeline();
@@ -75,11 +85,42 @@ public class Chartek {
         }
     }
 
+    private class AddToQueueFromText implements Runnable {
+        String csvFile = "test.csv";
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+
+        public void run() {
+            try {
+                try {
+                    try {
+                        br = new BufferedReader(new FileReader(csvFile));
+                        while ((line = br.readLine()) != null) {
+                            dataQ.add(Double.parseDouble(line));
+                            System.out.println(Double.parseDouble(line));
+                            Thread.sleep(1000);
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Nie moge odczytac pliku!");
+                }
+
+                executor.execute(this);
+            } catch (InterruptedException exe) {
+                exe.printStackTrace();
+            }
+        }
+    }
+
     //-- Timeline gets called in the JavaFX Main thread
     private void prepareTimeline() {
         // Every frame to take any data from queue and add to chart
         new AnimationTimer() {
-            @Override public void handle(long now) {
+            @Override
+            public void handle(long now) {
                 addDataToSeries();
             }
         }.start();
@@ -95,8 +136,8 @@ public class Chartek {
             series.getData().remove(0, series.getData().size() - MAX_DATA_POINTS);
         }
         // update
-        xAxis.setLowerBound(xSeriesData-MAX_DATA_POINTS);
-        xAxis.setUpperBound(xSeriesData-1);
+        xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
+        xAxis.setUpperBound(xSeriesData - 1);
     }
 
     public ArrayList<String> getOut() {
