@@ -37,6 +37,7 @@ public class Main extends Application {
         communicator = new Communicator();
         HBox topMenu = new HBox();
         Button button1 = new Button("Start");
+        button1.getStyleClass().add("my_customLabel");
         Button button2 = new Button("Nagraj przebieg");
         Button button3 = new Button("View");
 
@@ -46,17 +47,23 @@ public class Main extends Application {
         Button button4 = new Button("D");
         Button button5 = new Button("E");
         Button button6 = new Button("F");
+
         leftMenu.getChildren().addAll(button4, button5, button6);
 
         BorderPane borderPane = new BorderPane();
+        borderPane.setLayoutX(10);
+        borderPane.setLayoutY(20);
+        borderPane.setPrefSize(800, 600);
         borderPane.setTop(topMenu);
         borderPane.setLeft(leftMenu);
 
+
         Chartek chartek = new Chartek();
-        chartek.createChart();
-        borderPane.setRight(chartek.sc);
 
         button1.setOnAction(event ->{
+
+            chartek.createRealtimeChart();
+            borderPane.setRight(chartek.areaChart);
             communicator.connect();
             if(communicator.getConnected() && communicator.initIOStream()) {
                 communicator.initListener();
@@ -71,7 +78,21 @@ public class Main extends Application {
                 System.out.println("Nie mogę zapisać pliku!");
             }
         });
+        button3.setOnAction(event ->{
+            Chartek chartek2 = new Chartek();
+            chartek2.createChart();
+            chartek.createChart();
+            borderPane.setRight(chartek.areaChart);
+            borderPane.setLeft(chartek2.areaChart);
+//            communicator.connect();
+//            if(communicator.getConnected() && communicator.initIOStream()) {
+//                communicator.initListener();
+//            }
+        });
 
-        primaryStage.setScene(new Scene((borderPane)));
+        Scene scene = new Scene(borderPane);
+        scene.getStylesheets().add("myStyle.css");
+        //primaryStage.setScene(new Scene((borderPane)));
+        primaryStage.setScene(scene);
     }
 }

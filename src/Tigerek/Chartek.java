@@ -25,13 +25,14 @@ public class Chartek {
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
     private ExecutorService executor;
 //    private AddToQueue addToQueue;
-    private AddToQueueFromText addToQueue;
+    private AddToQueueFromText addToQueueFromText;
+    private AddToQueueRealTime addToQueueRealTime;
     private int xSeriesData = 0;
-    private static final int MAX_DATA_POINTS = 50;
+    private static final int MAX_DATA_POINTS = 30;
     private NumberAxis xAxis;
-    private XYChart.Series series;
     private NumberAxis yAxis;
-    final AreaChart<Number, Number> sc;
+    private XYChart.Series series;
+    final AreaChart<Number, Number> areaChart;
 
     public Chartek() {
         xAxis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
@@ -41,43 +42,53 @@ public class Chartek {
         yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
 
-        sc = new AreaChart<Number, Number>(xAxis, yAxis) {
+        areaChart = new AreaChart<Number, Number>(xAxis, yAxis) {
+            //Wywalenie Kropek, można dodać
             // Override to remove symbols on each data point
             @Override
             protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
             }
         };
-        sc.setAnimated(false);
-        sc.setId("liveAreaChart");
-        sc.setTitle("Animated Area Chart");
+        areaChart.setAnimated(false);
+        areaChart.setId("liveAreaChart");
+        areaChart.setTitle("Animated Area Chart");
 
         //-- Chart Series
         series = new AreaChart.Series<Number, Number>();
         series.setName("Area Chart Series");
-        sc.getData().add(series);
+        areaChart.getData().add(series);
     }
 
     public void createChart() {
         //-- Prepare Executor Services
         executor = Executors.newCachedThreadPool();
-        addToQueue = new AddToQueueFromText();
-        executor.execute(addToQueue);
+        addToQueueFromText = new AddToQueueFromText();
+        executor.execute(addToQueueFromText);
         //-- Prepare Timeline
         prepareTimeline();
     }
 
-    private class AddToQueue implements Runnable {
+    public void createRealtimeChart() {
+        //-- Prepare Executor Services
+        executor = Executors.newCachedThreadPool();
+        addToQueueRealTime = new AddToQueueRealTime();
+        executor.execute(addToQueueRealTime);
+        //-- Prepare Timeline
+        prepareTimeline();
+    }
+
+    private class AddToQueueRealTime implements Runnable {
         public void run() {
             try {
                 // add a item of random data to queue
                 //dataQ.add(Math.random());
+                Thread.sleep(1000);
                 try {
                     out.add(Communicator.temporary);
                     dataQ.add(Double.parseDouble(Communicator.temporary));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
-                Thread.sleep(100);
                 executor.execute(this);
             } catch (InterruptedException ex) {
                 //Logger.getLogger(AreaChartSample.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,10 +107,10 @@ public class Chartek {
                 try {
                     try {
                         br = new BufferedReader(new FileReader(csvFile));
-                        while ((line = br.readLine()) != null) {
+                        while ((line = br.readLine().trim()) != null) {
                             dataQ.add(Double.parseDouble(line));
                             System.out.println(Double.parseDouble(line));
-                            Thread.sleep(1000);
+                            Thread.sleep(100);
                         }
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
@@ -127,15 +138,20 @@ public class Chartek {
     }
 
     private void addDataToSeries() {
-        for (int i = 0; i < 20; i++) { //-- add 20 numbers to the plot+
-            if (dataQ.isEmpty()) break;
+        //W ORYGINALE:
+//        for (int i = 0; i < 1000; i++) { //-- add 20 numbers to the plot+
+//            if (dataQ.isEmpty()) break;
+//            series.getData().add(new AreaChart.Data(xSeriesData++, dataQ.remove()));
+//        }
+        if (!dataQ.isEmpty()) {
             series.getData().add(new AreaChart.Data(xSeriesData++, dataQ.remove()));
         }
-        // remove points to keep us at no more than MAX_DATA_POINTS
-        if (series.getData().size() > MAX_DATA_POINTS) {
-            series.getData().remove(0, series.getData().size() - MAX_DATA_POINTS);
-        }
-        // update
+        //SKALOWANIE
+//        // remove points to keep us at no more than MAX_DATA_POINTS
+//        if (series.getData().size() > MAX_DATA_POINTS) {
+//            series.getData().remove(0, series.getData().size() - MAX_DATA_POINTS);
+//        }
+//        // update
         xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
         xAxis.setUpperBound(xSeriesData - 1);
     }
