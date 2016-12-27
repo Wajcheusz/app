@@ -3,6 +3,7 @@ package Tigerek;
 import javafx.animation.AnimationTimer;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.StackedAreaChart;
 import javafx.scene.chart.XYChart;
 
 import java.io.BufferedReader;
@@ -23,6 +24,7 @@ import java.util.concurrent.Executors;
 public class Chartek {
     private ArrayList<String> out = new ArrayList<>();
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
+    private ConcurrentLinkedQueue<Number> dataQ2 = new ConcurrentLinkedQueue<Number>();
     private ExecutorService executor;
 //    private AddToQueue addToQueue;
     private AddToQueueFromText addToQueueFromText;
@@ -32,6 +34,7 @@ public class Chartek {
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private XYChart.Series series;
+    private XYChart.Series series2;
     AreaChart<Number, Number> areaChart;
     //final AreaChart<Number, Number> areaChart;
 
@@ -58,7 +61,10 @@ public class Chartek {
         //-- Chart Series
         series = new AreaChart.Series<Number, Number>();
         series.setName("Area Chart Series");
-        areaChart.getData().add(series);
+        series2 = new AreaChart.Series<Number, Number>();
+        series2.setName("Druga seria");
+        areaChart.getData().addAll(series, series2);
+        //areaChart.getData().add(series2);
         areaChart.getStyleClass().add(styleClass);
     }
 
@@ -106,18 +112,29 @@ public class Chartek {
 
     private class AddToQueueFromText implements Runnable {
         String csvFile = "test.csv";
+        String csvFile2 = "test2.csv";
         BufferedReader br = null;
+        BufferedReader br2 = null;
         String line = "";
-        String cvsSplitBy = ",";
+        String line2 = "";
+        //String cvsSplitBy = ",";
 
         public void run() {
             try {
                 try {
                     try {
                         br = new BufferedReader(new FileReader(csvFile));
+                        br2 = new BufferedReader(new FileReader(csvFile2));
                         while ((line = br.readLine().trim()) != null) {
+                            line2 = br2.readLine().trim();
                             dataQ.add(Double.parseDouble(line));
                             System.out.println(Double.parseDouble(line));
+                            //   Thread.sleep(100);
+                        //}
+                        //br2 = new BufferedReader(new FileReader(csvFile2));
+                        //while ((line2 = br2.readLine().trim()) != null) {
+                            dataQ2.add(Double.parseDouble(line2));
+                            System.out.println(Double.parseDouble(line2));
                             Thread.sleep(100);
                         }
                     } catch (NumberFormatException e) {
@@ -153,6 +170,9 @@ public class Chartek {
 //        }
         if (!dataQ.isEmpty()) {
             series.getData().add(new AreaChart.Data(xSeriesData++, dataQ.remove()));
+        }
+        if (!dataQ2.isEmpty()) {
+            series2.getData().add(new AreaChart.Data(xSeriesData++, dataQ2.remove()));
         }
         //SKALOWANIE
 //        // remove points to keep us at no more than MAX_DATA_POINTS

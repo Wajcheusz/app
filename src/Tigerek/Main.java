@@ -3,9 +3,7 @@ package Tigerek;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -50,6 +48,18 @@ public class Main extends Application {
 
         leftMenu.getChildren().addAll(button4, button5, button6);
 
+        //BorderPane borderPane = new BorderPane();
+
+        GridPane gridPane = new GridPane();
+        //gridPane.add(topMenu, 0, 0);
+        //gridPane.add(leftMenu, 0, 1);
+        //gridPane.autosize();
+        //gridPane.setPrefSize(1200, 800);
+        gridPane.setGridLinesVisible(true);
+        //gridPane.getColumnConstraints().add(new ColumnConstraints(200)); // column 0 is 100 wide
+        //gridPane.getColumnConstraints().add(new ColumnConstraints(200)); // column 1 is 200 wide
+
+
         BorderPane borderPane = new BorderPane();
         borderPane.setLayoutX(10);
         borderPane.setLayoutY(20);
@@ -64,7 +74,8 @@ public class Main extends Application {
 
             chartek.createRealtimeChart();
 
-            borderPane.setRight(chartek.areaChart);
+            gridPane.add(chartek.areaChart, 2, 2);
+            //borderPane.setRight(chartek.areaChart);
             communicator.connect();
             if(communicator.getConnected() && communicator.initIOStream()) {
                 communicator.initListener();
@@ -80,17 +91,31 @@ public class Main extends Application {
             }
         });
         button3.setOnAction(event ->{
+            Chartek chartek1 = new Chartek("first_chart");
             Chartek chartek2 = new Chartek("first_chart");
+            Chartek chartek3 = new Chartek("first_chart");
+            Chartek chartek4 = new Chartek("first_chart");
+            Chartek chartek5 = new Chartek("first_chart");
+            Chartek chartek6 = new Chartek("first_chart");
+            chartek1.createChart();
             chartek2.createChart();
+            chartek3.createChart();
+            chartek4.createChart();
+            chartek5.createChart();
+            chartek6.createChart();
             chartek.createChart();
-            borderPane.setRight(chartek.areaChart);
-            borderPane.setLeft(chartek2.areaChart);
+            gridPane.add(chartek1.areaChart, 0, 0);
+            gridPane.add(chartek2.areaChart, 0, 1);
+            gridPane.add(chartek3.areaChart, 0, 2);
+            gridPane.add(chartek4.areaChart, 1, 0);
+            gridPane.add(chartek5.areaChart, 1, 1);
+            gridPane.add(chartek6.areaChart, 1, 2);
 //            communicator.connect();
 //            if(communicator.getConnected() && communicator.initIOStream()) {
 //                communicator.initListener();
 //            }
         });
-
+        borderPane.setCenter(gridPane);
         Scene scene = new Scene(borderPane);
         scene.getStylesheets().add(Main.class.getResource("myStyle.css").toExternalForm());
         //primaryStage.setScene(new Scene((borderPane)));
