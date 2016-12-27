@@ -32,9 +32,10 @@ public class Chartek {
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private XYChart.Series series;
-    final AreaChart<Number, Number> areaChart;
+    AreaChart<Number, Number> areaChart;
+    //final AreaChart<Number, Number> areaChart;
 
-    public Chartek() {
+    public Chartek(String styleClass) {
         xAxis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
         xAxis.setForceZeroInRange(false);
         xAxis.setAutoRanging(false);
@@ -52,12 +53,19 @@ public class Chartek {
         areaChart.setAnimated(false);
         areaChart.setId("liveAreaChart");
         areaChart.setTitle("Animated Area Chart");
+        //areaChart.getStyleClass().add(styleClass);
 
         //-- Chart Series
         series = new AreaChart.Series<Number, Number>();
         series.setName("Area Chart Series");
         areaChart.getData().add(series);
+        areaChart.getStyleClass().add(styleClass);
     }
+
+//    public Chartek(String styleClass) {
+//        Chartek chartek = new Chartek();
+//        chartek.areaChart.getStyleClass().add(styleClass);
+//    }
 
     public void createChart() {
         //-- Prepare Executor Services

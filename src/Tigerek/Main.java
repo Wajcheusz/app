@@ -58,11 +58,12 @@ public class Main extends Application {
         borderPane.setLeft(leftMenu);
 
 
-        Chartek chartek = new Chartek();
+        Chartek chartek = new Chartek("first_chart");
 
         button1.setOnAction(event ->{
 
             chartek.createRealtimeChart();
+
             borderPane.setRight(chartek.areaChart);
             communicator.connect();
             if(communicator.getConnected() && communicator.initIOStream()) {
@@ -79,7 +80,7 @@ public class Main extends Application {
             }
         });
         button3.setOnAction(event ->{
-            Chartek chartek2 = new Chartek();
+            Chartek chartek2 = new Chartek("first_chart");
             chartek2.createChart();
             chartek.createChart();
             borderPane.setRight(chartek.areaChart);
@@ -91,7 +92,7 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(borderPane);
-        scene.getStylesheets().add("myStyle.css");
+        scene.getStylesheets().add(Main.class.getResource("myStyle.css").toExternalForm());
         //primaryStage.setScene(new Scene((borderPane)));
         primaryStage.setScene(scene);
     }
