@@ -128,7 +128,15 @@
             </SplitMenuButton>
             <Slider />
             <Separator prefWidth="200.0" />
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="ZOOM" />
+            <Button fx:id="zoom" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="125.0" text="+">
+               <padding>
+                  <Insets left="2.0" top="10.0" />
+               </padding></Button>
+            <Button mnemonicParsing="false" onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="125.0" text="-">
+               <padding>
+                  <Insets left="2.0" top="10.0" />
+               </padding>
+            </Button>
             </children>
         </VBox>
     </left>

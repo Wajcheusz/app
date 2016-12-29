@@ -72,6 +72,7 @@ public class Controller {
     @FXML private RadioMenuItem skalowanie20Minut = new RadioMenuItem();
     @FXML private RadioMenuItem skalowanie40Minut = new RadioMenuItem();
     @FXML private RadioMenuItem skalowanie60Minut = new RadioMenuItem();
+    @FXML private Button zoom = new Button();
 
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
     @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
@@ -91,6 +92,16 @@ public class Controller {
 //        chartek.setUpZooming(zoomRect, chartek.getXYChart());
 //        chartek.doZoom(zoomRect, chartek.getXYChart());
 //    }
+
+    @FXML private void zoomClicked(){
+        chartek.prepareTimeline(2);
+    }
+
+    @FXML private void zoomOutClicked(){
+        chartek.prepareTimeline(0);
+    }
+
+
 
     @FXML private void skalowanie(){
         skalowanieAutomatyczne.setUserData(0);
@@ -161,7 +172,7 @@ public class Controller {
         if(Main.communicator.getConnected() && Main.communicator.initIOStream()) {
             Main.communicator.initListener();
         }
-        start1();
+        //start1();
     }
 
     @FXML private void stopClicked(){
@@ -249,6 +260,14 @@ public class Controller {
 
     public ToggleGroup getSkalowanie() {
         return skalowanie;
+    }
+
+    public Button getZoom() {
+        return zoom;
+    }
+
+    public void setZoomSelected(Button zoom) {
+        this.zoom = zoom;
     }
 
     //

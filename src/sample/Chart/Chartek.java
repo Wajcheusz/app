@@ -125,7 +125,7 @@ public class Chartek {
         addToQueueFromText = new AddToQueueFromText(file);
         executor.execute(addToQueueFromText);
         //-- Prepare Timeline
-        prepareTimeline();
+        prepareTimeline(1);
     }
 
     public void createRealtimeChart() {
@@ -134,7 +134,7 @@ public class Chartek {
         addToQueueRealTime = new AddToQueueRealTime();
         executor.execute(addToQueueRealTime);
         //-- Prepare Timeline
-        prepareTimeline();
+        prepareTimeline(1);
     }
 
     private class AddToQueueRealTime implements Runnable {
@@ -144,7 +144,7 @@ public class Chartek {
             //while (running){
                 try {
                     //while (running){
-                    Thread.sleep(800);
+                    Thread.sleep(1000);
                     try {
                         ser.generateSeries(Communicator.temporary);
                         if (Controller.nagrajPrzebiegClicked) {
@@ -222,12 +222,19 @@ public class Chartek {
     }
 
     //-- Timeline gets called in the JavaFX Main thread
-    private void prepareTimeline() {
+    //0 zmniejsz 2 powieksz
+    public void prepareTimeline(int scale) {
         // Every frame to take any data from queue and add to chart
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+                if (scale == 1) {
                 addDataToSeries();
+                } else if (scale == 0) {
+                    pomniejsz();
+                } else if(scale == 2) {
+                    powieksz();
+                }
             }
         }.start();
     }
@@ -288,6 +295,43 @@ public class Chartek {
         //xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
         //xAxis.setUpperBound(xSeriesData - 1);
         //xAxis.setUpperBound(5);
+    }
+
+
+//    public void prepareTimeline2() {
+//        // Every frame to take any data from queue and add to chart
+//        new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                powieksz();
+//            }
+//        }.start();
+//    }
+//
+//    public void prepareTimeline3() {
+//        // Every frame to take any data from queue and add to chart
+//        new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                pomniejsz();
+//            }
+//        }.start();
+//    }
+
+    public void powieksz(){
+        if (xSeriesData-xAxis.getLowerBound()>8) {
+        xAxis.setLowerBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+        } else {controller.getZoom().setDisable(true);}
+    }
+
+    public void pomniejsz(){
+        //if((xAxis.getUpperBound()-xAxis.getLowerBound())/2>xAxis.getLowerBound()){
+        controller.getZoom().setDisable(false);
+//        if((Math.abs(xAxis.getLowerBound()-xAxis.getUpperBound()))/2<xAxis.getLowerBound()){
+//            xAxis.setLowerBound(Math.floor(xAxis.getLowerBound()*3/2)-Math.floor(xAxis.getUpperBound()/2));
+//        } else {xAxis.setLowerBound(0);}
+        xAxis.setLowerBound(0);
+        //xAxis.setLowerBound(Math.ceil(xAxis.getLowerBound()*/2)-Math.ceil(xAxis.getUpperBound()/2));
     }
 
 //    public void clearData(int numberOfSensor){
