@@ -6,6 +6,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import sample.Chart.Chartek;
@@ -24,6 +25,7 @@ public class Controller {
     @FXML public void initialize() {
         System.out.println("Application started");
         chartek.init(this);
+        skalowanie();
 //        tab1Controller.init(this);
 //        tab2Controller.init(this);
     }
@@ -39,6 +41,18 @@ public class Controller {
     @FXML private RadioMenuItem pointsChart = new RadioMenuItem();
     @FXML private RadioMenuItem lineChart = new RadioMenuItem();
     @FXML private RadioMenuItem pointsAndLineChart = new RadioMenuItem();
+
+    @FXML private ToggleGroup skalowanie = new ToggleGroup();
+    @FXML private RadioMenuItem skalowanieAutomatyczne = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie30Sekund = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie1Minuta = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie2Minuty = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie5Minut = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie10Minut = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie20Minut = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie40Minut = new RadioMenuItem();
+    @FXML private RadioMenuItem skalowanie60Minut = new RadioMenuItem();
+
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
     @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
     @FXML private MenuItem odtworzPrzebiegItem = new MenuItem();
@@ -46,6 +60,18 @@ public class Controller {
     @FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
     //public AreaChart areaChart2 = new AreaChart<Number, Number>(new NumberAxis(5, 10, 15), new NumberAxis(5, 10, 15));
+
+    @FXML private void skalowanie(){
+        skalowanieAutomatyczne.setUserData(0);
+        skalowanie30Sekund.setUserData(30);
+        skalowanie1Minuta.setUserData(60);
+        skalowanie2Minuty.setUserData(120);
+        skalowanie5Minut.setUserData(300);
+        skalowanie10Minut.setUserData(600);
+        skalowanie20Minut.setUserData(1200);
+        skalowanie40Minut.setUserData(2400);
+        skalowanie60Minut.setUserData(3600);
+    }
 
     @FXML private void checkboxSelected(){
         System.out.println("KLIKNIETO");
@@ -188,4 +214,46 @@ public class Controller {
     public Boolean getointsAndLineSelection(){
         return pointsAndLineChart.isSelected();
     }
+
+    public ToggleGroup getSkalowanie() {
+        return skalowanie;
+    }
+
+    //
+//    public RadioMenuItem getSkalowanie30Sekund() {
+//        return skalowanie30Sekund;
+//    }
+//
+//    public RadioMenuItem getSkalowanie1Minuta() {
+//        return skalowanie1Minuta;
+//    }
+//
+//    public RadioMenuItem getSkalowanie2Minuty() {
+//        return skalowanie2Minuty;
+//    }
+//
+//    public RadioMenuItem getSkalowanie5Minut() {
+//        return skalowanie5Minut;
+//    }
+//
+//    public RadioMenuItem getSkalowanie10Minut() {
+//        return skalowanie10Minut;
+//    }
+//
+//    public RadioMenuItem getSkalowanie20Minut() {
+//        return skalowanie20Minut;
+//    }
+//
+//    public RadioMenuItem getSkalowanie40Minut() {
+//        return skalowanie40Minut;
+//    }
+//
+//    public RadioMenuItem getSkalowanie60Minut() {
+//        return skalowanie60Minut;
+//    }
+//
+//    public RadioMenuItem getSkalowanieAutomatyczne() {
+//        skalowanie.
+//        return skalowanieAutomatyczne;
+//    }
 }

@@ -44,7 +44,7 @@ public class Chartek {
     private AddToQueueFromText addToQueueFromText;
     private AddToQueueRealTime addToQueueRealTime;
     private int xSeriesData = 0;
-    private static final int MAX_DATA_POINTS = 30;
+    private static final int MAX_DATA_POINTS = 130;
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private XYChart.Series series;
@@ -263,8 +263,22 @@ public class Chartek {
 //            series.getData().remove(0, series.getData().size() - MAX_DATA_POINTS);
 //        }
 //        // update
-        xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
-        xAxis.setUpperBound(xSeriesData - 1);
+
+//        System.out.println(controller.getSkalowanie().getSelectedToggle().getProperties());
+        //System.out.println(controller.getSkalowanie().getSelectedToggle().getUserData());
+//        System.out.println(controller.getSkalowanie().getSelectedToggle());
+        //controller.getSkalowanie().getSelectedToggle().getProperties().
+        if (controller.getSkalowanie().getSelectedToggle().getUserData().equals(0)){
+            xAxis.setLowerBound(0);
+            xAxis.setUpperBound(xSeriesData - 1);
+        } else {
+            xAxis.setLowerBound(xSeriesData - (int)controller.getSkalowanie().getSelectedToggle().getUserData());
+            xAxis.setUpperBound(xSeriesData - 1);
+        }
+        //xAxis.setLowerBound(0);
+        //xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
+        //xAxis.setUpperBound(xSeriesData - 1);
+        //xAxis.setUpperBound(5);
     }
 
     public void clearData(int numberOfSensor){

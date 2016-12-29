@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.web.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
     <top>
         <VBox prefHeight="16.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -13,18 +14,33 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Opcje">
                             <items>
-                        <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" text="Wykres punktowy">
+                        <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy">
                            <toggleGroup>
                               <ToggleGroup fx:id="chartOptions" />
-                           </toggleGroup>
-                        </RadioMenuItem>
-                        <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy" toggleGroup="$chartOptions" />
+                           </toggleGroup></RadioMenuItem>
                         <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false" text="Wykres liniowy z punktami" toggleGroup="$chartOptions" />
+                        <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" text="Wykres punktowy" toggleGroup="$chartOptions" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
+                        <Menu mnemonicParsing="false" text="Skalowanie">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
+                        <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" text="Automatyczne">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="skalowanie" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <Menu mnemonicParsing="false" text="Stałe">
+                          <items>
+                              <RadioMenuItem fx:id="skalowanie30Sekund" mnemonicParsing="false" text="30 sekund" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie1Minuta" mnemonicParsing="false" text="1 minuta" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie2Minuty" mnemonicParsing="false" text="2 minuty" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie5Minut" mnemonicParsing="false" text="5 minut" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie10Minut" mnemonicParsing="false" text="10 minut" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie20Minut" mnemonicParsing="false" text="20 minut" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie40Minut" mnemonicParsing="false" text="40 minut" toggleGroup="$skalowanie" />
+                              <RadioMenuItem fx:id="skalowanie60Minut" mnemonicParsing="false" text="60 minut" toggleGroup="$skalowanie" />
+                          </items>
+                        </Menu>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Help">
@@ -97,7 +113,25 @@
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
+            <Label text="Czas" />
+            <TextField />
+            <ChoiceBox prefWidth="150.0" />
+            <DatePicker />
+            <ComboBox prefWidth="150.0" />
+            <ColorPicker />
+            <ScrollBar />
+            <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </SplitMenuButton>
+            <Slider />
+            <Separator prefWidth="200.0" />
             </children>
         </VBox>
     </left>
+   <right>
+      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>
