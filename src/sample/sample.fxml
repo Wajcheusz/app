@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
+    <top>
+        <VBox prefHeight="16.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar>
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Opcje">
+                            <items>
+                                <MenuItem fx:id="oserwojPrzebiegItem" mnemonicParsing="false" onAction="#obserwojPrzebiegClicked" text="Obserwój przebieg" />
+                        <MenuItem fx:id="nagrajPrzebiegItem" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" text="Nagraj przebieg" />
+                        <MenuItem fx:id="odtworzPrzebiegItem" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" text="Odtwórz przebieg" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Edit">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
+                            </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Help">
+                            <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </children>
+        </VBox>
+    </top>
+    <left>
+        <VBox prefHeight="375.0" prefWidth="115.0" BorderPane.alignment="CENTER">
+            <children>
+                <CheckBox mnemonicParsing="false" text="Czujnik 1">
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding></CheckBox>
+                <CheckBox fx:id="checkobox2" mnemonicParsing="false" text="Czujnik 2">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Czujnik 3">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Czujnik 4">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Czujnik 5">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </CheckBox>
+                <CheckBox mnemonicParsing="false" text="Czujnik 6">
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </CheckBox>
+            <Button mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="113.0" text="Nagraj przebieg">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="113.0" text="Zapisz">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Button>
+            </children>
+        </VBox>
+    </left>
+</BorderPane>
