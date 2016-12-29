@@ -1,5 +1,6 @@
 package sample.Control;
 
+import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
@@ -18,17 +19,56 @@ import java.util.ArrayList;
 
 public class Controller {
 
-    public BorderPane borderPane = new BorderPane();
-    public CheckBox checkobox2 = new CheckBox();
-    public MenuItem oserwojPrzebiegItem = new MenuItem();
-    public MenuItem nagrajPrzebiegItem = new MenuItem();
-    public MenuItem odtworzPrzebiegItem = new MenuItem();
-    public Chartek chartek = new Chartek();
-    public AreaChart<Number, Number> areaChart = chartek.getAreaChart();
+    @FXML public void initialize() {
+        System.out.println("Application started");
+        chartek.init(this);
+//        tab1Controller.init(this);
+//        tab2Controller.init(this);
+    }
+
+    @FXML private BorderPane borderPane = new BorderPane();
+    @FXML private CheckBox checkbox = new CheckBox();
+    @FXML private CheckBox checkbox2 = new CheckBox();
+    @FXML private CheckBox checkbox3 = new CheckBox();
+    @FXML private CheckBox checkbox4 = new CheckBox();
+    @FXML private CheckBox checkbox5 = new CheckBox();
+    @FXML private CheckBox checkbox6 = new CheckBox();
+    @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
+    @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
+    @FXML private MenuItem odtworzPrzebiegItem = new MenuItem();
+    private Chartek chartek = new Chartek();
+    @FXML private AreaChart<Number, Number> areaChart = chartek.getAreaChart();
     public static boolean nagrajPrzebiegClicked = false;
     //public AreaChart areaChart2 = new AreaChart<Number, Number>(new NumberAxis(5, 10, 15), new NumberAxis(5, 10, 15));
 
-    public void odtworzPrzebiegClicked(){
+
+//    @FXML private void checkboxSelected(){
+//        //checkbox.setSelected(!checkbox.isSelected());
+//        //System.out.println("1 selected" + checkbox.isSelected());
+//    }
+//
+//    @FXML private void checkbox2Selected(){
+//        //checkbox2.setSelected(!checkbox2.isSelected());
+//        //System.out.println("2 selected" + checkbox2.isSelected());
+//    }
+//
+//    @FXML private void checkbox3Selected(){
+//        //checkbox3.setSelected(!checkbox3.isSelected());
+//    }
+//
+//    @FXML private void checkbox4Selected(){
+//        //checkbox4.setSelected(!checkbox4.isSelected());
+//    }
+//
+//    @FXML private void checkbox5Selected(){
+//        //checkbox5.setSelected(!checkbox5.isSelected());
+//    }
+//
+//    @FXML private void checkbox6Selected(){
+//        //checkbox6.setSelected(!checkbox6.isSelected());
+//    }
+
+    @FXML private void odtworzPrzebiegClicked(){
 
         FileChooser fileChooser = new FileChooser();
 
@@ -41,7 +81,7 @@ public class Controller {
         borderPane.setCenter(chartek.getAreaChart());
     }
 
-    public void nagrajPrzebiegClicked(){
+    @FXML private void nagrajPrzebiegClicked(){
         try {
             String nazwaPliku = "test5.csv";
             Path sciezka = Paths.get(nazwaPliku);
@@ -52,7 +92,7 @@ public class Controller {
         }
     }
 
-    public void obserwojPrzebiegClicked(){
+    @FXML private void obserwojPrzebiegClicked(){
         chartek.createRealtimeChart();
         borderPane.setCenter(chartek.getAreaChart());
         Main.communicator.connect();
@@ -61,7 +101,7 @@ public class Controller {
         }
     }
 
-    public void zapiszPrzebiegClicked(){
+    @FXML private void zapiszPrzebiegClicked(){
 //        File file = chooser.getSelectedFile();
 //        if (FilenameUtils.getExtension(file.getName()).equalsIgnoreCase("xml")) {
 //            // filename is OK as-is
@@ -101,7 +141,29 @@ public class Controller {
             System.out.println(ex);
             //Logger.getLogger(JavaFX_Text.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
+    public Boolean getCheckboxSelection() {
+        return checkbox.isSelected();
+    }
+
+    public Boolean getCheckbox2Selection(){
+        return checkbox2.isSelected();
+    }
+
+    public Boolean getCheckbox3Selection(){
+        return checkbox3.isSelected();
+    }
+
+    public Boolean getCheckbox4Selection(){
+        return checkbox4.isSelected();
+    }
+
+    public Boolean getCheckbox5Selection(){
+        return checkbox5.isSelected();
+    }
+
+    public Boolean getCheckbox6Selection(){
+        return checkbox6.isSelected();
+    }
 }

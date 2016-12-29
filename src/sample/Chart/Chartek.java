@@ -1,6 +1,7 @@
 package sample.Chart;
 
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -20,6 +21,10 @@ import java.util.concurrent.Executors;
  * Created by E6420 on 2016-11-30.
  */
 public class Chartek {
+    public void init(Controller controller){
+        this.controller = controller;
+    }
+    Controller controller;
     final int LICZBA_CZUJNIKOW = 6;
     private ArrayList<String> out = new ArrayList<>();
     //    private List<ConcurrentLinkedQueue<Number>> data = new  ArrayList<ConcurrentLinkedQueue<Number>>();
@@ -86,7 +91,11 @@ public class Chartek {
         series5.setName("Piąta seria");
         series6 = new AreaChart.Series<Number, Number>();
         series6.setName("Szusta seria");
+        //areaChart.setVisible(false);
         areaChart.getData().addAll(series, series2, series3, series4, series5, series6);
+        //areaChart.setVisible(false);
+
+
 
         //areaChart.getStyleClass().add(styleClass);
     }
@@ -129,6 +138,7 @@ public class Chartek {
                     System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
                     System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
                     i++;
+                    xSeriesData++;
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 }
@@ -164,6 +174,7 @@ public class Chartek {
                             dataQ6.add(ser.getCharts().get(5).get(i));
                             Thread.sleep(1000);
                             i++;
+                            xSeriesData++;
                         }
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
@@ -189,7 +200,7 @@ public class Chartek {
             }
         }.start();
     }
-
+    //static int countOfSinglePoints;
     private void addDataToSeries() {
         //W ORYGINALE:
 //        for (int i = 0; i < 20; i++) { //-- add 20 numbers to the plot+
@@ -197,26 +208,32 @@ public class Chartek {
 //            series.getData().add(new AreaChart.Data(xSeriesData++, dataQ.remove()));
 //        }
 
-
-        if (!dataQ.isEmpty()) {
+        if (!dataQ.isEmpty() && controller.getCheckboxSelection()) {
             series.getData().add(new AreaChart.Data(xSeriesData, dataQ.remove()));
         }
-        if (!dataQ2.isEmpty()) {
+        if (!dataQ2.isEmpty() && controller.getCheckbox2Selection()) {
             series2.getData().add(new AreaChart.Data(xSeriesData, dataQ2.remove()));
         }
-        if (!dataQ3.isEmpty()) {
+        if (!dataQ3.isEmpty() && controller.getCheckbox3Selection()) {
             series3.getData().add(new AreaChart.Data(xSeriesData, dataQ3.remove()));
         }
-        if (!dataQ4.isEmpty()) {
+        if (!dataQ4.isEmpty() && controller.getCheckbox4Selection()) {
             series4.getData().add(new AreaChart.Data(xSeriesData, dataQ4.remove()));
         }
-        if (!dataQ5.isEmpty()) {
+        if (!dataQ5.isEmpty() && controller.getCheckbox5Selection()) {
             series5.getData().add(new AreaChart.Data(xSeriesData, dataQ5.remove()));
         }
-        if (!dataQ6.isEmpty()) {
-            series6.getData().add(new AreaChart.Data(xSeriesData++, dataQ6.remove()));
+        if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
+            series6.getData().add(new AreaChart.Data(xSeriesData, dataQ6.remove()));
         }
-
+//        if (countOfSinglePoints == LICZBA_CZUJNIKOW){
+//            xSeriesData++;
+//            countOfSinglePoints = 0;
+//        }
+//        if(!dataQ.isEmpty() || !dataQ2.isEmpty() || !dataQ3.isEmpty() || !dataQ4.isEmpty() || !dataQ5.isEmpty() || !dataQ6.isEmpty()){
+//            xSeriesData++;
+//        }
+        //xSeriesData++;
 
         //SKALOWANIE
 //        // remove points to keep us at no more than MAX_DATA_POINTS
