@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
     <top>
         <VBox prefHeight="16.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -19,12 +19,12 @@
                               <ToggleGroup fx:id="chartOptions" />
                            </toggleGroup></RadioMenuItem>
                         <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false" text="Wykres liniowy z punktami" toggleGroup="$chartOptions" />
-                        <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" text="Wykres punktowy" toggleGroup="$chartOptions" />
+                        <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" selected="true" text="Wykres punktowy" toggleGroup="$chartOptions" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Skalowanie">
                             <items>
-                        <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" text="Automatyczne">
+                        <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" selected="true" text="Automatyczne">
                            <toggleGroup>
                               <ToggleGroup fx:id="skalowanie" />
                            </toggleGroup>
@@ -128,10 +128,8 @@
             </SplitMenuButton>
             <Slider />
             <Separator prefWidth="200.0" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="ZOOM" />
             </children>
         </VBox>
     </left>
-   <right>
-      <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </right>
 </BorderPane>

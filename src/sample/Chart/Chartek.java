@@ -1,10 +1,17 @@
 package sample.Chart;
 
 import javafx.animation.AnimationTimer;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.chart.*;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import sample.Control.Communicator;
 import sample.Control.Controller;
 
@@ -137,7 +144,7 @@ public class Chartek {
             //while (running){
                 try {
                     //while (running){
-                    Thread.sleep(1000);
+                    Thread.sleep(800);
                     try {
                         ser.generateSeries(Communicator.temporary);
                         if (Controller.nagrajPrzebiegClicked) {
@@ -155,6 +162,8 @@ public class Chartek {
                         xSeriesData++;
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
+                    } catch (java.lang.Exception ex){ //todo sprawdz
+                        ex.printStackTrace();
                     }
                     executor.execute(this);
 
@@ -281,9 +290,9 @@ public class Chartek {
         //xAxis.setUpperBound(5);
     }
 
-    public void clearData(int numberOfSensor){
-
-    }
+//    public void clearData(int numberOfSensor){
+//
+//    }
 
     public ArrayList<String> getOut() {
         return out;
@@ -315,6 +324,74 @@ public class Chartek {
 
     public ConcurrentLinkedQueue<Number> getDataQ6() {
         return dataQ6;
+    }
+
+    public NumberAxis getxAxis() {
+        return xAxis;
+    }
+
+    public void setAxises(double xAxisLower, double xAxisUpper, double yAxisLower, double yAxisUpper) {
+        this.xAxis.setLowerBound(xAxisLower);// = xAxis;
+        this.xAxis.setUpperBound(xAxisUpper);
+        this.yAxis.setLowerBound(yAxisLower);
+        this.yAxis.setUpperBound(yAxisUpper);
+    }
+
+    public NumberAxis getyAxis() {
+        return yAxis;
+    }
+
+    public void setyAxis(NumberAxis yAxis) {
+        this.yAxis = yAxis;
+    }
+
+    //
+//    public void doZoom(Rectangle zoomRect, XYChart<Number, Number> chart) {
+//        Point2D zoomTopLeft = new Point2D(zoomRect.getX(), zoomRect.getY());
+//        Point2D zoomBottomRight = new Point2D(zoomRect.getX() + zoomRect.getWidth(), zoomRect.getY() + zoomRect.getHeight());
+//        final NumberAxis yAxis = (NumberAxis) chart.getYAxis();
+//        Point2D yAxisInScene = yAxis.localToScene(0, 0);
+//        final NumberAxis xAxis = (NumberAxis) chart.getXAxis();
+//        Point2D xAxisInScene = xAxis.localToScene(0, 0);
+//        double xOffset = zoomTopLeft.getX() - yAxisInScene.getX() ;
+//        double yOffset = zoomBottomRight.getY() - xAxisInScene.getY();
+//        double xAxisScale = xAxis.getScale();
+//        double yAxisScale = yAxis.getScale();
+//        xAxis.setLowerBound(xAxis.getLowerBound() + xOffset / xAxisScale);
+//        xAxis.setUpperBound(xAxis.getLowerBound() + zoomRect.getWidth() / xAxisScale);
+//        yAxis.setLowerBound(yAxis.getLowerBound() + yOffset / yAxisScale);
+//        yAxis.setUpperBound(yAxis.getLowerBound() - zoomRect.getHeight() / yAxisScale);
+//        System.out.println(yAxis.getLowerBound() + " " + yAxis.getUpperBound());
+//        zoomRect.setWidth(0);
+//        zoomRect.setHeight(0);
+//    }
+//
+//    public void setUpZooming(final Rectangle rect, final Node zoomingNode) {
+//        final ObjectProperty<Point2D> mouseAnchor = new SimpleObjectProperty<>();
+//        zoomingNode.setOnMousePressed(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                mouseAnchor.set(new Point2D(event.getX(), event.getY()));
+//                rect.setWidth(0);
+//                rect.setHeight(0);
+//            }
+//        });
+//        zoomingNode.setOnMouseDragged(new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                double x = event.getX();
+//                double y = event.getY();
+//                rect.setX(Math.min(x, mouseAnchor.get().getX()));
+//                rect.setY(Math.min(y, mouseAnchor.get().getY()));
+//                rect.setWidth(Math.abs(x - mouseAnchor.get().getX()));
+//                rect.setHeight(Math.abs(y - mouseAnchor.get().getY()));
+//            }
+//        });
+//    }
+
+
+    public void setXYChart(javafx.scene.chart.XYChart<Number, Number> XYChart) {
+        this.XYChart = XYChart;
     }
 }
 
