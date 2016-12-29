@@ -2,8 +2,10 @@ package sample.Control;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import sample.Chart.Chartek;
@@ -33,40 +35,42 @@ public class Controller {
     @FXML private CheckBox checkbox4 = new CheckBox();
     @FXML private CheckBox checkbox5 = new CheckBox();
     @FXML private CheckBox checkbox6 = new CheckBox();
+//    @FXML private CheckBox connectPoints = new CheckBox();
+    @FXML private RadioMenuItem pointsChart = new RadioMenuItem();
+    @FXML private RadioMenuItem lineChart = new RadioMenuItem();
+    @FXML private RadioMenuItem pointsAndLineChart = new RadioMenuItem();
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
     @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
     @FXML private MenuItem odtworzPrzebiegItem = new MenuItem();
     private Chartek chartek = new Chartek();
-    @FXML private AreaChart<Number, Number> areaChart = chartek.getAreaChart();
+    @FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
     //public AreaChart areaChart2 = new AreaChart<Number, Number>(new NumberAxis(5, 10, 15), new NumberAxis(5, 10, 15));
 
+    @FXML private void checkboxSelected(){
+        System.out.println("KLIKNIETO");
+        chartek.getDataQ().clear();
+    }
 
-//    @FXML private void checkboxSelected(){
-//        //checkbox.setSelected(!checkbox.isSelected());
-//        //System.out.println("1 selected" + checkbox.isSelected());
-//    }
-//
-//    @FXML private void checkbox2Selected(){
-//        //checkbox2.setSelected(!checkbox2.isSelected());
-//        //System.out.println("2 selected" + checkbox2.isSelected());
-//    }
-//
-//    @FXML private void checkbox3Selected(){
-//        //checkbox3.setSelected(!checkbox3.isSelected());
-//    }
-//
-//    @FXML private void checkbox4Selected(){
-//        //checkbox4.setSelected(!checkbox4.isSelected());
-//    }
-//
-//    @FXML private void checkbox5Selected(){
-//        //checkbox5.setSelected(!checkbox5.isSelected());
-//    }
-//
-//    @FXML private void checkbox6Selected(){
-//        //checkbox6.setSelected(!checkbox6.isSelected());
-//    }
+    @FXML private void checkbox2Selected(){
+        chartek.getDataQ2().clear();
+    }
+
+    @FXML private void checkbox3Selected(){
+        chartek.getDataQ3().clear();
+    }
+
+    @FXML private void checkbox4Selected(){
+        chartek.getDataQ4().clear();
+    }
+
+    @FXML private void checkbox5Selected(){
+        chartek.getDataQ5().clear();
+    }
+
+    @FXML private void checkbox6Selected(){
+        chartek.getDataQ6().clear();
+    }
 
     @FXML private void odtworzPrzebiegClicked(){
 
@@ -76,9 +80,9 @@ public class Controller {
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(Main.stage);
 
-
+        chartek.Start();
         chartek.createChart(file);
-        borderPane.setCenter(chartek.getAreaChart());
+        borderPane.setCenter(chartek.getXYChart());
     }
 
     @FXML private void nagrajPrzebiegClicked(){
@@ -93,13 +97,19 @@ public class Controller {
     }
 
     @FXML private void obserwojPrzebiegClicked(){
+        chartek.Start();
         chartek.createRealtimeChart();
-        borderPane.setCenter(chartek.getAreaChart());
+        borderPane.setCenter(chartek.getXYChart());
         Main.communicator.connect();
         if(Main.communicator.getConnected() && Main.communicator.initIOStream()) {
             Main.communicator.initListener();
         }
     }
+
+    @FXML private void stopClicked(){
+        chartek.stop();
+    }
+
 
     @FXML private void zapiszPrzebiegClicked(){
 //        File file = chooser.getSelectedFile();
@@ -165,5 +175,17 @@ public class Controller {
 
     public Boolean getCheckbox6Selection(){
         return checkbox6.isSelected();
+    }
+
+    public Boolean getPointsSelection(){
+        return pointsChart.isSelected();
+    }
+
+    public Boolean getLineSelection(){
+        return lineChart.isSelected();
+    }
+
+    public Boolean getointsAndLineSelection(){
+        return pointsAndLineChart.isSelected();
     }
 }

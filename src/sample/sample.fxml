@@ -13,9 +13,13 @@
                     <menus>
                         <Menu mnemonicParsing="false" text="Opcje">
                             <items>
-                                <MenuItem fx:id="oserwojPrzebiegItem" mnemonicParsing="false" onAction="#obserwojPrzebiegClicked" text="Obserwój przebieg" />
-                        <MenuItem fx:id="nagrajPrzebiegItem" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" text="Nagraj przebieg" />
-                        <MenuItem fx:id="odtworzPrzebiegItem" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" text="Odtwórz przebieg" />
+                        <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" text="Wykres punktowy">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="chartOptions" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy" toggleGroup="$chartOptions" />
+                        <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false" text="Wykres liniowy z punktami" toggleGroup="$chartOptions" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
@@ -34,48 +38,63 @@
         </VBox>
     </top>
     <left>
-        <VBox prefHeight="375.0" prefWidth="115.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="374.0" prefWidth="125.0" BorderPane.alignment="CENTER">
             <children>
-                <CheckBox fx:id="checkbox" mnemonicParsing="false" text="Czujnik 1">
+                <CheckBox fx:id="checkbox" mnemonicParsing="false" onAction="#checkboxSelected" text="Czujnik 1">
                     <VBox.margin>
                         <Insets />
                     </VBox.margin>
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding></CheckBox>
-                <CheckBox fx:id="checkbox2" mnemonicParsing="false" text="Czujnik 2">
+                <CheckBox fx:id="checkbox2" mnemonicParsing="false" onAction="#checkbox2Selected" text="Czujnik 2">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </CheckBox>
-                <CheckBox fx:id="checkbox3" mnemonicParsing="false" text="Czujnik 3">
+                <CheckBox fx:id="checkbox3" mnemonicParsing="false" onAction="#checkbox3Selected" text="Czujnik 3">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </CheckBox>
-                <CheckBox fx:id="checkbox4" mnemonicParsing="false" text="Czujnik 4">
+                <CheckBox fx:id="checkbox4" mnemonicParsing="false" onAction="#checkbox4Selected" text="Czujnik 4">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </CheckBox>
-                <CheckBox fx:id="checkbox5" mnemonicParsing="false" text="Czujnik 5">
+                <CheckBox fx:id="checkbox5" mnemonicParsing="false" onAction="#checkbox5Selected" text="Czujnik 5">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </CheckBox>
-                <CheckBox fx:id="checkbox6" mnemonicParsing="false" text="Czujnik 6">
+                <CheckBox fx:id="checkbox6" mnemonicParsing="false" onAction="#checkbox6Selected" text="Czujnik 6">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </CheckBox>
-            <Button mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="113.0" text="Nagraj przebieg">
+            <Button mnemonicParsing="false" onAction="#obserwojPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Obserwój przebieg">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="113.0" text="Zapisz">
+            <Button mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Odtwórz przebieg">
                <VBox.margin>
-                  <Insets top="10.0" />
+                  <Insets left="2.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Nagraj przebieg">
+               <VBox.margin>
+                  <Insets left="2.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Zapisz przebieg">
+               <VBox.margin>
+                  <Insets left="2.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#stopClicked" prefHeight="25.0" prefWidth="125.0" text="STOP">
+               <VBox.margin>
+                  <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
             </children>

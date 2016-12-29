@@ -2,8 +2,8 @@ package sample.Chart;
 
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.*;
+import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart;
 import sample.Control.Communicator;
 import sample.Control.Controller;
@@ -54,10 +54,17 @@ public class Chartek {
     private XYChart.Series series5;
     private XYChart.Series series6;
     private Series ser;
-    private AreaChart<Number, Number> areaChart;
+    private XYChart<Number, Number> XYChart;
+    private volatile boolean running = true;
 
+    public void stop(){
+        System.out.println("Force closing");
+        executor.shutdownNow();
+    }
 
-    public Chartek() {
+    public void Start() {
+    //public Chartek() {
+        xSeriesData = 0;
         ser = new Series(LICZBA_CZUJNIKOW);
         xAxis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
         xAxis.setForceZeroInRange(false);
@@ -65,39 +72,44 @@ public class Chartek {
 
         yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
-
-        areaChart = new AreaChart<Number, Number>(xAxis, yAxis) {
-            //Wywalenie Kropek, można dodać
-            // Override to remove symbols on each data point
-            @Override
-            protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
-            }
-        };
-        areaChart.setAnimated(false);
-        areaChart.setId("liveAreaChart");
-        areaChart.setTitle("Animated Area Chart");
-        //areaChart.getStyleClass().add(styleClass);
+        if (controller.getLineSelection()){
+        XYChart = new LineChart<Number, Number>(xAxis, yAxis) {
+                    //Wywalenie Kropek, można dodać
+                    // Override to remove symbols on each data point
+                    @Override
+                    protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
+                    }
+                };
+        } else if (controller.getointsAndLineSelection()){
+            XYChart = new LineChart<Number, Number>(xAxis, yAxis);
+        } else {
+            XYChart = new ScatterChart<Number, Number>(xAxis, yAxis);
+        }
+        XYChart.setAnimated(false);
+        XYChart.setId("liveXYChart");
+        XYChart.setTitle("Animated Area Chart");
+        //XYChart.getStyleClass().add(styleClass);
 
         //-- Chart Series
-        series = new AreaChart.Series<Number, Number>();
+        series = new XYChart.Series<Number, Number>();
         series.setName("Area Chart Series");
-        series2 = new AreaChart.Series<Number, Number>();
+        series2 = new XYChart.Series<Number, Number>();
         series2.setName("Druga seria");
-        series3 = new AreaChart.Series<Number, Number>();
+        series3 = new XYChart.Series<Number, Number>();
         series3.setName("Trzecia seria");
-        series4 = new AreaChart.Series<Number, Number>();
+        series4 = new XYChart.Series<Number, Number>();
         series4.setName("Czwarta seria");
-        series5 = new AreaChart.Series<Number, Number>();
+        series5 = new XYChart.Series<Number, Number>();
         series5.setName("Piąta seria");
-        series6 = new AreaChart.Series<Number, Number>();
+        series6 = new XYChart.Series<Number, Number>();
         series6.setName("Szusta seria");
-        //areaChart.setVisible(false);
-        areaChart.getData().addAll(series, series2, series3, series4, series5, series6);
-        //areaChart.setVisible(false);
+        //XYChart.setVisible(false);
+        XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
+        //XYChart.setVisible(false);
 
 
 
-        //areaChart.getStyleClass().add(styleClass);
+        //XYChart.getStyleClass().add(styleClass);
     }
 
     public void createChart(File file) {
@@ -122,30 +134,34 @@ public class Chartek {
         int i = 0;
 
         public void run() {
-            try {
-                Thread.sleep(1000);
+            //while (running){
                 try {
-                    ser.generateSeries(Communicator.temporary);
-                    if (Controller.nagrajPrzebiegClicked){
-                        out.add(Communicator.temporary);
+                    //while (running){
+                    Thread.sleep(1000);
+                    try {
+                        ser.generateSeries(Communicator.temporary);
+                        if (Controller.nagrajPrzebiegClicked) {
+                            out.add(Communicator.temporary);
+                        }
+                        dataQ.add(ser.getCharts().get(0).get(i));
+                        dataQ2.add(ser.getCharts().get(1).get(i));
+                        dataQ3.add(ser.getCharts().get(2).get(i));
+                        dataQ4.add(ser.getCharts().get(3).get(i));
+                        dataQ5.add(ser.getCharts().get(4).get(i));
+                        dataQ6.add(ser.getCharts().get(5).get(i));
+                        System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
+                        System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
+                        i++;
+                        xSeriesData++;
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
                     }
-                    dataQ.add(ser.getCharts().get(0).get(i));
-                    dataQ2.add(ser.getCharts().get(1).get(i));
-                    dataQ3.add(ser.getCharts().get(2).get(i));
-                    dataQ4.add(ser.getCharts().get(3).get(i));
-                    dataQ5.add(ser.getCharts().get(4).get(i));
-                    dataQ6.add(ser.getCharts().get(5).get(i));
-                    System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
-                    System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
-                    i++;
-                    xSeriesData++;
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
+                    executor.execute(this);
+
+                } catch (InterruptedException ex) {
+                    //todo dokoncz
                 }
-                executor.execute(this);
-            } catch (InterruptedException ex) {
-                //todo dokoncz
-            }
+            //}
         }
     }
 
@@ -160,33 +176,39 @@ public class Chartek {
         String line = "";
 
         public void run() {
-            try {
+            //while (running){
                 try {
+                    //Thread.sleep(1000);
                     try {
-                        br = new BufferedReader(new FileReader(csvFile));
-                        while ((line = br.readLine().trim()) != null) {
-                            ser.generateSeries(line);
-                            dataQ.add(ser.getCharts().get(0).get(i));
-                            dataQ2.add(ser.getCharts().get(1).get(i));
-                            dataQ3.add(ser.getCharts().get(2).get(i));
-                            dataQ4.add(ser.getCharts().get(3).get(i));
-                            dataQ5.add(ser.getCharts().get(4).get(i));
-                            dataQ6.add(ser.getCharts().get(5).get(i));
-                            Thread.sleep(1000);
-                            i++;
-                            xSeriesData++;
+                        try {
+                            br = new BufferedReader(new FileReader(csvFile));
+                            while ((line = br.readLine().trim()) != null) {
+                                ser.generateSeries(line);
+                                dataQ.add(ser.getCharts().get(0).get(i));
+                                dataQ2.add(ser.getCharts().get(1).get(i));
+                                dataQ3.add(ser.getCharts().get(2).get(i));
+                                dataQ4.add(ser.getCharts().get(3).get(i));
+                                dataQ5.add(ser.getCharts().get(4).get(i));
+                                dataQ6.add(ser.getCharts().get(5).get(i));
+                                Thread.sleep(1000);
+                                i++;
+                                xSeriesData++;
+                            }
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        } catch (NullPointerException e) {
+                            System.out.println("koniec pliku???");
+                            e.printStackTrace();
                         }
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                    } catch (IOException ex) {
+                        System.out.println("Nie moge odczytac pliku!");
                     }
-                } catch (IOException ex) {
-                    System.out.println("Nie moge odczytac pliku!");
-                }
 
-                executor.execute(this);
-            } catch (InterruptedException exe) {
-                exe.printStackTrace();
-            }
+                    executor.execute(this);
+                } catch (InterruptedException exe) {
+                    exe.printStackTrace();
+                }
+            //}
         }
     }
 
@@ -205,26 +227,26 @@ public class Chartek {
         //W ORYGINALE:
 //        for (int i = 0; i < 20; i++) { //-- add 20 numbers to the plot+
 //            if (dataQ.isEmpty()) break;
-//            series.getData().add(new AreaChart.Data(xSeriesData++, dataQ.remove()));
+//            series.getData().add(new XYChart.Data(xSeriesData++, dataQ.remove()));
 //        }
 
         if (!dataQ.isEmpty() && controller.getCheckboxSelection()) {
-            series.getData().add(new AreaChart.Data(xSeriesData, dataQ.remove()));
+            series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
         }
         if (!dataQ2.isEmpty() && controller.getCheckbox2Selection()) {
-            series2.getData().add(new AreaChart.Data(xSeriesData, dataQ2.remove()));
+            series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
         }
         if (!dataQ3.isEmpty() && controller.getCheckbox3Selection()) {
-            series3.getData().add(new AreaChart.Data(xSeriesData, dataQ3.remove()));
+            series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
         }
         if (!dataQ4.isEmpty() && controller.getCheckbox4Selection()) {
-            series4.getData().add(new AreaChart.Data(xSeriesData, dataQ4.remove()));
+            series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
         }
         if (!dataQ5.isEmpty() && controller.getCheckbox5Selection()) {
-            series5.getData().add(new AreaChart.Data(xSeriesData, dataQ5.remove()));
+            series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
         }
         if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
-            series6.getData().add(new AreaChart.Data(xSeriesData, dataQ6.remove()));
+            series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
         }
 //        if (countOfSinglePoints == LICZBA_CZUJNIKOW){
 //            xSeriesData++;
@@ -245,12 +267,40 @@ public class Chartek {
         xAxis.setUpperBound(xSeriesData - 1);
     }
 
+    public void clearData(int numberOfSensor){
+
+    }
+
     public ArrayList<String> getOut() {
         return out;
     }
 
-    public AreaChart<Number, Number> getAreaChart() {
-        return areaChart;
+    public XYChart<Number, Number> getXYChart() {
+        return XYChart;
+    }
+
+    public ConcurrentLinkedQueue<Number> getDataQ() {
+        return dataQ;
+    }
+
+    public ConcurrentLinkedQueue<Number> getDataQ2() {
+        return dataQ2;
+    }
+
+    public ConcurrentLinkedQueue<Number> getDataQ3() {
+        return dataQ3;
+    }
+
+    public ConcurrentLinkedQueue<Number> getDataQ4() {
+        return dataQ4;
+    }
+
+    public ConcurrentLinkedQueue<Number> getDataQ5() {
+        return dataQ5;
+    }
+
+    public ConcurrentLinkedQueue<Number> getDataQ6() {
+        return dataQ6;
     }
 }
 
