@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,12 +35,6 @@ public class Chartek {
     Controller controller;
     final int LICZBA_CZUJNIKOW = 6;
     private ArrayList<String> out = new ArrayList<>();
-    //    private List<ConcurrentLinkedQueue<Number>> data = new  ArrayList<ConcurrentLinkedQueue<Number>>();
-//    private void createData(int countOfCharts){
-//        for (int i = 0; i<countOfCharts; i++){
-//            data.add(i, new ConcurrentLinkedQueue<Number>());
-//        }
-//    }
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
     private ConcurrentLinkedQueue<Number> dataQ2 = new ConcurrentLinkedQueue<Number>();
     private ConcurrentLinkedQueue<Number> dataQ3 = new ConcurrentLinkedQueue<Number>();
@@ -63,6 +58,13 @@ public class Chartek {
     private Series ser;
     private XYChart<Number, Number> XYChart;
     private volatile boolean running = true;
+    private boolean zoomClicked = false;
+    private boolean zoomOutClicked = false;
+    private boolean leftClicked = false;
+    private boolean rightClicked = false;
+    private int zoom;
+    private int move;
+    private Queue<Boolean> kolejka; //0 przybliz, 1 w lewo
 
     public void stop(){
         System.out.println("Force closing");
@@ -74,17 +76,10 @@ public class Chartek {
 
     public void start(){
         System.out.println("Force starting");
-        //stop = false;
         createRealtimeChart();
-//        executor = Executors.newCachedThreadPool();
-//        addToQueueRealTime = new AddToQueueRealTime();
-//        executor.execute(addToQueueRealTime);
-//        //-- Prepare Timeline
-//        prepareTimeline(1);
     }
 
     public void Start() {
-    //public Chartek() {
         xSeriesData = 0;
         ser = new Series(LICZBA_CZUJNIKOW);
         xAxis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
@@ -126,11 +121,6 @@ public class Chartek {
         series6.setName("Szusta seria");
         //XYChart.setVisible(false);
         XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
-        //XYChart.setVisible(false);
-
-
-
-        //XYChart.getStyleClass().add(styleClass);
     }
 
     public void createChart(File file) {
@@ -251,36 +241,36 @@ public class Chartek {
             public void handle(long now) {
                 if (scale == 1) {
                 addDataToSeries();
-                } else if (scale == 0) {
-                    pomniejsz();
-                } else if(scale == 2) {
-                    powieksz();
-                } else if(scale == 3) {
-                    lewo();
-                }
+                } //else if (scale == 0) {
+//                    pomniejsz();
+//                } else if(scale == 2) {
+//                    powieksz();
+//                } else if(scale == 3) {
+//                    lewo();
+//                }
             }
         };
         at.start();
     }
 
-    public void prepareTimeline2(int scale) {
-        // Every frame to take any data from queue and add to chart
-        at2 = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (scale == 1) {
-                    addDataToSeries();
-                } else if (scale == 0) {
-                    pomniejsz();
-                } else if(scale == 2) {
-                    powieksz();
-                } else if(scale == 3) {
-                    lewo();
-                }
-            }
-        };
-        at2.start();
-    }
+//    public void prepareTimeline2(int scale) {
+//        // Every frame to take any data from queue and add to chart
+//        at2 = new AnimationTimer() {
+//            @Override
+//            public void handle(long now) {
+//                if (scale == 1) {
+//                    addDataToSeries();
+//                } else if (scale == 0) {
+//                    pomniejsz();
+//                } else if(scale == 2) {
+//                    powieksz();
+//                } else if(scale == 3) {
+//                    lewo();
+//                }
+//            }
+//        };
+//        at2.start();
+//    }
 
     //static int countOfSinglePoints;
     private void addDataToSeries() {
@@ -308,26 +298,6 @@ public class Chartek {
         if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
             series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
         }
-//        if (countOfSinglePoints == LICZBA_CZUJNIKOW){
-//            xSeriesData++;
-//            countOfSinglePoints = 0;
-//        }
-//        if(!dataQ.isEmpty() || !dataQ2.isEmpty() || !dataQ3.isEmpty() || !dataQ4.isEmpty() || !dataQ5.isEmpty() || !dataQ6.isEmpty()){
-//            xSeriesData++;
-//        }
-        //xSeriesData++;
-
-        //SKALOWANIE
-//        // remove points to keep us at no more than MAX_DATA_POINTS
-//        if (series.getData().size() > MAX_DATA_POINTS) {
-//            series.getData().remove(0, series.getData().size() - MAX_DATA_POINTS);
-//        }
-//        // update
-
-//        System.out.println(controller.getSkalowanie().getSelectedToggle().getProperties());
-        //System.out.println(controller.getSkalowanie().getSelectedToggle().getUserData());
-//        System.out.println(controller.getSkalowanie().getSelectedToggle());
-        //controller.getSkalowanie().getSelectedToggle().getProperties().
         if (controller.getSkalowanie().getSelectedToggle().getUserData().equals(0)){
             xAxis.setLowerBound(0);
             xAxis.setUpperBound(xSeriesData - 1);
@@ -335,67 +305,94 @@ public class Chartek {
             xAxis.setLowerBound(xSeriesData - (int)controller.getSkalowanie().getSelectedToggle().getUserData());
             xAxis.setUpperBound(xSeriesData - 1);
         }
-        //xAxis.setLowerBound(0);
-        //xAxis.setLowerBound(xSeriesData - MAX_DATA_POINTS);
-        //xAxis.setUpperBound(xSeriesData - 1);
-        //xAxis.setUpperBound(5);
+        while(!kolejka.isEmpty()){
+            if(kolejka.poll()==true){
+                lewo();
+            } else if(kolejka.poll()==false){
+                powieksz();
+            }
+        }
+//        if ((move<0) || (zoom<0)){
+//            pomniejsz();
+//        }
+//        if(zoom!=0){
+//            for(int i =0; i<zoom; i++) {
+//                powieksz();
+//            }
+//        }
+//        if(move!=0){
+//            for(int i =0; i<zoom; i++){
+//                lewo();
+//            }
+//        }
     }
 
 
-//    public void prepareTimeline2() {
-//        // Every frame to take any data from queue and add to chart
-//        new AnimationTimer() {
-//            @Override
-//            public void handle(long now) {
-//                powieksz();
-//            }
-//        }.start();
-//    }
-//
-//    public void prepareTimeline3() {
-//        // Every frame to take any data from queue and add to chart
-//        new AnimationTimer() {
-//            @Override
-//            public void handle(long now) {
-//                pomniejsz();
-//            }
-//        }.start();
-//    }
-
     public void lewo(){
-//       if (xAxis.getLowerBound() < (xAxis.getUpperBound()-xAxis.getLowerBound())){
-//           xAxis.setLowerBound(0);
-//       } else xAxis.setLowerBound(0);
-//           ? xAxis.setLowerBound(0):xAxis.setLowerBound(0);
-        int dif = (int)Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2);
-        int dif2 = (int)(xAxis.getLowerBound()-Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
-        if((xAxis.getLowerBound()-Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2))>0){
-        xAxis.setLowerBound(xAxis.getLowerBound()-dif);
-        xAxis.setUpperBound(xAxis.getUpperBound()-dif);
-        }
-        else {
-            xAxis.setLowerBound(0);
-            //xAxis.setUpperBound(xAxis.getUpperBound()-Math.abs(0-dif2));
-        }
+        double z = xAxis.getLowerBound();
+        //xAxis.setLowerBound(Math.max(0, z-(xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+        xAxis.setLowerBound(Math.max(0, xAxis.getLowerBound()-xAxis.getUpperBound()));
+        //xAxis.setUpperBound(xAxis.getLowerBound()-xAxis.getLowerBound()+z);
+        xAxis.setUpperBound(z);
+
+
+//        int dif = (int)Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2);
+//        int dif2 = (int)(xAxis.getLowerBound()-Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+//        if((xAxis.getLowerBound()-Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2))>0){
+//        xAxis.setLowerBound(xAxis.getLowerBound()-dif);
+//        xAxis.setUpperBound(xAxis.getUpperBound()-dif);
+//        }
+//        else {
+//            xAxis.setLowerBound(0);
+//            //xAxis.setUpperBound(xAxis.getUpperBound()-Math.abs(0-dif2));
+//        }
     }
 
     public void powieksz(){
         //at.stop();
+        double down=xAxis.getLowerBound();
+        double up = xAxis.getUpperBound();
+        double dif = (up-down)/2;
+//        if (xSeriesData-xAxis.getLowerBound()>8) {
+////        xAxis.setLowerBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+////        xAxis.setUpperBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+//            xAxis.setLowerBound(down+dif);
+//            xAxis.setUpperBound(up-dif);
+//        } else {controller.getZoom().setDisable(true);}
+
+
+        //at.stop();
+//        double down=xAxis.getLowerBound();
+//        double up = xAxis.getUpperBound();
+//        double dif = (up-down)/4;
         if (xSeriesData-xAxis.getLowerBound()>8) {
-        xAxis.setLowerBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+//        xAxis.setLowerBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+//        xAxis.setUpperBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+            xAxis.setLowerBound(down+dif);
+            //xAxis.setUpperBound(up-dif);
         } else {controller.getZoom().setDisable(true);}
     }
 
     public void pomniejsz(){
+//        double down=xAxis.getLowerBound();
+//        double up = xAxis.getUpperBound();
+//        double dif = (up-down)/2;
+        double down=xAxis.getLowerBound();
+//        double up = xAxis.getUpperBound();
+//        double dif = (up-down)/2;
+//        xAxis.setLowerBound(down+dif);
+
+        xAxis.setUpperBound(xSeriesData);
+        xAxis.setLowerBound(0);
+        zoom=0;
+        move=0;
+//        double x = xAxis.getUpperBound()-xAxis.getLowerBound();
+//        xAxis.setUpperBound(Math.min(((int)(xAxis.getUpperBound())+x), xSeriesData));
+//        xAxis.setLowerBound(Math.max(0, xAxis.getLowerBound()-x));
+//        addDataToSeries();
 //        controller.getZoom().setDisable(false);
-//        xAxis.setLowerBound(0);
-        addDataToSeries();
-        controller.getZoom().setDisable(false);
     }
 
-//    public void clearData(int numberOfSensor){
-//
-//    }
 
     public ArrayList<String> getOut() {
         return out;
@@ -446,6 +443,62 @@ public class Chartek {
 
     public void setyAxis(NumberAxis yAxis) {
         this.yAxis = yAxis;
+    }
+
+    public boolean isZoomClicked() {
+        return zoomClicked;
+    }
+
+    public void setZoomClicked(boolean zoomClicked) {
+        this.zoomClicked = zoomClicked;
+    }
+
+    public boolean isZoomOutClicked() {
+        return zoomOutClicked;
+    }
+
+    public void setZoomOutClicked(boolean zoomOutClicked) {
+        this.zoomOutClicked = zoomOutClicked;
+    }
+
+    public boolean isLeftClicked() {
+        return leftClicked;
+    }
+
+    public void setLeftClicked(boolean leftClicked) {
+        this.leftClicked = leftClicked;
+    }
+
+    public boolean isRightClicked() {
+        return rightClicked;
+    }
+
+    public void setRightClicked(boolean rightClicked) {
+        this.rightClicked = rightClicked;
+    }
+
+    public int getZoom() {
+        return zoom;
+    }
+
+    public void setZoom(int zoom) {
+        this.zoom = zoom;
+    }
+
+    public int getMove() {
+        return move;
+    }
+
+    public void setMove(int move) {
+        this.move = move;
+    }
+
+    public Queue<Boolean> getKolejka() {
+        return kolejka;
+    }
+
+    public void setKolejka(Queue<Boolean> kolejka) {
+        this.kolejka = kolejka;
     }
 
     //
