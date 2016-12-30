@@ -68,7 +68,8 @@ public class Chartek {
         System.out.println("Force closing");
         //stop = true;
         //executor.wait();
-        executor.shutdownNow();
+        //executor.shutdownNow();
+        running=false;
     }
 
     public void start(){
@@ -200,7 +201,7 @@ public class Chartek {
 
 
         public void run() {
-            //while (running){
+            while (running){
                 try {
                     //Thread.sleep(1000);
                     try {
@@ -235,7 +236,7 @@ public class Chartek {
                 } catch (InterruptedException exe) {
                     exe.printStackTrace();
                 }
-            //}
+            }
         }
     }
 
