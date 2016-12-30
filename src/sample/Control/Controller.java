@@ -95,18 +95,20 @@ public class Controller {
 
     @FXML private void leftButtonClicked(){
         //chartek.setLeftClicked(true);
-        chartek.setMove(chartek.getMove()+1);
-        chartek.getKolejka().add(true);
+        //chartek.setMove(chartek.getMove()+1);
+        chartek.getKolejka().add(3);
 
     }
 
     @FXML private void rightButtonClicked(){
+        chartek.getKolejka().add(4);
         //chartek.setRightClicked(true);
-        chartek.setMove(chartek.getMove()-1);
+        //chartek.setMove(chartek.getMove()-1);
     }
 
     @FXML private void zoomClicked(){
-        chartek.setZoom(chartek.getZoom()+1);
+        chartek.getKolejka().add(2);
+        //chartek.setZoom(chartek.getZoom()+1);
         //chartek.getKolejka().add(false);
 
         //chartek.setZoomClicked(true);
@@ -115,9 +117,10 @@ public class Controller {
     }
 
     @FXML private void zoomOutClicked(){
+        chartek.getKolejka().add(1);
         //chartek.setZoomOutClicked(true);
         //chartek.pomniejsz();
-        chartek.setZoom(chartek.getZoom()-1);
+        //chartek.setZoom(chartek.getZoom()-1);
     }
 
 

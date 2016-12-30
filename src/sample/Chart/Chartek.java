@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
@@ -64,7 +65,7 @@ public class Chartek {
     private boolean rightClicked = false;
     private int zoom;
     private int move;
-    private Queue<Boolean> kolejka; //0 przybliz, 1 w lewo
+    private List<Integer> kolejka= new ArrayList<>(); //0 przybliz, 1 w lewo
 
     public void stop(){
         System.out.println("Force closing");
@@ -305,13 +306,25 @@ public class Chartek {
             xAxis.setLowerBound(xSeriesData - (int)controller.getSkalowanie().getSelectedToggle().getUserData());
             xAxis.setUpperBound(xSeriesData - 1);
         }
-        while(!kolejka.isEmpty()){
-            if(kolejka.poll()==true){
-                lewo();
-            } else if(kolejka.poll()==false){
-                powieksz();
+//        while(!kolejka.isEmpty()){
+//            if(kolejka.poll()==true){
+//                lewo();
+//            } else if(kolejka.poll()==false){
+//                powieksz();
+//            }
+//        }
+            for(int x : kolejka){
+                switch(x){
+                    case 1: pomniejsz();
+                        break;
+                    case 2: powieksz();
+                        break;
+                    case 3: lewo();
+                        break;
+                    case 4: prawo();
+                }
             }
-        }
+
 //        if ((move<0) || (zoom<0)){
 //            pomniejsz();
 //        }
@@ -329,23 +342,24 @@ public class Chartek {
 
 
     public void lewo(){
-        double z = xAxis.getLowerBound();
-        //xAxis.setLowerBound(Math.max(0, z-(xAxis.getUpperBound()-xAxis.getLowerBound())/2));
-        xAxis.setLowerBound(Math.max(0, xAxis.getLowerBound()-xAxis.getUpperBound()));
-        //xAxis.setUpperBound(xAxis.getLowerBound()-xAxis.getLowerBound()+z);
-        xAxis.setUpperBound(z);
+//        double z = xAxis.getLowerBound();
+//        //xAxis.setLowerBound(Math.max(0, z-(xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+//        xAxis.setLowerBound(Math.max(0, xAxis.getLowerBound()-xAxis.getUpperBound()));
+//        //xAxis.setUpperBound(xAxis.getLowerBound()-xAxis.getLowerBound()+z);
+//        xAxis.setUpperBound(z);
+        double down=xAxis.getLowerBound();
+        double up = xAxis.getUpperBound();
+        double dif = up-down;
+        xAxis.setUpperBound(down);
+        xAxis.setLowerBound(Math.max(0, down-dif));
+    }
 
-
-//        int dif = (int)Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2);
-//        int dif2 = (int)(xAxis.getLowerBound()-Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
-//        if((xAxis.getLowerBound()-Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2))>0){
-//        xAxis.setLowerBound(xAxis.getLowerBound()-dif);
-//        xAxis.setUpperBound(xAxis.getUpperBound()-dif);
-//        }
-//        else {
-//            xAxis.setLowerBound(0);
-//            //xAxis.setUpperBound(xAxis.getUpperBound()-Math.abs(0-dif2));
-//        }
+    public void prawo(){
+        double down=xAxis.getLowerBound();
+        double up = xAxis.getUpperBound();
+        double dif = up-down;
+        xAxis.setUpperBound(Math.min(xSeriesData, up+dif));
+        xAxis.setLowerBound(up);
     }
 
     public void powieksz(){
@@ -368,7 +382,8 @@ public class Chartek {
         if (xSeriesData-xAxis.getLowerBound()>8) {
 //        xAxis.setLowerBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
 //        xAxis.setUpperBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
-            xAxis.setLowerBound(down+dif);
+            xAxis.setLowerBound(down+dif/2);
+            xAxis.setUpperBound(up-dif/2);
             //xAxis.setUpperBound(up-dif);
         } else {controller.getZoom().setDisable(true);}
     }
@@ -378,14 +393,14 @@ public class Chartek {
 //        double up = xAxis.getUpperBound();
 //        double dif = (up-down)/2;
         double down=xAxis.getLowerBound();
-//        double up = xAxis.getUpperBound();
-//        double dif = (up-down)/2;
-//        xAxis.setLowerBound(down+dif);
+        double up = xAxis.getUpperBound();
+        double dif = (up-down)/2;
 
-        xAxis.setUpperBound(xSeriesData);
-        xAxis.setLowerBound(0);
-        zoom=0;
-        move=0;
+        xAxis.setLowerBound(Math.max(0,down-dif));
+        xAxis.setUpperBound(Math.min(xSeriesData,up+dif));
+//        xAxis.setLowerBound(0);
+//        zoom=0;
+//        move=0;
 //        double x = xAxis.getUpperBound()-xAxis.getLowerBound();
 //        xAxis.setUpperBound(Math.min(((int)(xAxis.getUpperBound())+x), xSeriesData));
 //        xAxis.setLowerBound(Math.max(0, xAxis.getLowerBound()-x));
@@ -493,13 +508,21 @@ public class Chartek {
         this.move = move;
     }
 
-    public Queue<Boolean> getKolejka() {
+    public List<Integer> getKolejka() {
         return kolejka;
     }
 
-    public void setKolejka(Queue<Boolean> kolejka) {
+    public void setKolejka(List<Integer> kolejka) {
         this.kolejka = kolejka;
     }
+
+//    public Queue<Boolean> getKolejka() {
+//        return kolejka;
+//    }
+//
+//    public void setKolejka(Queue<Boolean> kolejka) {
+//        this.kolejka = kolejka;
+//    }
 
     //
 //    public void doZoom(Rectangle zoomRect, XYChart<Number, Number> chart) {
