@@ -93,8 +93,17 @@ public class Controller {
 //        chartek.doZoom(zoomRect, chartek.getXYChart());
 //    }
 
+    @FXML private void leftButtonClicked(){
+        chartek.prepareTimeline2(3);
+    }
+
+    @FXML private void rightButtonClicked(){
+        chartek.prepareTimeline2(4);
+    }
+
     @FXML private void zoomClicked(){
-        chartek.prepareTimeline(2);
+        chartek.prepareTimeline2(2);
+        //chartek.powieksz();
     }
 
     @FXML private void zoomOutClicked(){
@@ -179,6 +188,9 @@ public class Controller {
         chartek.stop();
     }
 
+    @FXML private void startClicked(){
+        chartek.start();
+    }
 
     @FXML private void zapiszPrzebiegClicked(){
 //        File file = chooser.getSelectedFile();

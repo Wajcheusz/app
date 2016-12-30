@@ -66,7 +66,20 @@ public class Chartek {
 
     public void stop(){
         System.out.println("Force closing");
+        //stop = true;
+        //executor.wait();
         executor.shutdownNow();
+    }
+
+    public void start(){
+        System.out.println("Force starting");
+        //stop = false;
+        createRealtimeChart();
+//        executor = Executors.newCachedThreadPool();
+//        addToQueueRealTime = new AddToQueueRealTime();
+//        executor.execute(addToQueueRealTime);
+//        //-- Prepare Timeline
+//        prepareTimeline(1);
     }
 
     public void Start() {
@@ -174,6 +187,7 @@ public class Chartek {
         }
     }
 
+    public boolean stop = false;
     private class AddToQueueFromText implements Runnable {
         public AddToQueueFromText(File csvFile) {
             this.csvFile = csvFile;
@@ -183,6 +197,7 @@ public class Chartek {
 
         BufferedReader br = null;
         String line = "";
+
 
         public void run() {
             //while (running){
@@ -200,6 +215,9 @@ public class Chartek {
                                 dataQ5.add(ser.getCharts().get(4).get(i));
                                 dataQ6.add(ser.getCharts().get(5).get(i));
                                 Thread.sleep(1000);
+//                                if (stop){
+//                                    wait();
+//                                }
                                 i++;
                                 xSeriesData++;
                             }
@@ -221,11 +239,13 @@ public class Chartek {
         }
     }
 
+    public AnimationTimer at;
+    public AnimationTimer at2;
     //-- Timeline gets called in the JavaFX Main thread
     //0 zmniejsz 2 powieksz
     public void prepareTimeline(int scale) {
         // Every frame to take any data from queue and add to chart
-        new AnimationTimer() {
+        at = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (scale == 1) {
@@ -234,10 +254,33 @@ public class Chartek {
                     pomniejsz();
                 } else if(scale == 2) {
                     powieksz();
+                } else if(scale == 3) {
+                    lewo();
                 }
             }
-        }.start();
+        };
+        at.start();
     }
+
+    public void prepareTimeline2(int scale) {
+        // Every frame to take any data from queue and add to chart
+        at2 = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (scale == 1) {
+                    addDataToSeries();
+                } else if (scale == 0) {
+                    pomniejsz();
+                } else if(scale == 2) {
+                    powieksz();
+                } else if(scale == 3) {
+                    lewo();
+                }
+            }
+        };
+        at2.start();
+    }
+
     //static int countOfSinglePoints;
     private void addDataToSeries() {
         //W ORYGINALE:
@@ -318,20 +361,35 @@ public class Chartek {
 //        }.start();
 //    }
 
+    public void lewo(){
+//       if (xAxis.getLowerBound() < (xAxis.getUpperBound()-xAxis.getLowerBound())){
+//           xAxis.setLowerBound(0);
+//       } else xAxis.setLowerBound(0);
+//           ? xAxis.setLowerBound(0):xAxis.setLowerBound(0);
+        int dif = (int)Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2);
+        int dif2 = (int)(xAxis.getLowerBound()-Math.round((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
+        if((xAxis.getLowerBound()-Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2))>0){
+        xAxis.setLowerBound(xAxis.getLowerBound()-dif);
+        xAxis.setUpperBound(xAxis.getUpperBound()-dif);
+        }
+        else {
+            xAxis.setLowerBound(0);
+            //xAxis.setUpperBound(xAxis.getUpperBound()-Math.abs(0-dif2));
+        }
+    }
+
     public void powieksz(){
+        //at.stop();
         if (xSeriesData-xAxis.getLowerBound()>8) {
         xAxis.setLowerBound(xAxis.getLowerBound()+Math.ceil((xAxis.getUpperBound()-xAxis.getLowerBound())/2));
         } else {controller.getZoom().setDisable(true);}
     }
 
     public void pomniejsz(){
-        //if((xAxis.getUpperBound()-xAxis.getLowerBound())/2>xAxis.getLowerBound()){
+//        controller.getZoom().setDisable(false);
+//        xAxis.setLowerBound(0);
+        addDataToSeries();
         controller.getZoom().setDisable(false);
-//        if((Math.abs(xAxis.getLowerBound()-xAxis.getUpperBound()))/2<xAxis.getLowerBound()){
-//            xAxis.setLowerBound(Math.floor(xAxis.getLowerBound()*3/2)-Math.floor(xAxis.getUpperBound()/2));
-//        } else {xAxis.setLowerBound(0);}
-        xAxis.setLowerBound(0);
-        //xAxis.setLowerBound(Math.ceil(xAxis.getLowerBound()*/2)-Math.ceil(xAxis.getUpperBound()/2));
     }
 
 //    public void clearData(int numberOfSensor){

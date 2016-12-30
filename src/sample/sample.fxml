@@ -113,13 +113,12 @@
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Label text="Czas" />
+            <Button mnemonicParsing="false" onAction="#startClicked" prefHeight="25.0" prefWidth="125.0" text="START" />
             <TextField />
             <ChoiceBox prefWidth="150.0" />
             <DatePicker />
             <ComboBox prefWidth="150.0" />
             <ColorPicker />
-            <ScrollBar />
             <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">
               <items>
                 <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -137,6 +136,20 @@
                   <Insets left="2.0" top="10.0" />
                </padding>
             </Button>
+            <SplitPane dividerPositions="0.5040650406504065" prefHeight="160.0" prefWidth="200.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="59.0">
+                     <children>
+                        <Button layoutX="4.0" layoutY="2.0" mnemonicParsing="false" onAction="#leftButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&lt;" />
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="131.0" prefWidth="57.0">
+                     <children>
+                        <Button layoutX="3.0" layoutY="2.0" mnemonicParsing="false" onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
             </children>
         </VBox>
     </left>
