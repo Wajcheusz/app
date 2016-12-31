@@ -42,11 +42,17 @@ import java.util.Random;
 public class Controller {
 
     @FXML public void initialize() {
+        //opcjeMenu.setDisable(true);
         System.out.println("Application started");
         chartek.init(this);
         //zoom.setDisable(true);
         //start1();
         skalowanie();
+        nagrajButton.setDisable(true);
+        zapiszButton.setDisable(true);
+        resetButton.setDisable(true);
+//        opcjeMenu.setDisable(false);
+//        opcjeMenu.disableProperty();
 //        tab1Controller.init(this);
 //        tab2Controller.init(this);
     }
@@ -64,6 +70,10 @@ public class Controller {
     @FXML private RadioMenuItem pointsAndLineChart = new RadioMenuItem();
 
     @FXML private ToggleGroup skalowanie = new ToggleGroup();
+
+    @FXML private Menu opcjeMenu = new Menu();
+    @FXML private Menu skalowanieMenu = new Menu();
+
     @FXML private RadioMenuItem skalowanieAutomatyczne = new RadioMenuItem();
     @FXML private RadioMenuItem skalowanie30Sekund = new RadioMenuItem();
     @FXML private RadioMenuItem skalowanie1Minuta = new RadioMenuItem();
@@ -77,6 +87,14 @@ public class Controller {
     @FXML private Button zoomOut = new Button();
     @FXML private Button left = new Button();
     @FXML private Button right = new Button();
+    @FXML private Button resetZoomButton = new Button();
+
+    @FXML private Button obserwujButton = new Button();
+    @FXML private Button odtworzButton = new Button();
+    @FXML private Button nagrajButton = new Button();
+    @FXML private Button zapiszButton = new Button();
+    @FXML private Button resetButton = new Button();
+
 
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
     @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
@@ -96,6 +114,11 @@ public class Controller {
 //        chartek.setUpZooming(zoomRect, chartek.getXYChart());
 //        chartek.doZoom(zoomRect, chartek.getXYChart());
 //    }
+
+
+    @FXML private void resetZoomButtonClicked(){
+        chartek.clearKolejka();
+    }
 
     @FXML private void leftButtonClicked(){
         //chartek.setLeftClicked(true);
@@ -173,10 +196,15 @@ public class Controller {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki CSV (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(Main.stage);
-
-        chartek.Start();
-        chartek.createChart(file);
-        borderPane.setCenter(chartek.getXYChart());
+        if(file != null){
+            chartek.Start();
+            chartek.createChart(file);
+            borderPane.setCenter(chartek.getXYChart());
+            nagrajButton.setDisable(true);
+            resetButton.setDisable(false);
+            obserwujButton.setDisable(true);
+            odtworzButton.setDisable(true);
+        }//todo przy anuluj bedzie problem
     }
 
     @FXML private void nagrajPrzebiegClicked(){
@@ -188,9 +216,11 @@ public class Controller {
         } catch (IOException ex) {
             System.out.println("Nie mogę zapisać pliku!");
         }
+        zapiszButton.setDisable(false);
+        nagrajButton.setDisable(true);
     }
 
-    @FXML private void obserwojPrzebiegClicked(){
+    @FXML private void obserwujPrzebiegClicked(){
         chartek.Start();
         chartek.createRealtimeChart();
         borderPane.setCenter(chartek.getXYChart());
@@ -198,15 +228,24 @@ public class Controller {
         if(Main.communicator.getConnected() && Main.communicator.initIOStream()) {
             Main.communicator.initListener();
         }
+        nagrajButton.setDisable(false);
+        resetButton.setDisable(false);
+        odtworzButton.setDisable(true);
+        obserwujButton.setDisable(true);
         //start1();
     }
 
-    @FXML private void stopClicked(){
+    @FXML private void resetClicked(){
         chartek.stop();
+        nagrajButton.setDisable(true);
+        obserwujButton.setDisable(false);
+        odtworzButton.setDisable(false);
+        resetButton.setDisable(true);
+        zapiszButton.setDisable(true);
     }
 
     @FXML private void startClicked(){
-        chartek.start();
+        //chartek.start();
     }
 
     @FXML private void zapiszPrzebiegClicked(){
@@ -277,6 +316,22 @@ public class Controller {
 
     public void setRight(Button right) {
         this.right = right;
+    }
+
+    public Menu getOpcjeMenu() {
+        return opcjeMenu;
+    }
+
+    public void setOpcjeMenu(Menu opcjeMenu) {
+        this.opcjeMenu = opcjeMenu;
+    }
+
+    public Menu getSkalowanieMenu() {
+        return skalowanieMenu;
+    }
+
+    public void setSkalowanieMenu(Menu skalowanieMenu) {
+        this.skalowanieMenu = skalowanieMenu;
     }
 
     public Boolean getCheckboxSelection() {

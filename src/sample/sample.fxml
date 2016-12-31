@@ -12,7 +12,7 @@
             <children>
                 <MenuBar>
                     <menus>
-                        <Menu mnemonicParsing="false" text="Opcje">
+                        <Menu fx:id="opcjeMenu" mnemonicParsing="false" text="Opcje">
                             <items>
                         <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy">
                            <toggleGroup>
@@ -22,7 +22,7 @@
                         <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" selected="true" text="Wykres punktowy" toggleGroup="$chartOptions" />
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Skalowanie">
+                        <Menu fx:id="skalowanieMenu" mnemonicParsing="false" text="Skalowanie">
                             <items>
                         <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" selected="true" text="Automatyczne">
                            <toggleGroup>
@@ -43,7 +43,7 @@
                         </Menu>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Help">
+                        <Menu disable="true" mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem mnemonicParsing="false" text="About" />
                             </items>
@@ -88,44 +88,32 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </CheckBox>
-            <Button mnemonicParsing="false" onAction="#obserwojPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Obserwój przebieg">
+            <Button fx:id="obserwujButton" mnemonicParsing="false" onAction="#obserwujPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Obserwuj przebieg">
                <VBox.margin>
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Odtwórz przebieg">
+            <Button fx:id="odtworzButton" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Odtwórz przebieg">
                <VBox.margin>
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Nagraj przebieg">
+            <Button fx:id="nagrajButton" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Nagraj przebieg">
                <VBox.margin>
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Zapisz przebieg">
+            <Button fx:id="zapiszButton" mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Zapisz przebieg">
                <VBox.margin>
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#stopClicked" prefHeight="25.0" prefWidth="125.0" text="STOP">
+            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetClicked" prefHeight="25.0" prefWidth="125.0" text="RESET">
                <VBox.margin>
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#startClicked" prefHeight="25.0" prefWidth="125.0" text="START" />
-            <TextField />
-            <ChoiceBox prefWidth="150.0" />
-            <DatePicker />
-            <ComboBox prefWidth="150.0" />
-            <ColorPicker />
-            <SplitMenuButton mnemonicParsing="false" text="SplitMenuButton">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-            </SplitMenuButton>
-            <Slider />
+            <Button disable="true" mnemonicParsing="false" onAction="#startClicked" prefHeight="25.0" prefWidth="125.0" text="START" />
             <Label text="OŚ Y">
                <padding>
                   <Insets left="45.0" />
@@ -163,7 +151,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="59.0">
                      <children>
                         <Button fx:id="left" layoutX="5.0" layoutY="37.0" mnemonicParsing="false" onAction="#leftButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&lt;" />
-                        <Button fx:id="zoomOut1" layoutX="5.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="50.0" text="-">
+                        <Button fx:id="zoomOut1" disable="true" layoutX="5.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="50.0" text="-">
                            <padding>
                               <Insets left="2.0" top="10.0" />
                            </padding>
@@ -173,7 +161,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="58.0">
                      <children>
                         <Button fx:id="right" layoutX="4.0" layoutY="37.0" mnemonicParsing="false" onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;" />
-                        <Button fx:id="zoom1" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
+                        <Button fx:id="zoom1" disable="true" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
                            <padding>
                               <Insets left="2.0" top="10.0" />
                            </padding>
@@ -182,6 +170,7 @@
                   </AnchorPane>
               </items>
             </SplitPane>
+            <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="25.0" prefWidth="125.0" text="RESET ZOOM" />
             </children>
         </VBox>
     </left>
