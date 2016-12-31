@@ -313,6 +313,8 @@ public class Chartek {
 //                powieksz();
 //            }
 //        }
+
+
             for(int x : kolejka){
                 switch(x){
                     case 1: pomniejsz();
@@ -324,6 +326,26 @@ public class Chartek {
                     case 4: prawo();
                 }
             }
+
+
+        double down=xAxis.getLowerBound();
+        double up = xAxis.getUpperBound();
+        double dif = (up-down)/2;
+//        if (down-dif<=0){
+        if (down<=0){
+            controller.getLeft().setDisable(true);
+        } else {controller.getLeft().setDisable(false);}
+        if (up>=xSeriesData-1){
+            controller.getRight().setDisable(true);
+        } else {controller.getRight().setDisable(false);}
+
+        if (down<=0 && up>=xSeriesData){
+            controller.getZoomOut().setDisable(true);
+        } else {controller.getZoomOut().setDisable(false);}
+
+        if (up-down<6){
+            controller.getZoom().setDisable(true);
+        } else {controller.getZoom().setDisable(false);}
 
 //        if ((move<0) || (zoom<0)){
 //            pomniejsz();
@@ -352,6 +374,9 @@ public class Chartek {
         double dif = up-down;
         xAxis.setUpperBound(down);
         xAxis.setLowerBound(Math.max(0, down-dif));
+//        if (down-dif<=0){
+//            controller.getLeft().setDisable(true);
+//        }
     }
 
     public void prawo(){
@@ -359,6 +384,9 @@ public class Chartek {
         double up = xAxis.getUpperBound();
         double dif = up-down;
         xAxis.setUpperBound(Math.min(xSeriesData, up+dif));
+//        if (up+dif>=xSeriesData){
+//            controller.getRight().setDisable(true);
+//        }
         xAxis.setLowerBound(up);
     }
 

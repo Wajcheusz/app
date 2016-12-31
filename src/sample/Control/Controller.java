@@ -44,6 +44,7 @@ public class Controller {
     @FXML public void initialize() {
         System.out.println("Application started");
         chartek.init(this);
+        //zoom.setDisable(true);
         //start1();
         skalowanie();
 //        tab1Controller.init(this);
@@ -73,6 +74,9 @@ public class Controller {
     @FXML private RadioMenuItem skalowanie40Minut = new RadioMenuItem();
     @FXML private RadioMenuItem skalowanie60Minut = new RadioMenuItem();
     @FXML private Button zoom = new Button();
+    @FXML private Button zoomOut = new Button();
+    @FXML private Button left = new Button();
+    @FXML private Button right = new Button();
 
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
     @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
@@ -245,6 +249,34 @@ public class Controller {
             System.out.println(ex);
             //Logger.getLogger(JavaFX_Text.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void setZoom(Button zoom) {
+        this.zoom = zoom;
+    }
+
+    public Button getZoomOut() {
+        return zoomOut;
+    }
+
+    public void setZoomOut(Button zoomOut) {
+        this.zoomOut = zoomOut;
+    }
+
+    public Button getLeft() {
+        return left;
+    }
+
+    public void setLeft(Button left) {
+        this.left = left;
+    }
+
+    public Button getRight() {
+        return right;
+    }
+
+    public void setRight(Button right) {
+        this.right = right;
     }
 
     public Boolean getCheckboxSelection() {
