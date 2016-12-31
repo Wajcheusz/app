@@ -1,31 +1,10 @@
 package sample.Control;
 
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.chart.AreaChart;
-import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import sample.Chart.Chartek;
 import sample.Main;
 
@@ -36,8 +15,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
 
 public class Controller {
 
@@ -197,7 +174,7 @@ public class Controller {
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(Main.stage);
         if(file != null){
-            chartek.Start();
+            chartek.start();
             chartek.createChart(file);
             borderPane.setCenter(chartek.getXYChart());
             nagrajButton.setDisable(true);
@@ -221,7 +198,7 @@ public class Controller {
     }
 
     @FXML private void obserwujPrzebiegClicked(){
-        chartek.Start();
+        chartek.start();
         chartek.createRealtimeChart();
         borderPane.setCenter(chartek.getXYChart());
         Main.communicator.connect();

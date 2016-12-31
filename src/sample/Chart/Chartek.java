@@ -1,17 +1,10 @@
 package sample.Chart;
 
 import javafx.animation.AnimationTimer;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.chart.*;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import sample.Control.Communicator;
 import sample.Control.Controller;
 
@@ -21,7 +14,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -43,7 +35,6 @@ public class Chartek {
     private ConcurrentLinkedQueue<Number> dataQ5 = new ConcurrentLinkedQueue<Number>();
     private ConcurrentLinkedQueue<Number> dataQ6 = new ConcurrentLinkedQueue<Number>();
     private ExecutorService executor;
-    //    private AddToQueue addToQueue;
     private AddToQueueFromText addToQueueFromText;
     private AddToQueueRealTime addToQueueRealTime;
     private int xSeriesData = 0;
@@ -51,41 +42,23 @@ public class Chartek {
     private NumberAxis xAxis;
     private NumberAxis yAxis;
     private XYChart.Series series, series2, series3, series4, series5, series6;
-//    private XYChart.Series series2;
-//    private XYChart.Series series3;
-//    private XYChart.Series series4;
-//    private XYChart.Series series5;
-//    private XYChart.Series series6;
     private Series ser;
     private XYChart<Number, Number> XYChart;
     private volatile boolean running = true;
-//    private boolean zoomClicked = false;
-//    private boolean zoomOutClicked = false;
-//    private boolean leftClicked = false;
-//    private boolean rightClicked = false;
     private boolean zoomClicked, zoomOutClicked, leftClicked, rightClicked;
     private int zoom;
     private int move;
-//    private double down, up, dif;
-    private List<Integer> kolejka= new ArrayList<>(); //0 przybliz, 1 w lewo
+    private List<Integer> kolejka= new ArrayList<>();
 
     public void stop(){
         System.out.println("Force closing");
-        //stop = true;
-        //executor.wait();
         XYChart.setVisible(false);
         executor.shutdownNow();
         controller.getOpcjeMenu().setDisable(false);
         controller.getSkalowanieMenu().setDisable(false);
-        //running=false;
     }
 
-//    public void start(){
-//        System.out.println("Force starting");
-//        createRealtimeChart();
-//    }
-
-    public void Start() {
+    public void start() {
         controller.getOpcjeMenu().setDisable(true);
         controller.getSkalowanieMenu().setDisable(true);
         xSeriesData = 0;
@@ -97,7 +70,7 @@ public class Chartek {
         yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
         if (controller.getLineSelection()){
-        XYChart = new LineChart<Number, Number>(xAxis, yAxis) {
+            XYChart = new LineChart<Number, Number>(xAxis, yAxis) {
                     //Wywalenie Kropek, można dodać
                     // Override to remove symbols on each data point
                     @Override
@@ -110,13 +83,12 @@ public class Chartek {
             XYChart = new ScatterChart<Number, Number>(xAxis, yAxis);
         }
         XYChart.setAnimated(false);
-        XYChart.setId("liveXYChart");
-        XYChart.setTitle("Animated Area Chart");
+        XYChart.setId("Wykres ID");
+        XYChart.setTitle("Wykres Tytuł");
         //XYChart.getStyleClass().add(styleClass);
-
         //-- Chart Series
         series = new XYChart.Series<Number, Number>();
-        series.setName("Area Chart Series");
+        series.setName("Czujnik1");
         series2 = new XYChart.Series<Number, Number>();
         series2.setName("Druga seria");
         series3 = new XYChart.Series<Number, Number>();
@@ -128,7 +100,25 @@ public class Chartek {
         series6 = new XYChart.Series<Number, Number>();
         series6.setName("Szósta seria");
         //XYChart.setVisible(false);
+
+//        Set<Node> items = XYChart.lookupAll("Label.chart-legend-item");
+//        int i = 0;
+//        // these colors came from caspian.css .default-color0..4.chart-pie
+//        Color[] colors = { Color.web("#f9d900"), Color.web("#a9e200"), Color.web("#22bad9"), Color.web("#0181e2"), Color.web("#2f357f") };
+//        for (Node item : items) {
+//            Label label = (Label) item;
+//            final Rectangle rectangle = new Rectangle(10, 10, colors[i]);
+//            final Glow niceEffect = new Glow();
+//            niceEffect.setInput(new Reflection());
+//            rectangle.setEffect(niceEffect);
+//            label.setGraphic(rectangle);
+//            i++;
+//        }
+
         XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
+
+
+
     }
 
     public void createChart(File file) {
