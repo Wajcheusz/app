@@ -28,6 +28,8 @@ public class Controller {
         nagrajButton.setDisable(true);
         zapiszButton.setDisable(true);
         resetButton.setDisable(true);
+        disconnectButton.setDisable(true);
+        obserwujButton.setDisable(true);
 //        opcjeMenu.setDisable(false);
 //        opcjeMenu.disableProperty();
 //        tab1Controller.init(this);
@@ -72,12 +74,14 @@ public class Controller {
     @FXML private Button zapiszButton = new Button();
     @FXML private Button resetButton = new Button();
     @FXML private Button connectButton = new Button();
+    @FXML private Button disconnectButton = new Button();
 
 
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
     @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
     @FXML private MenuItem odtworzPrzebiegItem = new MenuItem();
     private Chartek chartek = new Chartek();
+    private ConnectBox connectBox = new ConnectBox();
     @FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
     //public AreaChart areaChart2 = new AreaChart<Number, Number>(new NumberAxis(5, 10, 15), new NumberAxis(5, 10, 15));
@@ -94,12 +98,25 @@ public class Controller {
 //    }
 
     @FXML private void connectButtonClicked(){
-        ConnectBox.display("Title", "Czy napewno?");
+        connectBox.init(this);
+        ConnectBox.display("Wybór portu COM", "Wybierz port COM z którym chcesz się połączyć");
+    }
+
+    @FXML private void disconnectButtonClicked(){
+        connectButton.setDisable(false);
+        disconnectButton.setDisable(true);
+        obserwujButton.setDisable(true);
+        nagrajButton.setDisable(true);
+        odtworzButton.setDisable(false);
+        resetButton.setDisable(true);
+        chartek.stop();
+        Communicator.commPort.close();
     }
 
     @FXML private void resetZoomButtonClicked(){
         chartek.clearKolejka();
     }
+
 
     @FXML private void leftButtonClicked(){
         //chartek.setLeftClicked(true);
@@ -361,6 +378,26 @@ public class Controller {
 
     public void setZoomSelected(Button zoom) {
         this.zoom = zoom;
+    }
+
+    public Button getConnectButton() {
+        return connectButton;
+    }
+
+    public Button getDisconnectButton() {
+        return disconnectButton;
+    }
+
+    public Button getObserwujButton() {
+        return obserwujButton;
+    }
+
+    public Button getOdtworzButton() {
+        return odtworzButton;
+    }
+
+    public Button getResetButton() {
+        return resetButton;
     }
 
     //

@@ -20,12 +20,13 @@ import java.util.HashMap;
  * Created by E6420 on 2017-01-07.
  */
 public class ConnectBox {
-    static boolean answer;
+    static boolean connected;
     static ComboBox combobox = new ComboBox();
     private static HashMap portMap = new HashMap();
     private static CommPortIdentifier selectedPortIdentifier = null;
     private static String selectedPort = null;
     static Communicator communicator = null;
+    static Controller controller;
 
     public static CommPortIdentifier getSelectedPortIdentifier() {
         return selectedPortIdentifier;
@@ -35,10 +36,14 @@ public class ConnectBox {
         ConnectBox.selectedPortIdentifier = selectedPortIdentifier;
     }
 
+    public void init(Controller controller){
+        this.controller = controller;
+    }
     //    String selectedPort = "COM11";//(String)serialPortId.getName();//"COM11";//(String)this.window.cboxPorts.getSelectedItem();
 //    selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
 //    CommPort commPort = null;
     private static void showPorts(){
+        combobox.getItems().clear();
         CommPortIdentifier serialPortId;
         Enumeration enumComm;
 
@@ -55,6 +60,7 @@ public class ConnectBox {
     }
 
     public static boolean display(String title, String message){
+        portMap.clear();
         showPorts();
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -71,33 +77,39 @@ public class ConnectBox {
 
         yesButton.setOnAction(event -> {
             System.out.println(combobox.getValue());
-            answer = true;
+            connected = true;
 //            window.close();
             selectedPort = combobox.getValue().toString();//(String)serialPortId.getName();//"COM11";//(String)this.window.cboxPorts.getSelectedItem();
             selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
 
             //todo wydziel do innej funkcji
-            communicator = new Communicator(selectedPortIdentifier, selectedPort);
+            communicator = new Communicator(selectedPortIdentifier);
             communicator.connect();
             if(communicator.getConnected() && communicator.initIOStream()) {
                 communicator.initListener();
+                controller.getConnectButton().setDisable(true);
+                controller.getDisconnectButton().setDisable(false);
+                controller.getObserwujButton().setDisable(false);
             }
             window.close();
             //CommPort commPort = null;
         });
 
         noButton.setOnAction(event -> {
-            answer = false;
+            connected = false;
+            controller.getDisconnectButton().setDisable(true);
+            controller.getConnectButton().setDisable(false);
+            controller.getObserwujButton().setDisable(true);
             window.close();
         });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, yesButton, noButton, combobox);
+        layout.getChildren().addAll(label, combobox, yesButton, noButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
         window.showAndWait();
 
-        return answer;
+        return connected;
     }
 }
