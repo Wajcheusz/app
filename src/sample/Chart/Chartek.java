@@ -84,7 +84,7 @@ public class Chartek {
         }
         XYChart.setAnimated(false);
         XYChart.setId("Wykres ID");
-        XYChart.setTitle("Wykres Tytuł");
+        XYChart.setTitle("Wykres temperaturowy");
         //XYChart.getStyleClass().add(styleClass);
         //-- Chart Series
         series = new XYChart.Series<Number, Number>();

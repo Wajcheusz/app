@@ -71,6 +71,7 @@ public class Controller {
     @FXML private Button nagrajButton = new Button();
     @FXML private Button zapiszButton = new Button();
     @FXML private Button resetButton = new Button();
+    @FXML private Button connectButton = new Button();
 
 
     @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
@@ -92,6 +93,9 @@ public class Controller {
 //        chartek.doZoom(zoomRect, chartek.getXYChart());
 //    }
 
+    @FXML private void connectButtonClicked(){
+        ConnectBox.display("Title", "Czy napewno?");
+    }
 
     @FXML private void resetZoomButtonClicked(){
         chartek.clearKolejka();
@@ -201,10 +205,10 @@ public class Controller {
         chartek.start();
         chartek.createRealtimeChart();
         borderPane.setCenter(chartek.getXYChart());
-        Main.communicator.connect();
-        if(Main.communicator.getConnected() && Main.communicator.initIOStream()) {
-            Main.communicator.initListener();
-        }
+//        Main.communicator.connect();
+//        if(Main.communicator.getConnected() && Main.communicator.initIOStream()) {
+//            Main.communicator.initListener();
+//        }
         nagrajButton.setDisable(false);
         resetButton.setDisable(false);
         odtworzButton.setDisable(true);

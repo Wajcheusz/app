@@ -27,29 +27,49 @@ public class Communicator implements SerialPortEventListener {
 //    static final int DASH_ASCII = 45;
     static final int NEW_LINE_ASCII = 10;
     public static String logText = "";
+    private static String selectedPort = null;
 
+    public Communicator(CommPortIdentifier selectedPortIdentifier, String selectedPort) {
+        this.selectedPortIdentifier = selectedPortIdentifier;
+        this.selectedPort = selectedPort;
+    }
 
-    public void connect() {
-        CommPortIdentifier serialPortId = null;
+    public void showPorts(){
+        CommPortIdentifier serialPortId;
         Enumeration enumComm;
-        List<CommPortIdentifier> x = new ArrayList<CommPortIdentifier>();
-
 
         enumComm = CommPortIdentifier.getPortIdentifiers();
         while (enumComm.hasMoreElements()) {
             serialPortId = (CommPortIdentifier) enumComm.nextElement();
             if (serialPortId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
-                x.add(serialPortId);
+                System.out.println(serialPortId);
                 System.out.println(serialPortId.getName());
             }
         }
+    }
 
-        String selectedPort = "COM11";//(String)serialPortId.getName();//"COM11";//(String)this.window.cboxPorts.getSelectedItem();
-        selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
+    public void connect() {
+//        CommPortIdentifier serialPortId = null;
+//        Enumeration enumComm;
+//        List<CommPortIdentifier> x = new ArrayList<CommPortIdentifier>();
+//
+//
+//        enumComm = CommPortIdentifier.getPortIdentifiers();
+//        while (enumComm.hasMoreElements()) {
+//            serialPortId = (CommPortIdentifier) enumComm.nextElement();
+//            if (serialPortId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
+//                x.add(serialPortId);
+//                System.out.println(serialPortId.getName());
+//            }
+//        }
+//
+//        String selectedPort = "COM11";//(String)serialPortId.getName();//"COM11";//(String)this.window.cboxPorts.getSelectedItem();
+//        selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
         CommPort commPort = null;
 
         try {
-            commPort = x.get(4).open("TigerControlPanel", 1000);
+            commPort = selectedPortIdentifier.open("Stanowisko laboratoryjne", 1000);
+//            commPort = x.get(4).open("Stanowisko laboratoryjne", 1000);
             serialPort = (SerialPort)commPort;
             setConnected(true);
             //this.logText = selectedPort + " opened successfully.";

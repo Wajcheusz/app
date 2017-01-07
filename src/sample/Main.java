@@ -12,11 +12,11 @@ public class Main extends Application {
     public static Stage stage;
     private static final int NUM_DATA_POINTS = 1000 ;
 
-    public static Communicator communicator;
+    //public static Communicator communicator;
     @Override
     public void start(Stage primaryStage) throws Exception{
         stage = primaryStage;
-        communicator = new Communicator();
+        //communicator = new Communicator();
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 1200, 800));
