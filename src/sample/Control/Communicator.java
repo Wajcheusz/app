@@ -12,11 +12,7 @@ import java.util.*;
  */
 
 public class Communicator implements SerialPortEventListener {
-    public static String x = "30";
-    //public static String temp = "30";
     public static String temporary = "40.2 25.5 27.5 28.5 21.5 29.5";
-    private Enumeration ports = null;
-    private HashMap portMap = new HashMap();
     private CommPortIdentifier selectedPortIdentifier = null;
     private SerialPort serialPort = null;
     private InputStream input = null;
@@ -89,28 +85,16 @@ public class Communicator implements SerialPortEventListener {
     }
 
     String liczba = "";
-
-    static StringBuffer z;
     public void serialEvent(SerialPortEvent evt) {
 
-        if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE)
-        {
-            try
-            {
+        if (evt.getEventType() == SerialPortEvent.DATA_AVAILABLE) {
+            try {
                 byte singleData = (byte)input.read();
 
-                if (singleData != NEW_LINE_ASCII)
-                {
+                if (singleData != NEW_LINE_ASCII) {
                     logText = new String(new byte[] {singleData});
-                    x=logText;
-                    liczba = liczba + x;
-                }
-                else
-                {
-//                    z = new StringBuffer(liczba);
-//                    z.substring(1,4);
-//                    temporary = z.toString();
-//                    System.out.print(temporary);
+                    liczba = liczba + logText;
+                } else {
                     System.out.print("Cliczba: " + liczba);
                     temporary = liczba;
                     System.out.println("Ctemporary: " + temporary);
@@ -118,8 +102,7 @@ public class Communicator implements SerialPortEventListener {
                     liczba = "";
                 }
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 logText = "Failed to read data. (" + e.toString() + ")";
             }
         }

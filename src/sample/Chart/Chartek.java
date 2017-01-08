@@ -8,10 +8,7 @@ import javafx.scene.chart.XYChart;
 import sample.Control.Communicator;
 import sample.Control.Controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -27,6 +24,7 @@ public class Chartek {
     }
     Controller controller;
     final int LICZBA_CZUJNIKOW = 6;
+    private int playerTime = 1000;
     private ArrayList<String> out = new ArrayList<>();
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
     private ConcurrentLinkedQueue<Number> dataQ2 = new ConcurrentLinkedQueue<Number>();
@@ -99,34 +97,21 @@ public class Chartek {
         series5.setName("Piąta seria");
         series6 = new XYChart.Series<Number, Number>();
         series6.setName("Szósta seria");
-        //XYChart.setVisible(false);
-
-//        Set<Node> items = XYChart.lookupAll("Label.chart-legend-item");
-//        int i = 0;
-//        // these colors came from caspian.css .default-color0..4.chart-pie
-//        Color[] colors = { Color.web("#f9d900"), Color.web("#a9e200"), Color.web("#22bad9"), Color.web("#0181e2"), Color.web("#2f357f") };
-//        for (Node item : items) {
-//            Label label = (Label) item;
-//            final Rectangle rectangle = new Rectangle(10, 10, colors[i]);
-//            final Glow niceEffect = new Glow();
-//            niceEffect.setInput(new Reflection());
-//            rectangle.setEffect(niceEffect);
-//            label.setGraphic(rectangle);
-//            i++;
-//        }
 
         XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
 
-
-
     }
 
-    public void createChart(File file) {
+    public void createChart(File file, int speed) {
         kolejka.clear();
         //-- Prepare Executor Services
-        executor = Executors.newCachedThreadPool();
-        addToQueueFromText = new AddToQueueFromText(file);
-        executor.execute(addToQueueFromText);
+        if (speed != 1000) {
+            executor = Executors.newCachedThreadPool();
+            addToQueueFromText = new AddToQueueFromText(file, speed);
+            executor.execute(addToQueueFromText);
+        } else {
+            addToQueueFromTextAll(file);
+        }
         //-- Prepare Timeline
         prepareTimeline(1);
     }
@@ -182,13 +167,43 @@ public class Chartek {
         }
     }
 
-    public boolean stop = false;
+    //public boolean stop = false;
+    int i = 0;
+    private void addToQueueFromTextAll(File csvFile){
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line = "";
+        try {
+            while ((line = br.readLine().trim())!= null) {
+                ser.generateSeries(line);
+                dataQ.add(ser.getCharts().get(0).get(i));
+                dataQ2.add(ser.getCharts().get(1).get(i));
+                dataQ3.add(ser.getCharts().get(2).get(i));
+                dataQ4.add(ser.getCharts().get(3).get(i));
+                dataQ5.add(ser.getCharts().get(4).get(i));
+                dataQ6.add(ser.getCharts().get(5).get(i));
+                i++;
+                xSeriesData++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("koniec pliku!?!?");
+        }
+    }
+
     private class AddToQueueFromText implements Runnable {
-        public AddToQueueFromText(File csvFile) {
+        public AddToQueueFromText(File csvFile, int speed) {
             this.csvFile = csvFile;
+            this.speed = speed;
         }
         int i = 0;
         private File csvFile;
+        private int speed;
 
         BufferedReader br = null;
         String line = "";
@@ -209,7 +224,9 @@ public class Chartek {
                                 dataQ4.add(ser.getCharts().get(3).get(i));
                                 dataQ5.add(ser.getCharts().get(4).get(i));
                                 dataQ6.add(ser.getCharts().get(5).get(i));
-                                Thread.sleep(1000);
+                                //if (playerTime/speed!=1) {
+                                    Thread.sleep(playerTime/speed);
+                                //}
                                 i++;
                                 xSeriesData++;
                             }
@@ -218,7 +235,7 @@ public class Chartek {
                         } catch (NullPointerException e) {
                             System.out.println("koniec pliku???");
                             running = false;
-                            e.printStackTrace();
+                            //e.printStackTrace();
                         }
                     } catch (IOException ex) {
                         System.out.println("Nie moge odczytac pliku!");
@@ -458,6 +475,14 @@ public class Chartek {
 
     public void setXYChart(javafx.scene.chart.XYChart<Number, Number> XYChart) {
         this.XYChart = XYChart;
+    }
+
+    public int getPlayerTime() {
+        return playerTime;
+    }
+
+    public void setPlayerTime(int playerTime) {
+        this.playerTime = playerTime;
     }
 }
 

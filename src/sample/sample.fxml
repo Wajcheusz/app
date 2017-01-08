@@ -14,6 +14,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
     <top>
         <VBox prefHeight="16.0" prefWidth="600.0" BorderPane.alignment="CENTER">
@@ -131,9 +133,9 @@
                   <Insets left="2.0" top="10.0" />
                </VBox.margin>
             </Button>
-            <Label text="OŚ X">
+            <Label prefHeight="11.0" prefWidth="71.0" text="OŚ X">
                <padding>
-                  <Insets left="45.0" top="20.0" />
+                  <Insets left="45.0" top="5.0" />
                </padding>
             </Label>
             <SplitPane dividerPositions="0.5040650406504065" prefHeight="75.0" prefWidth="200.0">
@@ -148,7 +150,7 @@
                         </Button>
                      </children>
                   </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="58.0">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="58.0">
                      <children>
                         <Button fx:id="right" layoutX="4.0" layoutY="37.0" mnemonicParsing="false" onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;" />
                         <Button fx:id="zoom" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
@@ -160,8 +162,40 @@
                   </AnchorPane>
               </items>
             </SplitPane>
-            <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="25.0" prefWidth="125.0" text="RESET ZOOM" />
+            <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="15.0" prefWidth="125.0" text="RESET ZOOM" />
             </children>
+            <!--<children>
+                <ImageView
+                        fx:id="imageView"
+                        fitHeight="150.0"
+                        fitWidth="200.0"
+                >
+                    <image>
+                        <Image
+                                url="file:silnik1.png"
+                                backgroundLoading="true"
+                        />
+                    </image>
+                </ImageView>
+            </children>-->
         </VBox>
     </left>
+   <bottom>
+      <AnchorPane prefHeight="197.0" prefWidth="800.0" BorderPane.alignment="CENTER" >
+       <children>
+           <ImageView
+                   fx:id="imageView"
+                   fitHeight="280.0"
+                   fitWidth="280.0"
+           >
+               <image>
+                   <Image
+                           url="file:silnik1.png"
+                           backgroundLoading="true"
+                   />
+         </image>
+        </ImageView>
+        </children>
+      </AnchorPane>
+   </bottom>
 </BorderPane>
