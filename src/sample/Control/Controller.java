@@ -3,11 +3,17 @@ package sample.Control;
 import javafx.fxml.FXML;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import sample.Chart.Chartek;
 import sample.Main;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +24,8 @@ import java.util.ArrayList;
 
 public class Controller {
 
-    @FXML public void initialize() {
+    @FXML
+    public void initialize() {
         System.out.println("Application started");
         skalowanie();
         nagrajButton.setDisable(true);
@@ -26,64 +33,104 @@ public class Controller {
         resetButton.setDisable(true);
         disconnectButton.setDisable(true);
         obserwujButton.setDisable(true);
+//        checkboxRightClicked();
     }
 
-    @FXML private BorderPane borderPane = new BorderPane();
-    @FXML private CheckBox checkbox = new CheckBox();
-    @FXML private CheckBox checkbox2 = new CheckBox();
-    @FXML private CheckBox checkbox3 = new CheckBox();
-    @FXML private CheckBox checkbox4 = new CheckBox();
-    @FXML private CheckBox checkbox5 = new CheckBox();
-    @FXML private CheckBox checkbox6 = new CheckBox();
-    @FXML private RadioMenuItem pointsChart = new RadioMenuItem();
-    @FXML private RadioMenuItem lineChart = new RadioMenuItem();
-    @FXML private RadioMenuItem pointsAndLineChart = new RadioMenuItem();
+    @FXML
+    private BorderPane borderPane = new BorderPane();
+    @FXML
+    private CheckBox checkbox = new CheckBox();
+    @FXML
+    private CheckBox checkbox2 = new CheckBox();
+    @FXML
+    private CheckBox checkbox3 = new CheckBox();
+    @FXML
+    private CheckBox checkbox4 = new CheckBox();
+    @FXML
+    private CheckBox checkbox5 = new CheckBox();
+    @FXML
+    private CheckBox checkbox6 = new CheckBox();
+    @FXML
+    private RadioMenuItem pointsChart = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem lineChart = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem pointsAndLineChart = new RadioMenuItem();
 
-    @FXML private ToggleGroup skalowanie = new ToggleGroup();
+    @FXML
+    private ToggleGroup skalowanie = new ToggleGroup();
 
-    @FXML private Menu opcjeMenu = new Menu();
-    @FXML private Menu skalowanieMenu = new Menu();
+    @FXML
+    private Menu opcjeMenu = new Menu();
+    @FXML
+    private Menu skalowanieMenu = new Menu();
 
-    @FXML private RadioMenuItem skalowanieAutomatyczne = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie30Sekund = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie1Minuta = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie2Minuty = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie5Minut = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie10Minut = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie20Minut = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie40Minut = new RadioMenuItem();
-    @FXML private RadioMenuItem skalowanie60Minut = new RadioMenuItem();
-    @FXML private Button zoom = new Button();
-    @FXML private Button zoomOut = new Button();
-    @FXML private Button left = new Button();
-    @FXML private Button right = new Button();
-    @FXML private Button resetZoomButton = new Button();
+    @FXML
+    private RadioMenuItem skalowanieAutomatyczne = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie30Sekund = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie1Minuta = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie2Minuty = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie5Minut = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie10Minut = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie20Minut = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie40Minut = new RadioMenuItem();
+    @FXML
+    private RadioMenuItem skalowanie60Minut = new RadioMenuItem();
+    @FXML
+    private Button zoom = new Button();
+    @FXML
+    private Button zoomOut = new Button();
+    @FXML
+    private Button left = new Button();
+    @FXML
+    private Button right = new Button();
+    @FXML
+    private Button resetZoomButton = new Button();
 
-    @FXML private Button obserwujButton = new Button();
-    @FXML private Button odtworzButton = new Button();
-    @FXML private Button nagrajButton = new Button();
-    @FXML private Button zapiszButton = new Button();
-    @FXML private Button resetButton = new Button();
-    @FXML private Button connectButton = new Button();
-    @FXML private Button disconnectButton = new Button();
+    @FXML
+    private Button obserwujButton = new Button();
+    @FXML
+    private Button odtworzButton = new Button();
+    @FXML
+    private Button nagrajButton = new Button();
+    @FXML
+    private Button zapiszButton = new Button();
+    @FXML
+    private Button resetButton = new Button();
+    @FXML
+    private Button connectButton = new Button();
+    @FXML
+    private Button disconnectButton = new Button();
 
 
-    @FXML private MenuItem oserwojPrzebiegItem = new MenuItem();
-    @FXML private MenuItem nagrajPrzebiegItem = new MenuItem();
-    @FXML private MenuItem odtworzPrzebiegItem = new MenuItem();
-    //private Chartek chartek = new Chartek();
-    private Chartek chartek = null;
+    @FXML
+    private MenuItem oserwojPrzebiegItem = new MenuItem();
+    @FXML
+    private MenuItem nagrajPrzebiegItem = new MenuItem();
+    @FXML
+    private MenuItem odtworzPrzebiegItem = new MenuItem();
+    private Chartek chartek = new Chartek();
+    //private Chartek chartek = null;
     private ConnectBox connectBox = new ConnectBox();
     private PlayerTimeBox playerTimeBox = new PlayerTimeBox();
     //@FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
 
-    @FXML private void connectButtonClicked(){
+    @FXML
+    private void connectButtonClicked() {
         connectBox.init(this);
         ConnectBox.display("Wybór portu COM", "Wybierz port COM z którym chcesz się połączyć");
     }
 
-    @FXML private void disconnectButtonClicked(){
+    @FXML
+    private void disconnectButtonClicked() {
         connectButton.setDisable(false);
         disconnectButton.setDisable(true);
         obserwujButton.setDisable(true);
@@ -94,31 +141,36 @@ public class Controller {
         Communicator.commPort.close();
     }
 
-    @FXML private void resetZoomButtonClicked(){
+    @FXML
+    private void resetZoomButtonClicked() {
         chartek.clearKolejka();
     }
 
 
-    @FXML private void leftButtonClicked(){
+    @FXML
+    private void leftButtonClicked() {
         chartek.getKolejka().add(3);
 
     }
 
-    @FXML private void rightButtonClicked(){
+    @FXML
+    private void rightButtonClicked() {
         chartek.getKolejka().add(4);
     }
 
-    @FXML private void zoomClicked(){
+    @FXML
+    private void zoomClicked() {
         chartek.getKolejka().add(2);
     }
 
-    @FXML private void zoomOutClicked(){
+    @FXML
+    private void zoomOutClicked() {
         chartek.getKolejka().add(1);
     }
 
 
-
-    @FXML private void skalowanie(){
+    @FXML
+    private void skalowanie() {
         skalowanieAutomatyczne.setUserData(0);
         skalowanie30Sekund.setUserData(30);
         skalowanie1Minuta.setUserData(60);
@@ -130,38 +182,64 @@ public class Controller {
         skalowanie60Minut.setUserData(3600);
     }
 
-    @FXML private void checkboxSelected(){
-        System.out.println("KLIKNIETO");
-        chartek.getDataQ().clear();
+//    private void checkboxRightClicked(){
+//        checkbox.setOnAction(event -> {
+//            if (event.getSource() == MouseButton.SECONDARY){
+//                System.out.println("prawy");
+//            } else if (event.getSource() == MouseButton.PRIMARY){
+//                System.out.println("lewy");
+//            }
+//        });
+//    }
+
+    @FXML
+    private void checkboxSelected(MouseEvent event) {
+//        System.out.println("KLIKNIETO");
+//        System.out.println(event.getButton().toString());
+        if (event.getButton() == MouseButton.PRIMARY) {
+            System.out.println("lewy");
+            chartek.getDataQ().clear();
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            System.out.println("prawy");
+            ChangeNameBox changeNameBox = new ChangeNameBox();
+            changeNameBox.setChangedName(checkbox.getText());
+            changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
+            checkbox.setText(changeNameBox.getChangedName());
+        }
     }
 
-    @FXML private void checkbox2Selected(){
+    @FXML
+    private void checkbox2Selected() {
         chartek.getDataQ2().clear();
     }
 
-    @FXML private void checkbox3Selected(){
+    @FXML
+    private void checkbox3Selected() {
         chartek.getDataQ3().clear();
     }
 
-    @FXML private void checkbox4Selected(){
+    @FXML
+    private void checkbox4Selected() {
         chartek.getDataQ4().clear();
     }
 
-    @FXML private void checkbox5Selected(){
+    @FXML
+    private void checkbox5Selected() {
         chartek.getDataQ5().clear();
     }
 
-    @FXML private void checkbox6Selected(){
+    @FXML
+    private void checkbox6Selected() {
         chartek.getDataQ6().clear();
     }
 
-    @FXML private void odtworzPrzebiegClicked(){
+    @FXML
+    private void odtworzPrzebiegClicked() {
         playerTimeBox.init(this);
         playerTimeBox.display("Wybór prędkości odtwarzania", "Wybierz prędkość z jaką chcesz odtworzyć wykres");
 
 
-
-        chartek = new Chartek();
+        //chartek = new Chartek();
         chartek.init(this);
 
         FileChooser fileChooser = new FileChooser();
@@ -169,7 +247,7 @@ public class Controller {
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki CSV (*.csv)", "*.csv");
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(Main.stage);
-        if(file != null){
+        if (file != null) {
             chartek.start();
             chartek.createChart(file, playerTimeBox.getSelectedSpeed());
             borderPane.setCenter(chartek.getXYChart());
@@ -180,7 +258,8 @@ public class Controller {
         }//todo przy anuluj bedzie problem
     }
 
-    @FXML private void nagrajPrzebiegClicked(){
+    @FXML
+    private void nagrajPrzebiegClicked() {
         try {
             String nazwaPliku = "test5.csv";
             Path sciezka = Paths.get(nazwaPliku);
@@ -193,8 +272,9 @@ public class Controller {
         nagrajButton.setDisable(true);
     }
 
-    @FXML private void obserwujPrzebiegClicked(){
-        chartek = new Chartek();
+    @FXML
+    private void obserwujPrzebiegClicked() {
+        //chartek = new Chartek();
         chartek.init(this);
         chartek.start();
         chartek.createRealtimeChart();
@@ -205,7 +285,8 @@ public class Controller {
         obserwujButton.setDisable(true);
     }
 
-    @FXML private void resetClicked(){
+    @FXML
+    private void resetClicked() {
         chartek.stop();
         nagrajButton.setDisable(true);
         obserwujButton.setDisable(false);
@@ -214,7 +295,8 @@ public class Controller {
         zapiszButton.setDisable(true);
     }
 
-    @FXML private void zapiszPrzebiegClicked(){
+    @FXML
+    private void zapiszPrzebiegClicked() {
 
         FileChooser fileChooser = new FileChooser();
 
@@ -222,12 +304,12 @@ public class Controller {
         fileChooser.getExtensionFilters().add(extFilter);
 
         File file = fileChooser.showSaveDialog(Main.stage);
-        if(file != null){
+        if (file != null) {
             SaveFile(chartek.getOut(), file);
         }
     }
 
-    private void SaveFile(ArrayList<String> list, File file){
+    private void SaveFile(ArrayList<String> list, File file) {
         try {
             FileWriter fileWriter = null;
 
@@ -236,7 +318,7 @@ public class Controller {
             StringBuilder listString = new StringBuilder();
 
             for (String s : list)
-                listString.append(s+"\n");
+                listString.append(s + "\n");
             fileWriter.write(listString.toString());
 
             fileWriter.close();
@@ -293,35 +375,35 @@ public class Controller {
         return checkbox.isSelected();
     }
 
-    public Boolean getCheckbox2Selection(){
+    public Boolean getCheckbox2Selection() {
         return checkbox2.isSelected();
     }
 
-    public Boolean getCheckbox3Selection(){
+    public Boolean getCheckbox3Selection() {
         return checkbox3.isSelected();
     }
 
-    public Boolean getCheckbox4Selection(){
+    public Boolean getCheckbox4Selection() {
         return checkbox4.isSelected();
     }
 
-    public Boolean getCheckbox5Selection(){
+    public Boolean getCheckbox5Selection() {
         return checkbox5.isSelected();
     }
 
-    public Boolean getCheckbox6Selection(){
+    public Boolean getCheckbox6Selection() {
         return checkbox6.isSelected();
     }
 
-    public Boolean getPointsSelection(){
+    public Boolean getPointsSelection() {
         return pointsChart.isSelected();
     }
 
-    public Boolean getLineSelection(){
+    public Boolean getLineSelection() {
         return lineChart.isSelected();
     }
 
-    public Boolean getointsAndLineSelection(){
+    public Boolean getointsAndLineSelection() {
         return pointsAndLineChart.isSelected();
     }
 

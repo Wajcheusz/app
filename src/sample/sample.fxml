@@ -24,33 +24,33 @@
                     <menus>
                         <Menu fx:id="opcjeMenu" mnemonicParsing="false" text="Opcje">
                             <items>
-                        <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="chartOptions" />
-                           </toggleGroup></RadioMenuItem>
-                        <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false" text="Wykres liniowy z punktami" toggleGroup="$chartOptions" />
-                        <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" selected="true" text="Wykres punktowy" toggleGroup="$chartOptions" />
+                                <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="chartOptions" />
+                                    </toggleGroup></RadioMenuItem>
+                                <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false" text="Wykres liniowy z punktami" toggleGroup="$chartOptions" />
+                                <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" selected="true" text="Wykres punktowy" toggleGroup="$chartOptions" />
                             </items>
                         </Menu>
                         <Menu fx:id="skalowanieMenu" mnemonicParsing="false" text="Skalowanie">
                             <items>
-                        <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" selected="true" text="Automatyczne">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="skalowanie" />
-                           </toggleGroup>
-                        </RadioMenuItem>
-                        <Menu mnemonicParsing="false" text="Stałe">
-                          <items>
-                              <RadioMenuItem fx:id="skalowanie30Sekund" mnemonicParsing="false" text="30 sekund" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie1Minuta" mnemonicParsing="false" text="1 minuta" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie2Minuty" mnemonicParsing="false" text="2 minuty" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie5Minut" mnemonicParsing="false" text="5 minut" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie10Minut" mnemonicParsing="false" text="10 minut" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie20Minut" mnemonicParsing="false" text="20 minut" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie40Minut" mnemonicParsing="false" text="40 minut" toggleGroup="$skalowanie" />
-                              <RadioMenuItem fx:id="skalowanie60Minut" mnemonicParsing="false" text="60 minut" toggleGroup="$skalowanie" />
-                          </items>
-                        </Menu>
+                                <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" selected="true" text="Automatyczne">
+                                    <toggleGroup>
+                                        <ToggleGroup fx:id="skalowanie" />
+                                    </toggleGroup>
+                                </RadioMenuItem>
+                                <Menu mnemonicParsing="false" text="Stałe">
+                                    <items>
+                                        <RadioMenuItem fx:id="skalowanie30Sekund" mnemonicParsing="false" text="30 sekund" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie1Minuta" mnemonicParsing="false" text="1 minuta" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie2Minuty" mnemonicParsing="false" text="2 minuty" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie5Minut" mnemonicParsing="false" text="5 minut" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie10Minut" mnemonicParsing="false" text="10 minut" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie20Minut" mnemonicParsing="false" text="20 minut" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie40Minut" mnemonicParsing="false" text="40 minut" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie60Minut" mnemonicParsing="false" text="60 minut" toggleGroup="$skalowanie" />
+                                    </items>
+                                </Menu>
                             </items>
                         </Menu>
                         <Menu disable="true" mnemonicParsing="false" text="Help">
@@ -64,11 +64,11 @@
         </VBox>
     </top>
     <left>
-        <VBox prefHeight="374.0" prefWidth="125.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="726.0" prefWidth="240.0" BorderPane.alignment="CENTER">
             <children>
-                <CheckBox fx:id="checkbox" mnemonicParsing="false" onAction="#checkboxSelected" text="Czujnik 1">
+                <CheckBox fx:id="checkbox" mnemonicParsing="false" onMouseClicked="#checkboxSelected" text="Czujnik 1">
                     <VBox.margin>
-                        <Insets />
+                        <Insets left="10.0" />
                     </VBox.margin>
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -77,98 +77,123 @@
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
                 </CheckBox>
                 <CheckBox fx:id="checkbox3" mnemonicParsing="false" onAction="#checkbox3Selected" text="Czujnik 3">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
                 </CheckBox>
                 <CheckBox fx:id="checkbox4" mnemonicParsing="false" onAction="#checkbox4Selected" text="Czujnik 4">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
                 </CheckBox>
                 <CheckBox fx:id="checkbox5" mnemonicParsing="false" onAction="#checkbox5Selected" text="Czujnik 5">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
                 </CheckBox>
                 <CheckBox fx:id="checkbox6" mnemonicParsing="false" onAction="#checkbox6Selected" text="Czujnik 6">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
+               <VBox.margin>
+                  <Insets left="10.0" />
+               </VBox.margin>
                 </CheckBox>
-            <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClicked" prefHeight="25.0" prefWidth="125.0" text="Połącz">
+                <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Połącz">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#disconnectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Rozłącz">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="obserwujButton" mnemonicParsing="false" onAction="#obserwujPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Obserwuj przebieg">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="odtworzButton" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Odtwórz przebieg">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="nagrajButton" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Nagraj przebieg">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="zapiszButton" mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Zapisz przebieg">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetClicked" prefHeight="25.0" prefWidth="130.0" text="RESET">
+                    <VBox.margin>
+                        <Insets left="60.0" top="5.0" />
+                    </VBox.margin>
+                </Button>
+                <Label text="OŚ X">
                <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
+                  <Insets left="110.0" top="5.0" />
                </VBox.margin>
-            </Button>
-            <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#disconnectButtonClicked" prefHeight="25.0" prefWidth="125.0" text="Rozłącz">
+                </Label>
+                <SplitPane dividerPositions="0.5040650406504065" maxWidth="-Infinity" prefHeight="75.0" prefWidth="125.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="59.0">
+                            <children>
+                                <Button fx:id="left" layoutX="5.0" layoutY="37.0" mnemonicParsing="false" onAction="#leftButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&lt;" />
+                                <Button fx:id="zoomOut" layoutX="5.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="50.0" text="-">
+                                    <padding>
+                                        <Insets left="2.0" top="10.0" />
+                                    </padding>
+                                </Button>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="58.0">
+                            <children>
+                                <Button fx:id="right" layoutX="4.0" layoutY="37.0" mnemonicParsing="false" onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;" />
+                                <Button fx:id="zoom" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
+                                    <padding>
+                                        <Insets left="2.0" top="10.0" />
+                                    </padding>
+                                </Button>
+                            </children>
+                     <padding>
+                        <Insets left="60.0" />
+                     </padding>
+                        </AnchorPane>
+
+                    </items>
                <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
+                  <Insets left="60.0" />
                </VBox.margin>
-            </Button>
-            <Button fx:id="obserwujButton" mnemonicParsing="false" onAction="#obserwujPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Obserwuj przebieg">
+                </SplitPane>
+                <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="25.0" prefWidth="125.0" text="RESET ZOOM">
                <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="odtworzButton" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Odtwórz przebieg">
-               <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="nagrajButton" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Nagraj przebieg">
-               <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="zapiszButton" mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="125.0" text="Zapisz przebieg">
-               <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetClicked" prefHeight="25.0" prefWidth="125.0" text="RESET">
-               <VBox.margin>
-                  <Insets left="2.0" top="10.0" />
-               </VBox.margin>
-            </Button>
-            <Label prefHeight="11.0" prefWidth="71.0" text="OŚ X">
-               <padding>
-                  <Insets left="45.0" top="5.0" />
-               </padding>
-            </Label>
-            <SplitPane dividerPositions="0.5040650406504065" prefHeight="75.0" prefWidth="200.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="59.0">
-                     <children>
-                        <Button fx:id="left" layoutX="5.0" layoutY="37.0" mnemonicParsing="false" onAction="#leftButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&lt;" />
-                        <Button fx:id="zoomOut" layoutX="5.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="50.0" text="-">
-                           <padding>
-                              <Insets left="2.0" top="10.0" />
-                           </padding>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="58.0">
-                     <children>
-                        <Button fx:id="right" layoutX="4.0" layoutY="37.0" mnemonicParsing="false" onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;" />
-                        <Button fx:id="zoom" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
-                           <padding>
-                              <Insets left="2.0" top="10.0" />
-                           </padding>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-              </items>
-            </SplitPane>
-            <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="15.0" prefWidth="125.0" text="RESET ZOOM" />
+                  <Insets left="60.0" />
+               </VBox.margin></Button>
             </children>
             <!--<children>
                 <ImageView
                         fx:id="imageView"
-                        fitHeight="150.0"
-                        fitWidth="200.0"
+                        fitHeight="200.0"
+                        fitWidth="240.0"
                 >
                     <image>
                         <Image
@@ -180,22 +205,4 @@
             </children>-->
         </VBox>
     </left>
-   <bottom>
-      <AnchorPane prefHeight="197.0" prefWidth="800.0" BorderPane.alignment="CENTER" >
-       <children>
-           <ImageView
-                   fx:id="imageView"
-                   fitHeight="280.0"
-                   fitWidth="280.0"
-           >
-               <image>
-                   <Image
-                           url="file:silnik1.png"
-                           backgroundLoading="true"
-                   />
-         </image>
-        </ImageView>
-        </children>
-      </AnchorPane>
-   </bottom>
 </BorderPane>
