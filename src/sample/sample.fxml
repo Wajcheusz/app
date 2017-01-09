@@ -73,7 +73,7 @@
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding></CheckBox>
-                <CheckBox fx:id="checkbox2" mnemonicParsing="false" onAction="#checkbox2Selected" text="Czujnik 2">
+                <CheckBox fx:id="checkbox2" mnemonicParsing="false" onMouseClicked="#checkbox2Selected" text="Czujnik 2">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
@@ -81,7 +81,7 @@
                   <Insets left="10.0" />
                </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="checkbox3" mnemonicParsing="false" onAction="#checkbox3Selected" text="Czujnik 3">
+                <CheckBox fx:id="checkbox3" mnemonicParsing="false" onMouseClicked="#checkbox3Selected" text="Czujnik 3">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
@@ -89,7 +89,7 @@
                   <Insets left="10.0" />
                </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="checkbox4" mnemonicParsing="false" onAction="#checkbox4Selected" text="Czujnik 4">
+                <CheckBox fx:id="checkbox4" mnemonicParsing="false" onMouseClicked="#checkbox4Selected" text="Czujnik 4">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
@@ -97,7 +97,7 @@
                   <Insets left="10.0" />
                </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="checkbox5" mnemonicParsing="false" onAction="#checkbox5Selected" text="Czujnik 5">
+                <CheckBox fx:id="checkbox5" mnemonicParsing="false" onMouseClicked="#checkbox5Selected" text="Czujnik 5">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
@@ -105,7 +105,7 @@
                   <Insets left="10.0" />
                </VBox.margin>
                 </CheckBox>
-                <CheckBox fx:id="checkbox6" mnemonicParsing="false" onAction="#checkbox6Selected" text="Czujnik 6">
+                <CheckBox fx:id="checkbox6" mnemonicParsing="false" onMouseClicked="#checkbox6Selected" text="Czujnik 6">
                     <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
@@ -115,37 +115,37 @@
                 </CheckBox>
                 <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Połącz">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#disconnectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Rozłącz">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="obserwujButton" mnemonicParsing="false" onAction="#obserwujPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Obserwuj przebieg">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="odtworzButton" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Odtwórz przebieg">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="nagrajButton" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Nagraj przebieg">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="zapiszButton" mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Zapisz przebieg">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetClicked" prefHeight="25.0" prefWidth="130.0" text="RESET">
                     <VBox.margin>
-                        <Insets left="60.0" top="5.0" />
+                        <Insets left="20.0" top="5.0" />
                     </VBox.margin>
                 </Button>
                 <Label text="OŚ X">
@@ -175,34 +175,34 @@
                                 </Button>
                             </children>
                      <padding>
-                        <Insets left="60.0" />
+                        <Insets left="20.0" />
                      </padding>
                         </AnchorPane>
 
                     </items>
                <VBox.margin>
-                  <Insets left="60.0" />
+                  <Insets left="20.0" />
                </VBox.margin>
                 </SplitPane>
                 <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="25.0" prefWidth="125.0" text="RESET ZOOM">
                <VBox.margin>
-                  <Insets left="60.0" />
+                  <Insets left="20.0" />
                </VBox.margin></Button>
             </children>
-            <!--<children>
+            <children>
                 <ImageView
                         fx:id="imageView"
-                        fitHeight="200.0"
+                        fitHeight="245.0"
                         fitWidth="240.0"
                 >
                     <image>
                         <Image
-                                url="file:silnik1.png"
+                                url="file:SilnikPrzerobiony.png"
                                 backgroundLoading="true"
                         />
                     </image>
                 </ImageView>
-            </children>-->
+            </children>
         </VBox>
     </left>
 </BorderPane>

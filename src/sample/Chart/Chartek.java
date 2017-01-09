@@ -67,6 +67,18 @@ public class Chartek {
 
         yAxis = new NumberAxis();
         yAxis.setAutoRanging(true);
+        series = new XYChart.Series<Number, Number>();
+        series.setName(controller.getCheckbox().getText());
+        series2 = new XYChart.Series<Number, Number>();
+        series2.setName(controller.getCheckbox2().getText());
+        series3 = new XYChart.Series<Number, Number>();
+        series3.setName(controller.getCheckbox3().getText());
+        series4 = new XYChart.Series<Number, Number>();
+        series4.setName(controller.getCheckbox4().getText());
+        series5 = new XYChart.Series<Number, Number>();
+        series5.setName(controller.getCheckbox5().getText());
+        series6 = new XYChart.Series<Number, Number>();
+        series6.setName(controller.getCheckbox6().getText());
         if (controller.getLineSelection()){
             XYChart = new LineChart<Number, Number>(xAxis, yAxis) {
                     //Wywalenie Kropek, można dodać
@@ -85,18 +97,7 @@ public class Chartek {
         XYChart.setTitle("Wykres temperaturowy");
         //XYChart.getStyleClass().add(styleClass);
         //-- Chart Series
-        series = new XYChart.Series<Number, Number>();
-        series.setName("Czujnik1");
-        series2 = new XYChart.Series<Number, Number>();
-        series2.setName("Druga seria");
-        series3 = new XYChart.Series<Number, Number>();
-        series3.setName("Trzecia seria");
-        series4 = new XYChart.Series<Number, Number>();
-        series4.setName("Czwarta seria");
-        series5 = new XYChart.Series<Number, Number>();
-        series5.setName("Piąta seria");
-        series6 = new XYChart.Series<Number, Number>();
-        series6.setName("Szósta seria");
+
 
         XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
 
@@ -483,6 +484,30 @@ public class Chartek {
 
     public void setPlayerTime(int playerTime) {
         this.playerTime = playerTime;
+    }
+
+    public javafx.scene.chart.XYChart.Series getSeries() {
+        return series;
+    }
+
+    public javafx.scene.chart.XYChart.Series getSeries2() {
+        return series2;
+    }
+
+    public javafx.scene.chart.XYChart.Series getSeries3() {
+        return series3;
+    }
+
+    public javafx.scene.chart.XYChart.Series getSeries4() {
+        return series4;
+    }
+
+    public javafx.scene.chart.XYChart.Series getSeries5() {
+        return series5;
+    }
+
+    public javafx.scene.chart.XYChart.Series getSeries6() {
+        return series6;
     }
 }
 

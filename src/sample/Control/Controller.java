@@ -33,6 +33,12 @@ public class Controller {
         resetButton.setDisable(true);
         disconnectButton.setDisable(true);
         obserwujButton.setDisable(true);
+//        checkbox.setText(chartek.getSeries().getName());
+//        checkbox2.setText(chartek.getSeries2().getName());
+//        checkbox3.setText(chartek.getSeries3().getName());
+//        checkbox4.setText(chartek.getSeries4().getName());
+//        checkbox5.setText(chartek.getSeries5().getName());
+//        checkbox6.setText(chartek.getSeries6().getName());
 //        checkboxRightClicked();
     }
 
@@ -122,6 +128,7 @@ public class Controller {
     private PlayerTimeBox playerTimeBox = new PlayerTimeBox();
     //@FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
+    ChangeNameBox changeNameBox = new ChangeNameBox();
 
     @FXML
     private void connectButtonClicked() {
@@ -201,36 +208,71 @@ public class Controller {
             chartek.getDataQ().clear();
         } else if (event.getButton() == MouseButton.SECONDARY) {
             System.out.println("prawy");
-            ChangeNameBox changeNameBox = new ChangeNameBox();
             changeNameBox.setChangedName(checkbox.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox.setText(changeNameBox.getChangedName());
+            chartek.getSeries().setName(changeNameBox.getChangedName());
         }
     }
 
     @FXML
-    private void checkbox2Selected() {
-        chartek.getDataQ2().clear();
+    private void checkbox2Selected(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            chartek.getDataQ2().clear();
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            changeNameBox.setChangedName(checkbox2.getText());
+            changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
+            checkbox2.setText(changeNameBox.getChangedName());
+            chartek.getSeries2().setName(changeNameBox.getChangedName());
+        }
     }
 
     @FXML
-    private void checkbox3Selected() {
-        chartek.getDataQ3().clear();
+    private void checkbox3Selected(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            chartek.getDataQ3().clear();
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            changeNameBox.setChangedName(checkbox3.getText());
+            changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
+            checkbox3.setText(changeNameBox.getChangedName());
+            chartek.getSeries3().setName(changeNameBox.getChangedName());
+        }
     }
 
     @FXML
-    private void checkbox4Selected() {
-        chartek.getDataQ4().clear();
+    private void checkbox4Selected(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            chartek.getDataQ4().clear();
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            changeNameBox.setChangedName(checkbox4.getText());
+            changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
+            checkbox4.setText(changeNameBox.getChangedName());
+            chartek.getSeries4().setName(changeNameBox.getChangedName());
+        }
     }
 
     @FXML
-    private void checkbox5Selected() {
-        chartek.getDataQ5().clear();
+    private void checkbox5Selected(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            chartek.getDataQ5().clear();
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            changeNameBox.setChangedName(checkbox5.getText());
+            changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
+            checkbox5.setText(changeNameBox.getChangedName());
+            chartek.getSeries5().setName(changeNameBox.getChangedName());
+        }
     }
 
     @FXML
-    private void checkbox6Selected() {
-        chartek.getDataQ6().clear();
+    private void checkbox6Selected(MouseEvent event) {
+        if (event.getButton() == MouseButton.PRIMARY) {
+            chartek.getDataQ6().clear();
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            changeNameBox.setChangedName(checkbox6.getText());
+            changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
+            checkbox6.setText(changeNameBox.getChangedName());
+            chartek.getSeries6().setName(changeNameBox.getChangedName());
+        }
     }
 
     @FXML
@@ -439,4 +481,51 @@ public class Controller {
         return resetButton;
     }
 
+    public CheckBox getCheckbox() {
+        return checkbox;
+    }
+
+    public void setCheckbox(CheckBox checkbox) {
+        this.checkbox = checkbox;
+    }
+
+    public CheckBox getCheckbox2() {
+        return checkbox2;
+    }
+
+    public void setCheckbox2(CheckBox checkbox2) {
+        this.checkbox2 = checkbox2;
+    }
+
+    public CheckBox getCheckbox3() {
+        return checkbox3;
+    }
+
+    public void setCheckbox3(CheckBox checkbox3) {
+        this.checkbox3 = checkbox3;
+    }
+
+    public CheckBox getCheckbox4() {
+        return checkbox4;
+    }
+
+    public void setCheckbox4(CheckBox checkbox4) {
+        this.checkbox4 = checkbox4;
+    }
+
+    public CheckBox getCheckbox5() {
+        return checkbox5;
+    }
+
+    public void setCheckbox5(CheckBox checkbox5) {
+        this.checkbox5 = checkbox5;
+    }
+
+    public CheckBox getCheckbox6() {
+        return checkbox6;
+    }
+
+    public void setCheckbox6(CheckBox checkbox6) {
+        this.checkbox6 = checkbox6;
+    }
 }

@@ -36,7 +36,7 @@ public class PlayerTimeBox {
         timesMap.put("5 razy szybciej", 5);
         timesMap.put("10 razy szybciej", 10);
         timesMap.put("25 razy szybciej", 25);
-        timesMap.put("Pokaż wszystko", 1000);
+        //timesMap.put("Pokaż wszystko", 1000);
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -45,8 +45,8 @@ public class PlayerTimeBox {
         Label label = new Label();
         label.setText(message);
 
-        Button yesButton = new Button("Połącz");
-        Button noButton = new Button("Anuluj");
+        Button yesButton = new Button("Wybierz");
+        //Button noButton = new Button("Anuluj");
 
 
 
@@ -60,13 +60,14 @@ public class PlayerTimeBox {
             //CommPort commPort = null;
         });
 
-        noButton.setOnAction(event -> {
-
-            window.close();
-        });
+//        noButton.setOnAction(event -> {
+//
+//            window.close();
+//        });
 
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, combobox, yesButton, noButton);
+        //layout.getChildren().addAll(label, combobox, yesButton, noButton);
+        layout.getChildren().addAll(label, combobox, yesButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
         window.setScene(scene);
