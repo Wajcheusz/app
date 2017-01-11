@@ -138,7 +138,7 @@ public class Chartek {
             //while (running){
                 try {
                     //while (running){
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     try {
                         ser.generateSeries(Communicator.temporary);
                         if (Controller.nagrajPrzebiegClicked) {
@@ -266,31 +266,42 @@ public class Chartek {
         at.start();
     }
 
+    public void nadrabianko(int xData, ConcurrentLinkedQueue data, XYChart.Series series){
+        //xData--;
+        int s = data.size();
+        int buf;// = xData-s;
+        for (int i = 0; i < s; i++){
+            buf = (xData-data.size())+1;
+            series.getData().add(new XYChart.Data(buf, data.remove()));
+        }
+    }
+
     private void addDataToSeries() {
         //W ORYGINALE:
 //        for (int i = 0; i < 20; i++) { //-- add 20 numbers to the plot+
 //            if (dataQ.isEmpty()) break;
 //            series.getData().add(new XYChart.Data(xSeriesData++, dataQ.remove()));
 //        }
-
-        if (!dataQ.isEmpty() && controller.getCheckboxSelection()) {
-            series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
-        }
-        if (!dataQ2.isEmpty() && controller.getCheckbox2Selection()) {
-            series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
-        }
-        if (!dataQ3.isEmpty() && controller.getCheckbox3Selection()) {
-            series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
-        }
-        if (!dataQ4.isEmpty() && controller.getCheckbox4Selection()) {
-            series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
-        }
-        if (!dataQ5.isEmpty() && controller.getCheckbox5Selection()) {
-            series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
-        }
-        if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
-            series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
-        }
+        //for (int i = 0; i < 20; i++) {
+            if (!dataQ.isEmpty() && controller.getCheckboxSelection()) {
+                series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
+            }
+            if (!dataQ2.isEmpty() && controller.getCheckbox2Selection()) {
+                series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
+            }
+            if (!dataQ3.isEmpty() && controller.getCheckbox3Selection()) {
+                series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
+            }
+            if (!dataQ4.isEmpty() && controller.getCheckbox4Selection()) {
+                series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
+            }
+            if (!dataQ5.isEmpty() && controller.getCheckbox5Selection()) {
+                series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
+            }
+            if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
+                series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
+            }
+        //}
         if (controller.getSkalowanie().getSelectedToggle().getUserData().equals(0)){
             xAxis.setLowerBound(0);
             xAxis.setUpperBound(xSeriesData - 1);
@@ -408,6 +419,10 @@ public class Chartek {
         this.xAxis.setUpperBound(xAxisUpper);
         this.yAxis.setLowerBound(yAxisLower);
         this.yAxis.setUpperBound(yAxisUpper);
+    }
+
+    public int getxSeriesData() {
+        return xSeriesData;
     }
 
     public NumberAxis getyAxis() {

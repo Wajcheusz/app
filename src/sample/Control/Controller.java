@@ -218,7 +218,8 @@ public class Controller {
     @FXML
     private void checkbox2Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY) {
-            chartek.getDataQ2().clear();
+            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ2(), chartek.getSeries2());
+            //chartek.getDataQ2().clear();
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox2.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
