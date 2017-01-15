@@ -22,8 +22,8 @@ public class Communicator implements SerialPortEventListener {
 //    static final int SPACE_ASCII = 32;
 //    static final int DASH_ASCII = 45;
     static final int NEW_LINE_ASCII = 10;
-    public static String logText = "";
-    private static String selectedPort = null;
+//    public static String logText = "";
+//    private static String selectedPort = null;
     public static CommPort commPort = null;
     Controller controller;
 
@@ -39,12 +39,12 @@ public class Communicator implements SerialPortEventListener {
             setConnected(true);
         } catch (PortInUseException var4) {
             controller.getLogger().clear();
-            controller.getLogger().appendText(selectedPort + " jest zajęty. (" + var4.toString() + ")");
+            controller.getLogger().appendText("Wybrany port jest zajęty. (" + var4.toString() + ")");
 //            logText = selectedPort + " jest zajęty. (" + var4.toString() + ")";
 //            System.out.println(logText + "\n");
         } catch (Exception var5) {
             controller.getLogger().clear();
-            controller.getLogger().appendText("Nie udało się otworzyć portu " + selectedPort + "(" + var5.toString() + ")");
+            controller.getLogger().appendText("Nie udało się otworzyć portu (" + var5.toString() + ")");
 //            logText = "Nie udało się otworyzć portu " + selectedPort + "(" + var5.toString() + ")";
 //            System.out.println(logText + "\n");
         }

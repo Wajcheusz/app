@@ -52,8 +52,8 @@ public class ConnectBox {
             serialPortId = (CommPortIdentifier) enumComm.nextElement();
             if (serialPortId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
                 portMap.put(serialPortId.getName(), serialPortId);
-                System.out.println(serialPortId);
-                System.out.println(serialPortId.getName());
+//                System.out.println(serialPortId);
+//                System.out.println(serialPortId.getName());
                 combobox.getItems().add(serialPortId.getName());
             }
         }
