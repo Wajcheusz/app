@@ -129,6 +129,7 @@ public class Controller {
     //@FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
     ChangeNameBox changeNameBox = new ChangeNameBox();
+    private boolean runningChart = false;
 
     @FXML
     private void connectButtonClicked() {
@@ -203,9 +204,12 @@ public class Controller {
     private void checkboxSelected(MouseEvent event) {
 //        System.out.println("KLIKNIETO");
 //        System.out.println(event.getButton().toString());
-        if (event.getButton() == MouseButton.PRIMARY) {
+        if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ(), chartek.getSeries());
             System.out.println("lewy");
-            chartek.getDataQ().clear();
+            //chartek.getDataQ().clear();
+            chartek.getSeries().setName(this.getCheckbox().getText());
+            //series6.setName(controller.getCheckbox6().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             System.out.println("prawy");
             changeNameBox.setChangedName(checkbox.getText());
@@ -217,8 +221,9 @@ public class Controller {
 
     @FXML
     private void checkbox2Selected(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
+        if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ2(), chartek.getSeries2());
+            chartek.getSeries2().setName(this.getCheckbox2().getText());
             //chartek.getDataQ2().clear();
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox2.getText());
@@ -230,8 +235,10 @@ public class Controller {
 
     @FXML
     private void checkbox3Selected(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            chartek.getDataQ3().clear();
+        if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ3(), chartek.getSeries3());
+            //chartek.getDataQ3().clear();
+            chartek.getSeries3().setName(this.getCheckbox3().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox3.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
@@ -242,8 +249,10 @@ public class Controller {
 
     @FXML
     private void checkbox4Selected(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            chartek.getDataQ4().clear();
+        if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ4(), chartek.getSeries4());
+//            chartek.getDataQ4().clear();
+            chartek.getSeries4().setName(this.getCheckbox4().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox4.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
@@ -254,8 +263,10 @@ public class Controller {
 
     @FXML
     private void checkbox5Selected(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            chartek.getDataQ5().clear();
+        if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ5(), chartek.getSeries5());
+//            chartek.getDataQ5().clear();
+            chartek.getSeries5().setName(' ' + this.getCheckbox5().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox5.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
@@ -266,8 +277,10 @@ public class Controller {
 
     @FXML
     private void checkbox6Selected(MouseEvent event) {
-        if (event.getButton() == MouseButton.PRIMARY) {
-            chartek.getDataQ6().clear();
+        if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ6(), chartek.getSeries6());
+//            chartek.getDataQ6().clear();
+            chartek.getSeries6().setName(this.getCheckbox6().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox6.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
@@ -278,13 +291,13 @@ public class Controller {
 
     @FXML
     private void odtworzPrzebiegClicked() {
+  //      chartek.stop();
         playerTimeBox.init(this);
         playerTimeBox.display("Wybór prędkości odtwarzania", "Wybierz prędkość z jaką chcesz odtworzyć wykres");
 
 
         //chartek = new Chartek();
         chartek.init(this);
-
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki CSV (*.csv)", "*.csv");
@@ -292,6 +305,7 @@ public class Controller {
         File file = fileChooser.showOpenDialog(Main.stage);
         if (file != null) {
             chartek.start();
+            runningChart = true;
             chartek.createChart(file, playerTimeBox.getSelectedSpeed());
             borderPane.setCenter(chartek.getXYChart());
             nagrajButton.setDisable(true);
@@ -320,6 +334,7 @@ public class Controller {
         //chartek = new Chartek();
         chartek.init(this);
         chartek.start();
+        runningChart = true;
         chartek.createRealtimeChart();
         borderPane.setCenter(chartek.getXYChart());
         nagrajButton.setDisable(false);
@@ -331,6 +346,7 @@ public class Controller {
     @FXML
     private void resetClicked() {
         chartek.stop();
+        runningChart = false;
         nagrajButton.setDisable(true);
         obserwujButton.setDisable(false);
         odtworzButton.setDisable(false);
@@ -446,7 +462,7 @@ public class Controller {
         return lineChart.isSelected();
     }
 
-    public Boolean getointsAndLineSelection() {
+    public Boolean getPointsAndLineSelection() {
         return pointsAndLineChart.isSelected();
     }
 

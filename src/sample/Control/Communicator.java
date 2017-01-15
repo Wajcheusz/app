@@ -35,11 +35,8 @@ public class Communicator implements SerialPortEventListener {
 
         try {
             commPort = selectedPortIdentifier.open("Stanowisko laboratoryjne", 1000);
-//            commPort = x.get(4).open("Stanowisko laboratoryjne", 1000);
             serialPort = (SerialPort)commPort;
             setConnected(true);
-            //this.logText = selectedPort + " opened successfully.";
-            //System.out.println(this.logText);
         } catch (PortInUseException var4) {
             logText = selectedPort + " is in use. (" + var4.toString() + ")";
             System.out.println(logText + "\n");
@@ -47,12 +44,10 @@ public class Communicator implements SerialPortEventListener {
             logText = "Failed to open " + selectedPort + "(" + var5.toString() + ")";
             System.out.println(logText + "\n");
         }
-
     }
 
     public boolean initIOStream() {
         boolean successful = false;
-
         try {
             input = serialPort.getInputStream();
             output = serialPort.getOutputStream();
@@ -73,7 +68,6 @@ public class Communicator implements SerialPortEventListener {
             this.logText = "Too many listeners. (" + var2.toString() + ")";
             System.out.println(this.logText + "\n");
         }
-
     }
 
     public final boolean getConnected() {

@@ -51,11 +51,17 @@ public class Chartek {
     public void stop(){
         System.out.println("Force closing");
         XYChart.setVisible(false);
-        executor.shutdownNow();
+        try{executor.shutdownNow();} catch (Exception e){
+            System.out.println("costam");
+        }
+
         controller.getOpcjeMenu().setDisable(false);
         controller.getSkalowanieMenu().setDisable(false);
     }
 
+//    public void init(){
+//
+//    }
     public void start() {
         controller.getOpcjeMenu().setDisable(true);
         controller.getSkalowanieMenu().setDisable(true);
@@ -87,7 +93,7 @@ public class Chartek {
                     protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
                     }
                 };
-        } else if (controller.getointsAndLineSelection()){
+        } else if (controller.getPointsAndLineSelection()){
             XYChart = new LineChart<Number, Number>(xAxis, yAxis);
         } else {
             XYChart = new ScatterChart<Number, Number>(xAxis, yAxis);
@@ -95,12 +101,7 @@ public class Chartek {
         XYChart.setAnimated(false);
         XYChart.setId("Wykres ID");
         XYChart.setTitle("Wykres temperaturowy");
-        //XYChart.getStyleClass().add(styleClass);
-        //-- Chart Series
-
-
         XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
-
     }
 
     public void createChart(File file, int speed) {
@@ -110,9 +111,9 @@ public class Chartek {
             executor = Executors.newCachedThreadPool();
             addToQueueFromText = new AddToQueueFromText(file, speed);
             executor.execute(addToQueueFromText);
-        } else {
-            addToQueueFromTextAll(file);
-        }
+        } //else {
+//            addToQueueFromTextAll(file);
+//        }
         //-- Prepare Timeline
         prepareTimeline(1);
     }
@@ -167,35 +168,33 @@ public class Chartek {
             //}
         }
     }
-
-    //public boolean stop = false;
-    int i = 0;
-    private void addToQueueFromTextAll(File csvFile){
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(csvFile));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String line = "";
-        try {
-            while ((line = br.readLine().trim())!= null) {
-                ser.generateSeries(line);
-                dataQ.add(ser.getCharts().get(0).get(i));
-                dataQ2.add(ser.getCharts().get(1).get(i));
-                dataQ3.add(ser.getCharts().get(2).get(i));
-                dataQ4.add(ser.getCharts().get(3).get(i));
-                dataQ5.add(ser.getCharts().get(4).get(i));
-                dataQ6.add(ser.getCharts().get(5).get(i));
-                i++;
-                xSeriesData++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            System.out.println("koniec pliku!?!?");
-        }
-    }
+//    int i = 0;
+//    private void addToQueueFromTextAll(File csvFile){
+//        BufferedReader br = null;
+//        try {
+//            br = new BufferedReader(new FileReader(csvFile));
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        String line = "";
+//        try {
+//            while ((line = br.readLine().trim())!= null) {
+//                ser.generateSeries(line);
+//                dataQ.add(ser.getCharts().get(0).get(i));
+//                dataQ2.add(ser.getCharts().get(1).get(i));
+//                dataQ3.add(ser.getCharts().get(2).get(i));
+//                dataQ4.add(ser.getCharts().get(3).get(i));
+//                dataQ5.add(ser.getCharts().get(4).get(i));
+//                dataQ6.add(ser.getCharts().get(5).get(i));
+//                i++;
+//                xSeriesData++;
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (NullPointerException e){
+//            System.out.println("koniec pliku!?!?");
+//        }
+//    }
 
     private class AddToQueueFromText implements Runnable {
         public AddToQueueFromText(File csvFile, int speed) {
@@ -208,7 +207,6 @@ public class Chartek {
 
         BufferedReader br = null;
         String line = "";
-
 
         public void run() {
             while (running){
@@ -225,9 +223,7 @@ public class Chartek {
                                 dataQ4.add(ser.getCharts().get(3).get(i));
                                 dataQ5.add(ser.getCharts().get(4).get(i));
                                 dataQ6.add(ser.getCharts().get(5).get(i));
-                                //if (playerTime/speed!=1) {
                                     Thread.sleep(playerTime/speed);
-                                //}
                                 i++;
                                 xSeriesData++;
                             }
@@ -242,7 +238,6 @@ public class Chartek {
                         System.out.println("Nie moge odczytac pliku!");
                     }
                     executor.execute(this);
-                    //Thread.sleep(1000);
                 } catch (InterruptedException exe) {
                     exe.printStackTrace();
                 }
@@ -250,20 +245,19 @@ public class Chartek {
         }
     }
 
-    public AnimationTimer at;
-    public AnimationTimer at2;
+    //public AnimationTimer at;
     //-- Timeline gets called in the JavaFX Main thread
     public void prepareTimeline(int scale) {
         // Every frame to take any data from queue and add to chart
-        at = new AnimationTimer() {
+        new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (scale == 1) {
                 addDataToSeries();
                 }
             }
-        };
-        at.start();
+        }.start();
+        //at.start();
     }
 
     public void nadrabianko(int xData, ConcurrentLinkedQueue data, XYChart.Series series){
