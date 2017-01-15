@@ -4,23 +4,28 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioMenuItem?>
 <?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
     <top>
-        <VBox prefHeight="16.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="32.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
-                <MenuBar>
+                <MenuBar prefHeight="56.0" prefWidth="800.0">
                     <menus>
                         <Menu fx:id="opcjeMenu" mnemonicParsing="false" text="Opcje">
                             <items>
@@ -61,58 +66,54 @@
                     </menus>
                 </MenuBar>
             </children>
+            <children>
+                <TextArea fx:id="logger" layoutY="-2.0" prefHeight="16.0" prefWidth="600.0" />
+            </children>
         </VBox>
     </top>
     <left>
         <VBox prefHeight="726.0" prefWidth="240.0" BorderPane.alignment="CENTER">
             <children>
-                <CheckBox fx:id="checkbox" mnemonicParsing="false" onMouseClicked="#checkboxSelected" text="Czujnik 1">
-                    <VBox.margin>
-                        <Insets left="10.0" />
-                    </VBox.margin>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding></CheckBox>
-                <CheckBox fx:id="checkbox2" mnemonicParsing="false" onMouseClicked="#checkbox2Selected" text="Czujnik 2">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-                </CheckBox>
-                <CheckBox fx:id="checkbox3" mnemonicParsing="false" onMouseClicked="#checkbox3Selected" text="Czujnik 3">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-                </CheckBox>
-                <CheckBox fx:id="checkbox4" mnemonicParsing="false" onMouseClicked="#checkbox4Selected" text="Czujnik 4">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-                </CheckBox>
-                <CheckBox fx:id="checkbox5" mnemonicParsing="false" onMouseClicked="#checkbox5Selected" text="Czujnik 5">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-                </CheckBox>
-                <CheckBox fx:id="checkbox6" mnemonicParsing="false" onMouseClicked="#checkbox6Selected" text="Czujnik 6">
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-                </CheckBox>
+            <SplitPane dividerPositions="0.3487394957983193" prefHeight="170.0" prefWidth="240.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                            <CheckBox fx:id="checkbox" layoutX="4.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#checkboxSelected" text="Czujnik 1">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                </padding>
+                        </CheckBox>
+                            <CheckBox fx:id="checkbox2" layoutX="4.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#checkbox2Selected" text="Czujnik 2">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                </padding>
+                            </CheckBox>
+                            <CheckBox fx:id="checkbox3" layoutX="4.0" layoutY="54.0" mnemonicParsing="false" onMouseClicked="#checkbox3Selected" text="Czujnik 3">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                </padding>
+                            </CheckBox>
+                            <CheckBox fx:id="checkbox4" layoutX="4.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#checkbox4Selected" text="Czujnik 4">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                </padding>
+                            </CheckBox>
+                            <CheckBox fx:id="checkbox5" layoutX="4.0" layoutY="104.0" mnemonicParsing="false" onMouseClicked="#checkbox5Selected" text="Czujnik 5">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                </padding>
+                            </CheckBox>
+                            <CheckBox fx:id="checkbox6" layoutX="4.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#checkbox6Selected" text="Czujnik 6">
+                                <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                </padding>
+                            </CheckBox>
+                     </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="168.0" prefWidth="135.0">
+        </AnchorPane>
+    </items>
+</SplitPane>
                 <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Połącz">
                     <VBox.margin>
                         <Insets left="20.0" top="5.0" />
@@ -189,20 +190,72 @@
                   <Insets left="20.0" />
                </VBox.margin></Button>
             </children>
-            <children>
-                <ImageView
-                        fx:id="imageView"
-                        fitHeight="245.0"
-                        fitWidth="240.0"
-                >
-                    <image>
-                        <Image
-                                url="file:SilnikApka.png"
-                                backgroundLoading="true"
-                        />
-                    </image>
-                </ImageView>
-            </children>
+                <children>
+                    <ImageView
+                            fx:id="imageView"
+                            fitHeight="245.0"
+                            fitWidth="240.0"
+                    >
+                        <image>
+                            <Image
+                                    url="file:SilnikApka.png"
+                                    backgroundLoading="true"
+                            />
+                        </image>
+                    </ImageView>
+                </children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="txt1" />
+                  <TextField fx:id="txt2" GridPane.columnIndex="1" />
+                  <TextField fx:id="txt3" GridPane.columnIndex="2" />
+                  <TextField fx:id="txt4" GridPane.columnIndex="3" />
+                  <TextField fx:id="txt5" GridPane.columnIndex="4" />
+               </children>
+            </GridPane>
+            <!--</children>-->
+            <!--<children>-->
+                <!--<ImageView-->
+                        <!--fx:id="imageView"-->
+                        <!--fitHeight="245.0"-->
+                        <!--fitWidth="240.0"-->
+                <!--&gt;-->
+                    <!--<image>-->
+                        <!--<Image-->
+                                <!--url="file:SilnikApka.png"-->
+                                <!--backgroundLoading="true"-->
+                        <!--/>-->
+                    <!--</image>-->
+                <!--</ImageView>-->
+            <!--</children>-->
+            <!--<children>-->
+                <!--<TextArea fx:id="txt1" layoutX="2.0" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--</children>-->
+            <!--<children>-->
+                <!--<TextArea fx:id="txt2" layoutX="20.0" layoutY="20.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--</children>-->
+            <!--<children>-->
+                <!--<TextArea fx:id="txt3" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--</children>-->
+            <!--<children>-->
+                <!--<TextArea fx:id="txt4" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--</children>-->
+            <!--<children>-->
+                <!--<TextArea fx:id="txt5" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--</children>-->
+            <!--<children>-->
+                <!--<TextArea fx:id="txt6" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--</children>-->
         </VBox>
     </left>
 </BorderPane>

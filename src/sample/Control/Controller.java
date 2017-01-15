@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +46,20 @@ public class Controller {
 
     @FXML
     private BorderPane borderPane = new BorderPane();
+    @FXML
+    private TextArea logger = new TextArea();
+    @FXML
+    private TextField txt1 = new TextField();
+    @FXML
+    private TextField txt2 = new TextField();
+    @FXML
+    private TextField txt3 = new TextField();
+    @FXML
+    private TextField txt4 = new TextField();
+    @FXML
+    private TextField txt5 = new TextField();
+    @FXML
+    private TextField txt6 = new TextField();
     @FXML
     private CheckBox checkbox = new CheckBox();
     @FXML
@@ -544,5 +560,33 @@ public class Controller {
 
     public void setCheckbox6(CheckBox checkbox6) {
         this.checkbox6 = checkbox6;
+    }
+
+    public TextArea getLogger() {
+        return logger;
+    }
+
+    public void setLogger(TextArea logger) {
+        this.logger = logger;
+    }
+
+    public TextField getTxt1() {
+        return txt1;
+    }
+
+    public TextField getTxt2() {
+        return txt2;
+    }
+
+    public TextField getTxt3() {
+        return txt3;
+    }
+
+    public TextField getTxt4() {
+        return txt4;
+    }
+
+    public TextField getTxt5() {
+        return txt5;
     }
 }

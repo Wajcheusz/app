@@ -1,6 +1,7 @@
 package sample.Chart;
 
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
@@ -47,6 +48,7 @@ public class Chartek {
     private int zoom;
     private int move;
     private List<Integer> kolejka= new ArrayList<>();
+    private double a,b,c,d,e,f;
 
     public void stop(){
         System.out.println("Force closing");
@@ -59,9 +61,6 @@ public class Chartek {
         controller.getSkalowanieMenu().setDisable(false);
     }
 
-//    public void init(){
-//
-//    }
     public void start() {
         controller.getOpcjeMenu().setDisable(true);
         controller.getSkalowanieMenu().setDisable(true);
@@ -115,7 +114,7 @@ public class Chartek {
 //            addToQueueFromTextAll(file);
 //        }
         //-- Prepare Timeline
-        prepareTimeline(1);
+        prepareTimeline();
     }
 
     public void createRealtimeChart() {
@@ -125,11 +124,19 @@ public class Chartek {
         addToQueueRealTime = new AddToQueueRealTime();
         executor.execute(addToQueueRealTime);
         //-- Prepare Timeline
-        prepareTimeline(1);
+        prepareTimeline();
     }
 
     public void clearKolejka(){
         kolejka.clear();
+    }
+
+    private void clearTextFields(){
+        controller.getTxt1().clear();
+        controller.getTxt2().clear();
+        controller.getTxt3().clear();
+        controller.getTxt4().clear();
+        controller.getTxt5().clear();
     }
 
     private class AddToQueueRealTime implements Runnable {
@@ -145,12 +152,51 @@ public class Chartek {
                         if (Controller.nagrajPrzebiegClicked) {
                             out.add(Communicator.temporary);
                         }
-                        dataQ.add(ser.getCharts().get(0).get(i));
-                        dataQ2.add(ser.getCharts().get(1).get(i));
-                        dataQ3.add(ser.getCharts().get(2).get(i));
-                        dataQ4.add(ser.getCharts().get(3).get(i));
-                        dataQ5.add(ser.getCharts().get(4).get(i));
-                        dataQ6.add(ser.getCharts().get(5).get(i));
+
+                        a = ser.getCharts().get(0).get(i);
+                        b = ser.getCharts().get(1).get(i);
+                        c = ser.getCharts().get(2).get(i);
+                        d = ser.getCharts().get(3).get(i);
+                        e = ser.getCharts().get(4).get(i);
+                        f = ser.getCharts().get(5).get(i);
+//                                dataQ.add(ser.getCharts().get(0).get(i));
+//                                dataQ2.add(ser.getCharts().get(1).get(i));
+//                                dataQ3.add(ser.getCharts().get(2).get(i));
+//                                dataQ4.add(ser.getCharts().get(3).get(i));
+//                                dataQ5.add(ser.getCharts().get(4).get(i));
+//                                dataQ6.add(ser.getCharts().get(5).get(i));
+                        dataQ.add(a);
+                        dataQ2.add(b);
+                        dataQ3.add(c);
+                        dataQ4.add(d);
+                        dataQ5.add(e);
+                        dataQ6.add(f);
+
+                        Platform.runLater(() -> {
+                            clearTextFields();
+                            controller.getTxt1().appendText(String.valueOf(a));
+                            controller.getTxt2().appendText(String.valueOf(b));
+                            controller.getTxt3().appendText(String.valueOf(c));
+                            controller.getTxt4().appendText(String.valueOf(d));
+                            controller.getTxt5().appendText(String.valueOf(e));
+                        });
+
+//                        dataQ.add(ser.getCharts().get(0).get(i));
+//                        dataQ2.add(ser.getCharts().get(1).get(i));
+//                        dataQ3.add(ser.getCharts().get(2).get(i));
+//                        dataQ4.add(ser.getCharts().get(3).get(i));
+//                        dataQ5.add(ser.getCharts().get(4).get(i));
+//                        dataQ6.add(ser.getCharts().get(5).get(i));
+//
+//                        Platform.runLater(() -> {
+//                                    clearTextFields();
+//                                    controller.getTxt1().appendText(ser.getCharts().get(0).get(i).toString());
+//                                    controller.getTxt2().appendText(ser.getCharts().get(1).get(i).toString());
+//                                    controller.getTxt3().appendText(ser.getCharts().get(2).get(i).toString());
+//                                    controller.getTxt4().appendText(ser.getCharts().get(3).get(i).toString());
+//                                    controller.getTxt5().appendText(ser.getCharts().get(4).get(i).toString());
+//                                });
+
                         System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
                         System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
                         i++;
@@ -217,12 +263,33 @@ public class Chartek {
                             br = new BufferedReader(new FileReader(csvFile));
                             while ((line = br.readLine().trim()) != null) {
                                 ser.generateSeries(line);
-                                dataQ.add(ser.getCharts().get(0).get(i));
-                                dataQ2.add(ser.getCharts().get(1).get(i));
-                                dataQ3.add(ser.getCharts().get(2).get(i));
-                                dataQ4.add(ser.getCharts().get(3).get(i));
-                                dataQ5.add(ser.getCharts().get(4).get(i));
-                                dataQ6.add(ser.getCharts().get(5).get(i));
+                                a = ser.getCharts().get(0).get(i);
+                                b = ser.getCharts().get(1).get(i);
+                                c = ser.getCharts().get(2).get(i);
+                                d = ser.getCharts().get(3).get(i);
+                                e = ser.getCharts().get(4).get(i);
+                                f = ser.getCharts().get(5).get(i);
+//                                dataQ.add(ser.getCharts().get(0).get(i));
+//                                dataQ2.add(ser.getCharts().get(1).get(i));
+//                                dataQ3.add(ser.getCharts().get(2).get(i));
+//                                dataQ4.add(ser.getCharts().get(3).get(i));
+//                                dataQ5.add(ser.getCharts().get(4).get(i));
+//                                dataQ6.add(ser.getCharts().get(5).get(i));
+                                dataQ.add(a);
+                                dataQ2.add(b);
+                                dataQ3.add(c);
+                                dataQ4.add(d);
+                                dataQ5.add(e);
+                                dataQ6.add(f);
+
+                                Platform.runLater(() -> {
+                                            clearTextFields();
+                                            controller.getTxt1().appendText(String.valueOf(a));
+                                            controller.getTxt2().appendText(String.valueOf(b));
+                                            controller.getTxt3().appendText(String.valueOf(c));
+                                            controller.getTxt4().appendText(String.valueOf(d));
+                                            controller.getTxt5().appendText(String.valueOf(e));
+                                        });
                                     Thread.sleep(playerTime/speed);
                                 i++;
                                 xSeriesData++;
@@ -230,6 +297,10 @@ public class Chartek {
                         } catch (NumberFormatException e) {
                             e.printStackTrace();
                         } catch (NullPointerException e) {
+                            Platform.runLater(() -> {
+                                controller.getLogger().clear();
+                                controller.getLogger().appendText("Koniec nagrania");
+                            });
                             System.out.println("koniec pliku???");
                             running = false;
                             //e.printStackTrace();
@@ -247,14 +318,12 @@ public class Chartek {
 
     //public AnimationTimer at;
     //-- Timeline gets called in the JavaFX Main thread
-    public void prepareTimeline(int scale) {
+    public void prepareTimeline() {
         // Every frame to take any data from queue and add to chart
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (scale == 1) {
                 addDataToSeries();
-                }
             }
         }.start();
         //at.start();

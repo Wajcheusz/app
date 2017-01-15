@@ -83,7 +83,7 @@ public class ConnectBox {
             selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
 
             //todo wydziel do innej funkcji
-            communicator = new Communicator(selectedPortIdentifier);
+            communicator = new Communicator(selectedPortIdentifier, controller);
             communicator.connect();
             if(communicator.getConnected() && communicator.initIOStream()) {
                 communicator.initListener();
