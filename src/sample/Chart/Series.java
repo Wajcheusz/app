@@ -39,6 +39,7 @@ public class Series {
 
     private double getNumber(){
         line = line.replace(',', '.');
+        line = line.replaceAll("[^\\d.]", "");
         int index = line.indexOf('.');
         double number = Double.parseDouble(line.substring(0, index+PLACES_AFTER_DOT+1));
         line = line.substring(index+PLACES_AFTER_DOT+1);
