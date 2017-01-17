@@ -106,15 +106,21 @@ public class Chartek {
     public void createChart(File file, int speed) {
         kolejka.clear();
         //-- Prepare Executor Services
-        if (speed != 1000) {
+        if (speed != 25) {
             executor = Executors.newCachedThreadPool();
             addToQueueFromText = new AddToQueueFromText(file, speed);
             executor.execute(addToQueueFromText);
-        } //else {
+        //else {
 //            addToQueueFromTextAll(file);
 //        }
         //-- Prepare Timeline
-        prepareTimeline();
+        prepareTimeline();}
+        else {
+            addToQueueFromTextAll(file);
+            zoom();
+            prepareTimeline();
+        }
+
     }
 
     public void createRealtimeChart() {
@@ -214,33 +220,39 @@ public class Chartek {
             //}
         }
     }
-//    int i = 0;
-//    private void addToQueueFromTextAll(File csvFile){
-//        BufferedReader br = null;
-//        try {
-//            br = new BufferedReader(new FileReader(csvFile));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//        String line = "";
-//        try {
-//            while ((line = br.readLine().trim())!= null) {
-//                ser.generateSeries(line);
-//                dataQ.add(ser.getCharts().get(0).get(i));
-//                dataQ2.add(ser.getCharts().get(1).get(i));
-//                dataQ3.add(ser.getCharts().get(2).get(i));
-//                dataQ4.add(ser.getCharts().get(3).get(i));
-//                dataQ5.add(ser.getCharts().get(4).get(i));
-//                dataQ6.add(ser.getCharts().get(5).get(i));
-//                i++;
-//                xSeriesData++;
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (NullPointerException e){
-//            System.out.println("koniec pliku!?!?");
-//        }
-//    }
+    int i2 = 0;
+    private void addToQueueFromTextAll(File csvFile){
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(csvFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line = "";
+        try {
+            while ((line = br.readLine().trim())!= null) {
+                ser.generateSeries(line);
+                dataQ.add(ser.getCharts().get(0).get(i2));
+                dataQ2.add(ser.getCharts().get(1).get(i2));
+                dataQ3.add(ser.getCharts().get(2).get(i2));
+                dataQ4.add(ser.getCharts().get(3).get(i2));
+                dataQ5.add(ser.getCharts().get(4).get(i2));
+                dataQ6.add(ser.getCharts().get(5).get(i2));
+                series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
+                series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
+                series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
+                series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
+                series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
+                series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
+                i2++;
+                xSeriesData++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            System.out.println("koniec pliku!?!?");
+        }
+    }
 
     private class AddToQueueFromText implements Runnable {
         public AddToQueueFromText(File csvFile, int speed) {
@@ -372,17 +384,51 @@ public class Chartek {
             xAxis.setLowerBound(xSeriesData - (int)controller.getSkalowanie().getSelectedToggle().getUserData());
             xAxis.setUpperBound(xSeriesData - 1);
         }
-            for(int x : kolejka){
-                switch(x){
-                    case 1: pomniejsz();
-                        break;
-                    case 2: powieksz();
-                        break;
-                    case 3: lewo();
-                        break;
-                    case 4: prawo();
-                }
+        zoom();
+//            for(int x : kolejka){
+//                switch(x){
+//                    case 1: pomniejsz();
+//                        break;
+//                    case 2: powieksz();
+//                        break;
+//                    case 3: lewo();
+//                        break;
+//                    case 4: prawo();
+//                }
+//            }
+//
+//
+//        double down=xAxis.getLowerBound();
+//        double up = xAxis.getUpperBound();
+//        double dif = (up-down)/2;
+//        if (down<=0){
+//            controller.getLeft().setDisable(true);
+//        } else {controller.getLeft().setDisable(false);}
+//        if (up>=xSeriesData-1){
+//            controller.getRight().setDisable(true);
+//        } else {controller.getRight().setDisable(false);}
+//
+//        if (down<=0 && up>=xSeriesData){
+//            controller.getZoomOut().setDisable(true);
+//        } else {controller.getZoomOut().setDisable(false);}
+//
+//        if (up-down<6){
+//            controller.getZoom().setDisable(true);
+//        } else {controller.getZoom().setDisable(false);}
+    }
+
+    private void zoom(){
+        for(int x : kolejka){
+            switch(x){
+                case 1: pomniejsz();
+                    break;
+                case 2: powieksz();
+                    break;
+                case 3: lewo();
+                    break;
+                case 4: prawo();
             }
+        }
 
 
         double down=xAxis.getLowerBound();
