@@ -146,6 +146,8 @@ public class Controller {
     public static boolean nagrajPrzebiegClicked = false;
     ChangeNameBox changeNameBox = new ChangeNameBox();
     private boolean runningChart = false;
+    private boolean showChartAll = false;
+    private File file = null;
 
     @FXML
     private void connectButtonClicked() {
@@ -221,6 +223,9 @@ public class Controller {
 //        System.out.println("KLIKNIETO");
 //        System.out.println(event.getButton().toString());
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            if (showChartAll == true) {
+                chartek.createChart(file, 25);
+            }
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ(), chartek.getSeries());
             System.out.println("lewy");
             //chartek.getDataQ().clear();
@@ -238,6 +243,9 @@ public class Controller {
     @FXML
     private void checkbox2Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            if (showChartAll == true) {
+                chartek.createChart(file, 25);
+            }
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ2(), chartek.getSeries2());
             chartek.getSeries2().setName(this.getCheckbox2().getText());
             //chartek.getDataQ2().clear();
@@ -252,6 +260,9 @@ public class Controller {
     @FXML
     private void checkbox3Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            if (showChartAll == true) {
+                chartek.createChart(file, 25);
+            }
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ3(), chartek.getSeries3());
             //chartek.getDataQ3().clear();
             chartek.getSeries3().setName(this.getCheckbox3().getText());
@@ -262,10 +273,17 @@ public class Controller {
             chartek.getSeries3().setName(changeNameBox.getChangedName());
         }
     }
+//
+//    private boolean[] checkSelection(){
+//        if checkbox
+//    }
 
     @FXML
     private void checkbox4Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            if (showChartAll == true) {
+                chartek.createChart(file, 25);
+            }
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ4(), chartek.getSeries4());
 //            chartek.getDataQ4().clear();
             chartek.getSeries4().setName(this.getCheckbox4().getText());
@@ -280,6 +298,9 @@ public class Controller {
     @FXML
     private void checkbox5Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            if (showChartAll == true) {
+                chartek.createChart(file, 25);
+            }
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ5(), chartek.getSeries5());
 //            chartek.getDataQ5().clear();
             chartek.getSeries5().setName(' ' + this.getCheckbox5().getText());
@@ -294,6 +315,9 @@ public class Controller {
     @FXML
     private void checkbox6Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
+            if (showChartAll == true) {
+                chartek.createChart(file, 25);
+            }
             chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ6(), chartek.getSeries6());
 //            chartek.getDataQ6().clear();
             chartek.getSeries6().setName(this.getCheckbox6().getText());
@@ -320,8 +344,14 @@ public class Controller {
         fileChooser.getExtensionFilters().add(extFilter);
         File file = fileChooser.showOpenDialog(Main.stage);
         if (file != null) {
+            this.file = file;
             chartek.start();
             runningChart = true;
+            if (playerTimeBox.getSelectedSpeed() == 25){
+                showChartAll = true;
+            } else {
+                showChartAll = false;
+            }
             chartek.createChart(file, playerTimeBox.getSelectedSpeed());
             borderPane.setCenter(chartek.getXYChart());
             nagrajButton.setDisable(true);
@@ -363,6 +393,7 @@ public class Controller {
     private void resetClicked() {
         chartek.stop();
         runningChart = false;
+        showChartAll = false;
         nagrajButton.setDisable(true);
         obserwujButton.setDisable(false);
         odtworzButton.setDisable(false);

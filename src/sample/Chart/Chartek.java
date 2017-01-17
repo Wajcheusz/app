@@ -20,9 +20,10 @@ import java.util.concurrent.Executors;
  * Created by E6420 on 2016-11-30.
  */
 public class Chartek {
-    public void init(Controller controller){
+    public void init(Controller controller) {
         this.controller = controller;
     }
+
     Controller controller;
     final int LICZBA_CZUJNIKOW = 6;
     private int playerTime = 1000;
@@ -47,13 +48,15 @@ public class Chartek {
     private boolean zoomClicked, zoomOutClicked, leftClicked, rightClicked;
     private int zoom;
     private int move;
-    private List<Integer> kolejka= new ArrayList<>();
-    private double a,b,c,d,e,f;
+    private List<Integer> kolejka = new ArrayList<>();
+    private double a, b, c, d, e, f;
 
-    public void stop(){
+    public void stop() {
         System.out.println("Force closing");
         XYChart.setVisible(false);
-        try{executor.shutdownNow();} catch (Exception e){
+        try {
+            executor.shutdownNow();
+        } catch (Exception e) {
             System.out.println("costam");
         }
 
@@ -84,15 +87,15 @@ public class Chartek {
         series5.setName(controller.getCheckbox5().getText());
         series6 = new XYChart.Series<Number, Number>();
         series6.setName(controller.getCheckbox6().getText());
-        if (controller.getLineSelection()){
+        if (controller.getLineSelection()) {
             XYChart = new LineChart<Number, Number>(xAxis, yAxis) {
-                    //Wywalenie Kropek, można dodać
-                    // Override to remove symbols on each data point
-                    @Override
-                    protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
-                    }
-                };
-        } else if (controller.getPointsAndLineSelection()){
+                //Wywalenie Kropek, można dodać
+                // Override to remove symbols on each data point
+                @Override
+                protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
+                }
+            };
+        } else if (controller.getPointsAndLineSelection()) {
             XYChart = new LineChart<Number, Number>(xAxis, yAxis);
         } else {
             XYChart = new ScatterChart<Number, Number>(xAxis, yAxis);
@@ -110,15 +113,17 @@ public class Chartek {
             executor = Executors.newCachedThreadPool();
             addToQueueFromText = new AddToQueueFromText(file, speed);
             executor.execute(addToQueueFromText);
-        //else {
+            //else {
 //            addToQueueFromTextAll(file);
 //        }
-        //-- Prepare Timeline
-        prepareTimeline();}
-        else {
+            //-- Prepare Timeline
+            prepareTimeline();
+        } else {
+            //XYChart.getData().clear();
             addToQueueFromTextAll(file);
             zoom();
             prepareTimeline();
+            //xSeriesData = 0;
         }
 
     }
@@ -133,11 +138,11 @@ public class Chartek {
         prepareTimeline();
     }
 
-    public void clearKolejka(){
+    public void clearKolejka() {
         kolejka.clear();
     }
 
-    private void clearTextFields(){
+    private void clearTextFields() {
         controller.getTxt1().clear();
         controller.getTxt2().clear();
         controller.getTxt3().clear();
@@ -150,42 +155,42 @@ public class Chartek {
 
         public void run() {
             //while (running){
+            try {
+                //while (running){
+                Thread.sleep(500);
                 try {
-                    //while (running){
-                    Thread.sleep(500);
-                    try {
-                        ser.generateSeries(Communicator.temporary);
-                        if (Controller.nagrajPrzebiegClicked) {
-                            out.add(Communicator.temporary);
-                        }
+                    ser.generateSeries(Communicator.temporary);
+                    if (Controller.nagrajPrzebiegClicked) {
+                        out.add(Communicator.temporary);
+                    }
 
-                        a = ser.getCharts().get(0).get(i);
-                        b = ser.getCharts().get(1).get(i);
-                        c = ser.getCharts().get(2).get(i);
-                        d = ser.getCharts().get(3).get(i);
-                        e = ser.getCharts().get(4).get(i);
-                        f = ser.getCharts().get(5).get(i);
+                    a = ser.getCharts().get(0).get(i);
+                    b = ser.getCharts().get(1).get(i);
+                    c = ser.getCharts().get(2).get(i);
+                    d = ser.getCharts().get(3).get(i);
+                    e = ser.getCharts().get(4).get(i);
+                    f = ser.getCharts().get(5).get(i);
 //                                dataQ.add(ser.getCharts().get(0).get(i));
 //                                dataQ2.add(ser.getCharts().get(1).get(i));
 //                                dataQ3.add(ser.getCharts().get(2).get(i));
 //                                dataQ4.add(ser.getCharts().get(3).get(i));
 //                                dataQ5.add(ser.getCharts().get(4).get(i));
 //                                dataQ6.add(ser.getCharts().get(5).get(i));
-                        dataQ.add(a);
-                        dataQ2.add(b);
-                        dataQ3.add(c);
-                        dataQ4.add(d);
-                        dataQ5.add(e);
-                        dataQ6.add(f);
+                    dataQ.add(a);
+                    dataQ2.add(b);
+                    dataQ3.add(c);
+                    dataQ4.add(d);
+                    dataQ5.add(e);
+                    dataQ6.add(f);
 
-                        Platform.runLater(() -> {
-                            clearTextFields();
-                            controller.getTxt1().appendText(String.valueOf(a));
-                            controller.getTxt2().appendText(String.valueOf(b));
-                            controller.getTxt3().appendText(String.valueOf(c));
-                            controller.getTxt4().appendText(String.valueOf(d));
-                            controller.getTxt5().appendText(String.valueOf(e));
-                        });
+                    Platform.runLater(() -> {
+                        clearTextFields();
+                        controller.getTxt1().appendText(String.valueOf(a));
+                        controller.getTxt2().appendText(String.valueOf(b));
+                        controller.getTxt3().appendText(String.valueOf(c));
+                        controller.getTxt4().appendText(String.valueOf(d));
+                        controller.getTxt5().appendText(String.valueOf(e));
+                    });
 
 //                        dataQ.add(ser.getCharts().get(0).get(i));
 //                        dataQ2.add(ser.getCharts().get(1).get(i));
@@ -203,25 +208,38 @@ public class Chartek {
 //                                    controller.getTxt5().appendText(ser.getCharts().get(4).get(i).toString());
 //                                });
 
-                        System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
-                        System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
-                        i++;
-                        xSeriesData++;
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    } catch (java.lang.Exception ex){ //todo sprawdz
-                        ex.printStackTrace();
-                    }
-                    executor.execute(this);
-
-                } catch (InterruptedException ex) {
-                    //todo dokoncz
+                    System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
+                    System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
+                    i++;
+                    xSeriesData++;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                } catch (java.lang.Exception ex) { //todo sprawdz
+                    ex.printStackTrace();
                 }
+                executor.execute(this);
+
+            } catch (InterruptedException ex) {
+                //todo dokoncz
+            }
             //}
         }
     }
-    int i2 = 0;
-    private void addToQueueFromTextAll(File csvFile){
+
+
+    private void clearSeries(){
+        series.getData().clear();
+        series2.getData().clear();
+        series3.getData().clear();
+        series4.getData().clear();
+        series5.getData().clear();
+        series6.getData().clear();
+    }
+
+    private void addToQueueFromTextAll(File csvFile) {
+        clearSeries();
+        int i2 = 0;
+        xSeriesData = 0;
         BufferedReader br = null;
         try {
             br = new BufferedReader(new FileReader(csvFile));
@@ -230,28 +248,53 @@ public class Chartek {
         }
         String line = "";
         try {
-            while ((line = br.readLine().trim())!= null) {
+            while ((line = br.readLine().trim()) != null) {
                 ser.generateSeries(line);
-                dataQ.add(ser.getCharts().get(0).get(i2));
-                dataQ2.add(ser.getCharts().get(1).get(i2));
-                dataQ3.add(ser.getCharts().get(2).get(i2));
-                dataQ4.add(ser.getCharts().get(3).get(i2));
-                dataQ5.add(ser.getCharts().get(4).get(i2));
-                dataQ6.add(ser.getCharts().get(5).get(i2));
-                series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
-                series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
-                series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
-                series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
-                series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
-                series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
+//                dataQ.add(ser.getCharts().get(0).get(i2));
+//                dataQ2.add(ser.getCharts().get(1).get(i2));
+//                dataQ3.add(ser.getCharts().get(2).get(i2));
+//                dataQ4.add(ser.getCharts().get(3).get(i2));
+//                dataQ5.add(ser.getCharts().get(4).get(i2));
+//                dataQ6.add(ser.getCharts().get(5).get(i2));
+//                series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
+//                series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
+//                series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
+//                series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
+//                series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
+//                series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
+                if (controller.getCheckboxSelection() == true) {
+                    dataQ.add(ser.getCharts().get(0).get(i2));
+                    series.getData().add(new XYChart.Data(i2, dataQ.remove()));
+                }
+                if (controller.getCheckbox2Selection() == true) {
+                    dataQ2.add(ser.getCharts().get(1).get(i2));
+                    series2.getData().add(new XYChart.Data(i2, dataQ2.remove()));
+                }
+                if (controller.getCheckbox3Selection() == true) {
+                    dataQ3.add(ser.getCharts().get(2).get(i2));
+                    series3.getData().add(new XYChart.Data(i2, dataQ3.remove()));
+                }
+                if (controller.getCheckbox4Selection() == true) {
+                    dataQ4.add(ser.getCharts().get(3).get(i2));
+                    series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
+                }
+                if (controller.getCheckbox5Selection() == true) {
+                    dataQ5.add(ser.getCharts().get(4).get(i2));
+                    series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
+                }
+                if (controller.getCheckbox6Selection() == true) {
+                    dataQ6.add(ser.getCharts().get(5).get(i2));
+                    series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
+                }
                 i2++;
                 xSeriesData++;
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("koniec pliku!?!?");
         }
+        //xSeriesData = 0;
     }
 
     private class AddToQueueFromText implements Runnable {
@@ -259,6 +302,7 @@ public class Chartek {
             this.csvFile = csvFile;
             this.speed = speed;
         }
+
         int i = 0;
         private File csvFile;
         private int speed;
@@ -267,7 +311,7 @@ public class Chartek {
         String line = "";
 
         public void run() {
-            while (running){
+            while (running) {
                 try {
                     //Thread.sleep(1000);
                     try {
@@ -295,14 +339,14 @@ public class Chartek {
                                 dataQ6.add(f);
 
                                 Platform.runLater(() -> {
-                                            clearTextFields();
-                                            controller.getTxt1().appendText(String.valueOf(a));
-                                            controller.getTxt2().appendText(String.valueOf(b));
-                                            controller.getTxt3().appendText(String.valueOf(c));
-                                            controller.getTxt4().appendText(String.valueOf(d));
-                                            controller.getTxt5().appendText(String.valueOf(e));
-                                        });
-                                    Thread.sleep(playerTime/speed);
+                                    clearTextFields();
+                                    controller.getTxt1().appendText(String.valueOf(a));
+                                    controller.getTxt2().appendText(String.valueOf(b));
+                                    controller.getTxt3().appendText(String.valueOf(c));
+                                    controller.getTxt4().appendText(String.valueOf(d));
+                                    controller.getTxt5().appendText(String.valueOf(e));
+                                });
+                                Thread.sleep(playerTime / speed);
                                 i++;
                                 xSeriesData++;
                             }
@@ -341,12 +385,12 @@ public class Chartek {
         //at.start();
     }
 
-    public void nadrabianko(int xData, ConcurrentLinkedQueue data, XYChart.Series series){
+    public void nadrabianko(int xData, ConcurrentLinkedQueue data, XYChart.Series series) {
         //xData--;
         int s = data.size();
         int buf;// = xData-s;
-        for (int i = 0; i < s; i++){
-            buf = (xData-data.size())+1;
+        for (int i = 0; i < s; i++) {
+            buf = (xData - data.size()) + 1;
             series.getData().add(new XYChart.Data(buf, data.remove()));
         }
     }
@@ -358,30 +402,30 @@ public class Chartek {
 //            series.getData().add(new XYChart.Data(xSeriesData++, dataQ.remove()));
 //        }
         //for (int i = 0; i < 20; i++) {
-            if (!dataQ.isEmpty() && controller.getCheckboxSelection()) {
-                series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
-            }
-            if (!dataQ2.isEmpty() && controller.getCheckbox2Selection()) {
-                series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
-            }
-            if (!dataQ3.isEmpty() && controller.getCheckbox3Selection()) {
-                series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
-            }
-            if (!dataQ4.isEmpty() && controller.getCheckbox4Selection()) {
-                series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
-            }
-            if (!dataQ5.isEmpty() && controller.getCheckbox5Selection()) {
-                series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
-            }
-            if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
-                series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
-            }
+        if (!dataQ.isEmpty() && controller.getCheckboxSelection()) {
+            series.getData().add(new XYChart.Data(xSeriesData, dataQ.remove()));
+        }
+        if (!dataQ2.isEmpty() && controller.getCheckbox2Selection()) {
+            series2.getData().add(new XYChart.Data(xSeriesData, dataQ2.remove()));
+        }
+        if (!dataQ3.isEmpty() && controller.getCheckbox3Selection()) {
+            series3.getData().add(new XYChart.Data(xSeriesData, dataQ3.remove()));
+        }
+        if (!dataQ4.isEmpty() && controller.getCheckbox4Selection()) {
+            series4.getData().add(new XYChart.Data(xSeriesData, dataQ4.remove()));
+        }
+        if (!dataQ5.isEmpty() && controller.getCheckbox5Selection()) {
+            series5.getData().add(new XYChart.Data(xSeriesData, dataQ5.remove()));
+        }
+        if (!dataQ6.isEmpty() && controller.getCheckbox6Selection()) {
+            series6.getData().add(new XYChart.Data(xSeriesData, dataQ6.remove()));
+        }
         //}
-        if (controller.getSkalowanie().getSelectedToggle().getUserData().equals(0)){
+        if (controller.getSkalowanie().getSelectedToggle().getUserData().equals(0)) {
             xAxis.setLowerBound(0);
             xAxis.setUpperBound(xSeriesData - 1);
         } else {
-            xAxis.setLowerBound(xSeriesData - (int)controller.getSkalowanie().getSelectedToggle().getUserData());
+            xAxis.setLowerBound(xSeriesData - (int) controller.getSkalowanie().getSelectedToggle().getUserData());
             xAxis.setUpperBound(xSeriesData - 1);
         }
         zoom();
@@ -417,73 +461,87 @@ public class Chartek {
 //        } else {controller.getZoom().setDisable(false);}
     }
 
-    private void zoom(){
-        for(int x : kolejka){
-            switch(x){
-                case 1: pomniejsz();
+    private void zoom() {
+        for (int x : kolejka) {
+            switch (x) {
+                case 1:
+                    pomniejsz();
                     break;
-                case 2: powieksz();
+                case 2:
+                    powieksz();
                     break;
-                case 3: lewo();
+                case 3:
+                    lewo();
                     break;
-                case 4: prawo();
+                case 4:
+                    prawo();
             }
         }
 
 
-        double down=xAxis.getLowerBound();
+        double down = xAxis.getLowerBound();
         double up = xAxis.getUpperBound();
-        double dif = (up-down)/2;
-        if (down<=0){
+        double dif = (up - down) / 2;
+        if (down <= 0) {
             controller.getLeft().setDisable(true);
-        } else {controller.getLeft().setDisable(false);}
-        if (up>=xSeriesData-1){
+        } else {
+            controller.getLeft().setDisable(false);
+        }
+        if (up >= xSeriesData - 1) {
             controller.getRight().setDisable(true);
-        } else {controller.getRight().setDisable(false);}
+        } else {
+            controller.getRight().setDisable(false);
+        }
 
-        if (down<=0 && up>=xSeriesData){
+        if (down <= 0 && up >= xSeriesData) {
             controller.getZoomOut().setDisable(true);
-        } else {controller.getZoomOut().setDisable(false);}
+        } else {
+            controller.getZoomOut().setDisable(false);
+        }
 
-        if (up-down<6){
+        if (up - down < 6) {
             controller.getZoom().setDisable(true);
-        } else {controller.getZoom().setDisable(false);}
+        } else {
+            controller.getZoom().setDisable(false);
+        }
     }
 
 
-    public void lewo(){
-        double down=xAxis.getLowerBound();
+    public void lewo() {
+        double down = xAxis.getLowerBound();
         double up = xAxis.getUpperBound();
-        double dif = up-down;
+        double dif = up - down;
         xAxis.setUpperBound(down);
-        xAxis.setLowerBound(Math.max(0, down-dif));
+        xAxis.setLowerBound(Math.max(0, down - dif));
     }
 
-    public void prawo(){
-        double down=xAxis.getLowerBound();
+    public void prawo() {
+        double down = xAxis.getLowerBound();
         double up = xAxis.getUpperBound();
-        double dif = up-down;
-        xAxis.setUpperBound(Math.min(xSeriesData, up+dif));
+        double dif = up - down;
+        xAxis.setUpperBound(Math.min(xSeriesData, up + dif));
         xAxis.setLowerBound(up);
     }
 
-    public void powieksz(){
-        double down=xAxis.getLowerBound();
+    public void powieksz() {
+        double down = xAxis.getLowerBound();
         double up = xAxis.getUpperBound();
-        double dif = (up-down)/2;
-        if (xSeriesData-xAxis.getLowerBound()>8) {
-            xAxis.setLowerBound(down+dif/2);
-            xAxis.setUpperBound(up-dif/2);
-        } else {controller.getZoom().setDisable(true);}
+        double dif = (up - down) / 2;
+        if (xSeriesData - xAxis.getLowerBound() > 8) {
+            xAxis.setLowerBound(down + dif / 2);
+            xAxis.setUpperBound(up - dif / 2);
+        } else {
+            controller.getZoom().setDisable(true);
+        }
     }
 
-    public void pomniejsz(){
-        double down=xAxis.getLowerBound();
+    public void pomniejsz() {
+        double down = xAxis.getLowerBound();
         double up = xAxis.getUpperBound();
-        double dif = (up-down)/2;
+        double dif = (up - down) / 2;
 
-        xAxis.setLowerBound(Math.max(0,down-dif));
-        xAxis.setUpperBound(Math.min(xSeriesData,up+dif));
+        xAxis.setLowerBound(Math.max(0, down - dif));
+        xAxis.setUpperBound(Math.min(xSeriesData, up + dif));
     }
 
 
