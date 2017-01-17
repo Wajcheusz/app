@@ -12,7 +12,7 @@ import java.util.*;
  */
 
 public class Communicator implements SerialPortEventListener {
-    public static String temporary = "40.2 25.5 27.5 28.5 21.5 29.5";
+    public static String temporary = "";
     private CommPortIdentifier selectedPortIdentifier = null;
     private SerialPort serialPort = null;
     private InputStream input = null;
