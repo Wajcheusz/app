@@ -1,4 +1,4 @@
-package sample.Control;
+package sample.Boxes;
 
 import gnu.io.CommPortIdentifier;
 import javafx.geometry.Pos;
@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sample.Control.Controller;
 
 import java.util.*;
 
@@ -30,7 +31,6 @@ public class PlayerTimeBox {
 
 
     public void display(String title, String message){
-        //timesMap.clear();
         combobox.getItems().clear();
         timesMap.put("Rzeczywista", 1);
         timesMap.put("2 razy szybciej", 2);

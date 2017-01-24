@@ -1,7 +1,5 @@
-package sample.Control;
+package sample.Boxes;
 
-import Tigerek.*;
-import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -11,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import sample.Main;
+import sample.Control.*;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -25,7 +23,7 @@ public class ConnectBox {
     private static HashMap portMap = new HashMap();
     private static CommPortIdentifier selectedPortIdentifier = null;
     private static String selectedPort = null;
-    static Communicator communicator = null;
+    static sample.Control.Communicator communicator = null;
     static Controller controller;
 
     public static CommPortIdentifier getSelectedPortIdentifier() {
@@ -39,9 +37,7 @@ public class ConnectBox {
     public void init(Controller controller){
         this.controller = controller;
     }
-    //    String selectedPort = "COM11";//(String)serialPortId.getName();//"COM11";//(String)this.window.cboxPorts.getSelectedItem();
-//    selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
-//    CommPort commPort = null;
+
     private static void showPorts(){
         combobox.getItems().clear();
         CommPortIdentifier serialPortId;
@@ -52,8 +48,6 @@ public class ConnectBox {
             serialPortId = (CommPortIdentifier) enumComm.nextElement();
             if (serialPortId.getPortType() == CommPortIdentifier.PORT_SERIAL) {
                 portMap.put(serialPortId.getName(), serialPortId);
-//                System.out.println(serialPortId);
-//                System.out.println(serialPortId.getName());
                 combobox.getItems().add(serialPortId.getName());
             }
         }
@@ -78,12 +72,11 @@ public class ConnectBox {
         yesButton.setOnAction(event -> {
             System.out.println(combobox.getValue());
             connected = true;
-//            window.close();
-            selectedPort = combobox.getValue().toString();//(String)serialPortId.getName();//"COM11";//(String)this.window.cboxPorts.getSelectedItem();
+            selectedPort = combobox.getValue().toString();
             selectedPortIdentifier = (CommPortIdentifier)portMap.get(selectedPort);
 
             //todo wydziel do innej funkcji
-            communicator = new Communicator(selectedPortIdentifier, controller);
+            communicator = new sample.Control.Communicator(selectedPortIdentifier, controller);
             communicator.connect();
             if(communicator.getConnected() && communicator.initIOStream()) {
                 communicator.initListener();
@@ -92,7 +85,6 @@ public class ConnectBox {
                 controller.getObserwujButton().setDisable(false);
             }
             window.close();
-            //CommPort commPort = null;
         });
 
         noButton.setOnAction(event -> {

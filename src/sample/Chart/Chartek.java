@@ -198,7 +198,7 @@ public class Chartek {
                 executor.execute(this);
 
             } catch (InterruptedException ex) {
-                //todo dokoncz
+                ex.printStackTrace();
             }
         }
     }

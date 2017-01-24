@@ -1,7 +1,6 @@
 package sample.Control;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
@@ -12,10 +11,12 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
+import sample.Boxes.ChangeNameBox;
+import sample.Boxes.ConnectBox;
+import sample.Boxes.PlayerTimeBox;
 import sample.Chart.Chartek;
 import sample.Main;
 
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -377,7 +378,6 @@ public class Controller {
 
     @FXML
     private void obserwujPrzebiegClicked() {
-        //chartek = new Chartek();
         chartek.init(this);
         chartek.start();
         runningChart = true;

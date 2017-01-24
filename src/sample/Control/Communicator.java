@@ -40,13 +40,9 @@ public class Communicator implements SerialPortEventListener {
         } catch (PortInUseException var4) {
             controller.getLogger().clear();
             controller.getLogger().appendText("Wybrany port jest zajęty. (" + var4.toString() + ")");
-//            logText = selectedPort + " jest zajęty. (" + var4.toString() + ")";
-//            System.out.println(logText + "\n");
         } catch (Exception var5) {
             controller.getLogger().clear();
             controller.getLogger().appendText("Nie udało się otworzyć portu (" + var5.toString() + ")");
-//            logText = "Nie udało się otworyzć portu " + selectedPort + "(" + var5.toString() + ")";
-//            System.out.println(logText + "\n");
         }
     }
 
@@ -60,8 +56,6 @@ public class Communicator implements SerialPortEventListener {
         } catch (IOException var3) {
             controller.getLogger().clear();
             controller.getLogger().appendText("Nie udało się otworzyć (" + var3.toString() + ")");
-//            logText = "I/O Streams failed to open. (" + var3.toString() + ")";
-//            System.out.println(logText + "\n");
             return successful;
         }
     }
@@ -73,8 +67,6 @@ public class Communicator implements SerialPortEventListener {
         } catch (TooManyListenersException var2) {
             controller.getLogger().clear();
             controller.getLogger().appendText("Zbyt dużo listenerów. (" + var2.toString() + ")");
-//            this.logText = "Too many listeners. (" + var2.toString() + ")";
-//            System.out.println(this.logText + "\n");
         }
     }
 
@@ -94,17 +86,10 @@ public class Communicator implements SerialPortEventListener {
                 byte singleData = (byte)input.read();
 
                 if (singleData != NEW_LINE_ASCII) {
-//                    logText = new String(new byte[] {singleData});
-//                    liczba = liczba + logText;
                     liczba = liczba + new String(new byte[] {singleData});
                 } else {
                     controller.getLogger().clear();
-                    //controller.getLogger().appendText("Cliczba: " + liczba);
-                    //System.out.print("Cliczba: " + liczba);
                     temporary = liczba;
-                    //controller.getLogger().appendText("Cliczba: " + liczba);
-                    //System.out.println("Ctemporary: " + temporary);
-                    //System.out.print("\n");
                     liczba = "";
                 }
             }

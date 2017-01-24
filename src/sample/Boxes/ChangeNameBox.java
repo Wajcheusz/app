@@ -1,26 +1,22 @@
-package sample.Control;
+package sample.Boxes;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.util.LinkedHashMap;
+import sample.Control.Controller;
 
 /**
  * Created by E6420 on 2017-01-09.
  */
 public class ChangeNameBox {
 
-
     Controller controller;
     private String changedName;
-
 
     public void init(Controller controller){
         this.controller = controller;
@@ -43,11 +39,9 @@ public class ChangeNameBox {
         yesButton.setOnAction(event -> {
             changedName = textField.getText();
             window.close();
-            //CommPort commPort = null;
         });
 
         noButton.setOnAction(event -> {
-
             window.close();
         });
 
