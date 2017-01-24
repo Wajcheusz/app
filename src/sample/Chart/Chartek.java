@@ -28,7 +28,7 @@ public class Chartek {
     Controller controller;
     final int LICZBA_CZUJNIKOW = 6;
     final int REFRESH_TIME = 1000;
-    private int playerTime = 1000;
+    final int PLAYER_TIME = 1000;
     private ArrayList<String> out = new ArrayList<>();
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
     private ConcurrentLinkedQueue<Number> dataQ2 = new ConcurrentLinkedQueue<Number>();
@@ -145,6 +145,7 @@ public class Chartek {
         controller.getTxt3().clear();
         controller.getTxt4().clear();
         controller.getTxt5().clear();
+        controller.getTxt6().clear();
     }
 
     private class AddToQueueRealTime implements Runnable {
@@ -184,10 +185,8 @@ public class Chartek {
                             controller.getTxt3().appendText(String.valueOf(c));
                             controller.getTxt4().appendText(String.valueOf(d));
                             controller.getTxt5().appendText(String.valueOf(e));
+                            controller.getTxt6().appendText(String.valueOf(f));
                         });
-
-                        System.out.println("Po przetworzeniu: " + ser.getCharts().get(0).get(i));
-                        System.out.println("Po przetworzeniu2: " + ser.getCharts().get(1).get(i));
                         i++;
                         xSeriesData++;
                     }
@@ -230,7 +229,7 @@ public class Chartek {
         try {
             while ((line = br.readLine().trim()) != null) {
                 ser.generateSeries(line);
-                x.oblicz(ser);
+//                x.oblicz(ser);
                 if (controller.getCheckboxSelection() == true) {
                     dataQ.add(ser.getCharts().get(0).get(i2));
                     series.getData().add(new XYChart.Data(i2, dataQ.remove()));
@@ -261,8 +260,10 @@ public class Chartek {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
-            System.out.println("koniec pliku!?!?");
+            controller.getLogger().clear();
+            controller.getLogger().appendText("Koniec nagrania");
         }
+        x.oblicz(ser.getCharts().get(0));
     }
 
     private class AddToQueueFromText implements Runnable {
@@ -307,8 +308,9 @@ public class Chartek {
                                     controller.getTxt3().appendText(String.valueOf(c));
                                     controller.getTxt4().appendText(String.valueOf(d));
                                     controller.getTxt5().appendText(String.valueOf(e));
+                                    controller.getTxt6().appendText(String.valueOf(f));
                                 });
-                                Thread.sleep(playerTime / speed);
+                                Thread.sleep(PLAYER_TIME / speed);
                                 i++;
                                 xSeriesData++;
                             }
@@ -319,12 +321,11 @@ public class Chartek {
                                 controller.getLogger().clear();
                                 controller.getLogger().appendText("Koniec nagrania");
                             });
-                            System.out.println("koniec pliku???");
                             running = false;
-                            //e.printStackTrace();
                         }
                     } catch (IOException ex) {
-                        System.out.println("Nie moge odczytac pliku!");
+                        controller.getLogger().clear();
+                        controller.getLogger().appendText("Nie moge odczytac pliku!");
                     }
                     executor.execute(this);
                 } catch (InterruptedException exe) {
@@ -579,14 +580,6 @@ public class Chartek {
 
     public void setXYChart(javafx.scene.chart.XYChart<Number, Number> XYChart) {
         this.XYChart = XYChart;
-    }
-
-    public int getPlayerTime() {
-        return playerTime;
-    }
-
-    public void setPlayerTime(int playerTime) {
-        this.playerTime = playerTime;
     }
 
     public javafx.scene.chart.XYChart.Series getSeries() {

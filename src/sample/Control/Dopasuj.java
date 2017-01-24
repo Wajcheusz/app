@@ -2,8 +2,7 @@ package sample.Control;
 
 import sample.Chart.Series;
 
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -13,39 +12,49 @@ public class Dopasuj {
     private Series ser;
     private double max, min;
     private int maxIx, minIx;
+    double stalaCzasowa;
 
+    public double search(double value, List<Double> b) {
+        List a = new ArrayList(b);
+        for (ListIterator<Double> bs = a.listIterator(); bs.hasNext();) {
+            Double element = bs.next();
+            bs.set(element-min);
+        }
+        //Collections.sort(a);
+        int lo = 0;
+        int hi = a.size() - 1;
 
-    public void oblicz(Series ser) {
-//        double max = Collections.max(ser.getCharts().get(0));
-//        double min = Collections.min(ser.getCharts().get(0));
-//        int t = 0;
-//        for (double i : ser.getCharts().get(0)) {
-//
-//        }
-//        IntStream.range(0, ser.getCharts().get(0).size())
-//                .boxed().min(Comparator.comparing(ser.getCharts().get(0)::get))
-//                .ifPresent(ix -> {
-//                    System.out.println("Index min" + ix + ", value min" + ser.getCharts().get(0).get(ix));
-//                    min = ser.getCharts().get(0).get(ix);
-//                    minIx = ix;
-//                });
-//
-//        IntStream.range(0, ser.getCharts().get(0).size())
-//                .boxed().max(Comparator.comparing(ser.getCharts().get(0)::get))
-//                .ifPresent(ix -> {
-//                    System.out.println("Index " + ix + ", value " + ser.getCharts().get(0).get(ix));
-//                    max = ser.getCharts().get(0).get(ix);
-//                    maxIx = ix;
-//                });
-//
-//        System.out.println("MaxIx " + maxIx + ", value " + max);
-//        System.out.println("MinIx " + minIx + ", value " + min);
-//        int minIndex = ser.getCharts().get(0).indexOf(Collections.min(ser.getCharts().get(0)));
-        int minIndex = ser.getCharts().get(0).lastIndexOf(Collections.min(ser.getCharts().get(0)));
+        double lastValue = 0;
+
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            lastValue = (double) a.get(mid);
+            if (value < lastValue) {
+                hi = mid - 1;
+            } else if (value > lastValue) {
+                lo = mid + 1;
+            } else {
+                return lastValue;
+            }
+        }
+        return lastValue;
+    }
+
+    public double oblicz(List ser) {
+        int minIndex = ser.lastIndexOf(Collections.min(ser));
         System.out.println("MinIx " + minIndex + ", value " + ser.getCharts().get(0).get(minIndex));
+        min = ser.getCharts().get(0).get(minIndex);
 
         int maxIndex = ser.getCharts().get(0).indexOf(Collections.max(ser.getCharts().get(0)));
         System.out.println("MaxIx " + maxIndex + ", value " + ser.getCharts().get(0).get(maxIndex));
+
+        max = ser.getCharts().get(0).get(maxIndex);
+        double point = search((max-min)*0.632,  ser.getCharts().get(0));
+        //System.out.println("Close " + close);
+        //System.out.println(ser.getCharts().get(0).indexOf(close+min));
+        System.out.println(ser.getCharts().get(0).indexOf(point+min)-minIndex);
+        stalaCzasowa = ser.getCharts().get(0).indexOf(point+min)-minIndex;
+        return stalaCzasowa;
     }
 
     public Series getSer() {

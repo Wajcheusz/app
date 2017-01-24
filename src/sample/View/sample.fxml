@@ -72,9 +72,14 @@
                                 </Menu>
                             </items>
                         </Menu>
-                        <Menu disable="true" mnemonicParsing="false" text="Help">
+                        <Menu mnemonicParsing="false" text="Oblicz">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="About"/>
+                                <MenuItem fx:id="stala1" mnemonicParsing="false" text="Stała czasowa czujnika 1" onAction="#stala1ButtonClicked"/>
+                                <MenuItem fx:id="stala2" mnemonicParsing="false" text="Stała czasowa czujnika 2" onAction="#stala2ButtonClicked"/>
+                                <MenuItem fx:id="stala3" mnemonicParsing="false" text="Stała czasowa czujnika 3" onAction="#stala3ButtonClicked"/>
+                                <MenuItem fx:id="stala4" mnemonicParsing="false" text="Stała czasowa czujnika 4" onAction="#stala4ButtonClicked"/>
+                                <MenuItem fx:id="stala5" mnemonicParsing="false" text="Stała czasowa czujnika 5" onAction="#stala5ButtonClicked"/>
+                                <MenuItem fx:id="stala6" mnemonicParsing="false" text="Stała czasowa czujnika 6" onAction="#stala6ButtonClicked"/>
                             </items>
                         </Menu>
                     </menus>
@@ -158,7 +163,7 @@
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </padding>
                                 </TextField>
-                                <TextField fx:id="tx" layoutX="30.0" layoutY="140.0" prefWidth="60">
+                                <TextField fx:id="txt6" layoutX="30.0" layoutY="140.0" prefWidth="60">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                                     </padding>

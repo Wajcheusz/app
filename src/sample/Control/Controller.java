@@ -31,6 +31,7 @@ public class Controller {
     public void initialize() {
         System.out.println("Application started");
         skalowanie();
+        logger.setEditable(false);
         nagrajButton.setDisable(true);
         zapiszButton.setDisable(true);
         resetButton.setDisable(true);
@@ -79,6 +80,18 @@ public class Controller {
     private RadioMenuItem lineChart = new RadioMenuItem();
     @FXML
     private RadioMenuItem pointsAndLineChart = new RadioMenuItem();
+    @FXML
+    private MenuItem stala1 = new MenuItem();
+    @FXML
+    private MenuItem stala2 = new MenuItem();
+    @FXML
+    private MenuItem stala3 = new MenuItem();
+    @FXML
+    private MenuItem stala4 = new MenuItem();
+    @FXML
+    private MenuItem stala5 = new MenuItem();
+    @FXML
+    private MenuItem stala6 = new MenuItem();
 
     @FXML
     private ToggleGroup skalowanie = new ToggleGroup();
@@ -166,6 +179,13 @@ public class Controller {
         resetButton.setDisable(true);
         chartek.stop();
         Communicator.commPort.close();
+        logger.clear();
+        logger.setText("Rozłączono");
+    }
+
+    @FXML
+    private void stala1ButtonClicked(){
+        logger.setText("Stała czasowa " + this.checkbox.getText() + "wynosi: " + );
     }
 
     @FXML
@@ -619,5 +639,9 @@ public class Controller {
 
     public TextField getTxt5() {
         return txt5;
+    }
+
+    public TextField getTxt6() {
+        return txt6;
     }
 }

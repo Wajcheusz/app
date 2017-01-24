@@ -37,6 +37,8 @@ public class Communicator implements SerialPortEventListener {
             commPort = selectedPortIdentifier.open("Stanowisko laboratoryjne", 1000);
             serialPort = (SerialPort)commPort;
             setConnected(true);
+            controller.getLogger().clear();
+            controller.getLogger().appendText("Połączono z portem: " + commPort.toString());
         } catch (PortInUseException var4) {
             controller.getLogger().clear();
             controller.getLogger().appendText("Wybrany port jest zajęty. (" + var4.toString() + ")");
@@ -88,7 +90,7 @@ public class Communicator implements SerialPortEventListener {
                 if (singleData != NEW_LINE_ASCII) {
                     liczba = liczba + new String(new byte[] {singleData});
                 } else {
-                    controller.getLogger().clear();
+                    //controller.getLogger().clear();
                     temporary = liczba;
                     liczba = "";
                 }
