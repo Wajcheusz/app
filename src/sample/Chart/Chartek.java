@@ -104,6 +104,8 @@ public class Chartek {
         XYChart.setAnimated(false);
         XYChart.setId("Wykres ID");
         XYChart.setTitle("Wykres temperaturowy");
+        XYChart.getXAxis().setLabel("Czas [s]");
+        XYChart.getYAxis().setLabel("Temperatura [°C]");
         XYChart.getData().addAll(series, series2, series3, series4, series5, series6);
     }
 

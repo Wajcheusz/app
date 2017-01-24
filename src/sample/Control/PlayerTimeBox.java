@@ -21,7 +21,7 @@ public class PlayerTimeBox {
     ComboBox combobox = new ComboBox();
 
     Controller controller;
-    LinkedHashMap timesMap; //keeps the keys in order they were inserted
+    LinkedHashMap timesMap = new LinkedHashMap<String, Integer>(); //keeps the keys in order they were inserted
     private int selectedSpeed = 1;
 
     public void init(Controller controller){
@@ -30,12 +30,13 @@ public class PlayerTimeBox {
 
 
     public void display(String title, String message){
-        timesMap = new LinkedHashMap<String, Integer>();
+        //timesMap.clear();
+        combobox.getItems().clear();
         timesMap.put("Rzeczywista", 1);
         timesMap.put("2 razy szybciej", 2);
         timesMap.put("5 razy szybciej", 5);
         timesMap.put("10 razy szybciej", 10);
-        timesMap.put("25 razy szybciej", 25);
+        timesMap.put("Pokaż wszystko", 25);
         //timesMap.put("Pokaż wszystko", 1000);
 
         Stage window = new Stage();
