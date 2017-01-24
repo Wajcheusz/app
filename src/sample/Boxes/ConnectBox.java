@@ -15,7 +15,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 
 /**
- * Created by E6420 on 2017-01-07.
+ * Created by Mateusz.Blaszczak on 2017-01-07.
  */
 public class ConnectBox {
     static boolean connected;

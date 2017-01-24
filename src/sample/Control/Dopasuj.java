@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.stream.IntStream;
 
 /**
- * Created by E6420 on 2017-01-17.
+ * Created by Mateusz.Blaszczak on 2017-01-17.
  */
 public class Dopasuj {
     private Series ser;

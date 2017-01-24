@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by E6420 on 2016-11-30.
+ * Created by Mateusz.Blaszczak on 2016-11-30.
  */
 public class Chartek {
     public void init(Controller controller) {
@@ -27,6 +27,7 @@ public class Chartek {
 
     Controller controller;
     final int LICZBA_CZUJNIKOW = 6;
+    final int REFRESH_TIME = 1000;
     private int playerTime = 1000;
     private ArrayList<String> out = new ArrayList<>();
     private ConcurrentLinkedQueue<Number> dataQ = new ConcurrentLinkedQueue<Number>();
@@ -58,7 +59,7 @@ public class Chartek {
         try {
             executor.shutdownNow();
         } catch (Exception e) {
-            System.out.println("costam");
+            e.printStackTrace();
         }
 
         controller.getOpcjeMenu().setDisable(false);
@@ -153,7 +154,7 @@ public class Chartek {
             //while (running){
             try {
                 //while (running){
-                Thread.sleep(500);
+                Thread.sleep(REFRESH_TIME);
                 try {
                     if (!Communicator.temporary.equals("")) ;
                     {
@@ -262,7 +263,6 @@ public class Chartek {
         } catch (NullPointerException e) {
             System.out.println("koniec pliku!?!?");
         }
-        //xSeriesData = 0;
     }
 
     private class AddToQueueFromText implements Runnable {
@@ -343,7 +343,7 @@ public class Chartek {
         }.start();
     }
 
-    public void nadrabianko(int xData, ConcurrentLinkedQueue data, XYChart.Series series) {
+    public void addSkippedPoints(int xData, ConcurrentLinkedQueue data, XYChart.Series series) {
         int s = data.size();
         int buf;
         for (int i = 0; i < s; i++) {

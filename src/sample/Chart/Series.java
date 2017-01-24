@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by E6420 on 2016-12-28.
+ * Created by Mateusz.Blaszczak on 2016-12-28.
  */
 public class Series {
     final int PLACES_AFTER_DOT = 1;

@@ -14,7 +14,7 @@ import sample.Control.Controller;
 import java.util.*;
 
 /**
- * Created by E6420 on 2017-01-08.
+ * Created by Mateusz.Blaszczak on 2017-01-08.
  */
 
 public class PlayerTimeBox {

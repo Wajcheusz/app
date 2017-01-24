@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.util.*;
 
 /**
- * Created by E6420 on 2016-11-19.
+ * Created by Mateusz.Blaszczak on 2016-11-19.
  */
 
 public class Communicator implements SerialPortEventListener {

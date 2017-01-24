@@ -21,7 +21,9 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="824.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.102"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Control.Controller">
     <top>
         <VBox prefHeight="32.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <children>
@@ -31,230 +33,309 @@
                             <items>
                                 <RadioMenuItem fx:id="lineChart" mnemonicParsing="false" text="Wykres liniowy">
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="chartOptions" />
-                                    </toggleGroup></RadioMenuItem>
-                                <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false" text="Wykres liniowy z punktami" toggleGroup="$chartOptions" />
-                                <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" selected="true" text="Wykres punktowy" toggleGroup="$chartOptions" />
+                                        <ToggleGroup fx:id="chartOptions"/>
+                                    </toggleGroup>
+                                </RadioMenuItem>
+                                <RadioMenuItem fx:id="pointsAndLineChart" mnemonicParsing="false"
+                                               text="Wykres liniowy z punktami" toggleGroup="$chartOptions"/>
+                                <RadioMenuItem fx:id="pointsChart" mnemonicParsing="false" selected="true"
+                                               text="Wykres punktowy" toggleGroup="$chartOptions"/>
                             </items>
                         </Menu>
                         <Menu fx:id="skalowanieMenu" mnemonicParsing="false" text="Skalowanie">
                             <items>
-                                <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" selected="true" text="Automatyczne">
+                                <RadioMenuItem fx:id="skalowanieAutomatyczne" mnemonicParsing="false" selected="true"
+                                               text="Automatyczne">
                                     <toggleGroup>
-                                        <ToggleGroup fx:id="skalowanie" />
+                                        <ToggleGroup fx:id="skalowanie"/>
                                     </toggleGroup>
                                 </RadioMenuItem>
                                 <Menu mnemonicParsing="false" text="Stałe">
                                     <items>
-                                        <RadioMenuItem fx:id="skalowanie30Sekund" mnemonicParsing="false" text="30 sekund" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie1Minuta" mnemonicParsing="false" text="1 minuta" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie2Minuty" mnemonicParsing="false" text="2 minuty" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie5Minut" mnemonicParsing="false" text="5 minut" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie10Minut" mnemonicParsing="false" text="10 minut" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie20Minut" mnemonicParsing="false" text="20 minut" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie40Minut" mnemonicParsing="false" text="40 minut" toggleGroup="$skalowanie" />
-                                        <RadioMenuItem fx:id="skalowanie60Minut" mnemonicParsing="false" text="60 minut" toggleGroup="$skalowanie" />
+                                        <RadioMenuItem fx:id="skalowanie30Sekund" mnemonicParsing="false"
+                                                       text="30 sekund" toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie1Minuta" mnemonicParsing="false" text="1 minuta"
+                                                       toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie2Minuty" mnemonicParsing="false" text="2 minuty"
+                                                       toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie5Minut" mnemonicParsing="false" text="5 minut"
+                                                       toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie10Minut" mnemonicParsing="false" text="10 minut"
+                                                       toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie20Minut" mnemonicParsing="false" text="20 minut"
+                                                       toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie40Minut" mnemonicParsing="false" text="40 minut"
+                                                       toggleGroup="$skalowanie"/>
+                                        <RadioMenuItem fx:id="skalowanie60Minut" mnemonicParsing="false" text="60 minut"
+                                                       toggleGroup="$skalowanie"/>
                                     </items>
                                 </Menu>
                             </items>
                         </Menu>
                         <Menu disable="true" mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
+                                <MenuItem mnemonicParsing="false" text="About"/>
                             </items>
                         </Menu>
                     </menus>
                 </MenuBar>
             </children>
             <children>
-                <TextArea fx:id="logger" layoutY="-2.0" prefHeight="16.0" prefWidth="600.0" />
+                <TextArea fx:id="logger" layoutY="-2.0" prefHeight="16.0" prefWidth="600.0"/>
             </children>
         </VBox>
     </top>
     <left>
-        <VBox prefHeight="726.0" prefWidth="240.0" BorderPane.alignment="CENTER">
+        <VBox prefHeight="704.0" prefWidth="240.0" BorderPane.alignment="CENTER">
             <children>
-            <SplitPane dividerPositions="0.3487394957983193" prefHeight="170.0" prefWidth="240.0">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                     <children>
-                            <CheckBox fx:id="checkbox" layoutX="4.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#checkboxSelected" text="Czujnik 1">
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                        </CheckBox>
-                            <CheckBox fx:id="checkbox2" layoutX="4.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#checkbox2Selected" text="Czujnik 2">
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </CheckBox>
-                            <CheckBox fx:id="checkbox3" layoutX="4.0" layoutY="54.0" mnemonicParsing="false" onMouseClicked="#checkbox3Selected" text="Czujnik 3">
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </CheckBox>
-                            <CheckBox fx:id="checkbox4" layoutX="4.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#checkbox4Selected" text="Czujnik 4">
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </CheckBox>
-                            <CheckBox fx:id="checkbox5" layoutX="4.0" layoutY="104.0" mnemonicParsing="false" onMouseClicked="#checkbox5Selected" text="Czujnik 5">
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </CheckBox>
-                            <CheckBox fx:id="checkbox6" layoutX="4.0" layoutY="128.0" mnemonicParsing="false" onMouseClicked="#checkbox6Selected" text="Czujnik 6">
-                                <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                </padding>
-                            </CheckBox>
-                     </children>
-        </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="168.0" prefWidth="135.0">
-        </AnchorPane>
-    </items>
-</SplitPane>
-                <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Połącz">
+                <SplitPane dividerPositions="0.5" prefHeight="170.0" prefWidth="240.0">
+                    <!--<SplitPane dividerPositions="0.3487394957983193" prefHeight="170.0" prefWidth="240.0">-->
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                            <children>
+                                <CheckBox fx:id="checkbox" layoutX="4.0" layoutY="0.0" mnemonicParsing="false"
+                                          onMouseClicked="#checkboxSelected" text="Czujnik 1">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </CheckBox>
+                                <CheckBox fx:id="checkbox2" layoutX="4.0" layoutY="28.0" mnemonicParsing="false"
+                                          onMouseClicked="#checkbox2Selected" text="Czujnik 2">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </CheckBox>
+                                <CheckBox fx:id="checkbox3" layoutX="4.0" layoutY="56.0" mnemonicParsing="false"
+                                          onMouseClicked="#checkbox3Selected" text="Czujnik 3">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </CheckBox>
+                                <CheckBox fx:id="checkbox4" layoutX="4.0" layoutY="84.0" mnemonicParsing="false"
+                                          onMouseClicked="#checkbox4Selected" text="Czujnik 4">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </CheckBox>
+                                <CheckBox fx:id="checkbox5" layoutX="4.0" layoutY="112.0" mnemonicParsing="false"
+                                          onMouseClicked="#checkbox5Selected" text="Czujnik 5">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </CheckBox>
+                                <CheckBox fx:id="checkbox6" layoutX="4.0" layoutY="140.0" mnemonicParsing="false"
+                                          onMouseClicked="#checkbox6Selected" text="Czujnik 6">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </CheckBox>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="168.0" prefWidth="135.0">
+                            <children>
+                                <TextField fx:id="txt1" layoutX="30.0" layoutY="0.0" prefWidth="60">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </TextField>
+                                <TextField fx:id="txt2" layoutX="30.0" layoutY="28.0" prefWidth="60">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </TextField>
+                                <TextField fx:id="txt3" layoutX="30.0" layoutY="56.0" prefWidth="60">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </TextField>
+                                <TextField fx:id="txt4" layoutX="30.0" layoutY="84.0" prefWidth="60">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </TextField>
+                                <TextField fx:id="txt5" layoutX="30.0" layoutY="112.0" prefWidth="60">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </TextField>
+                                <TextField fx:id="tx" layoutX="30.0" layoutY="140.0" prefWidth="60">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </TextField>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+                <Button fx:id="connectButton" mnemonicParsing="false" onAction="#connectButtonClicked" prefHeight="25.0"
+                        prefWidth="150.0" text="Połącz">
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="2.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#disconnectButtonClicked" prefHeight="25.0" prefWidth="130.0" text="Rozłącz">
+                <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#disconnectButtonClicked"
+                        prefHeight="25.0" prefWidth="150.0" text="Rozłącz">
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="obserwujButton" mnemonicParsing="false" onAction="#obserwujPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Obserwuj przebieg">
+                <Button fx:id="obserwujButton" mnemonicParsing="false" onAction="#obserwujPrzebiegClicked"
+                        prefHeight="25.0" prefWidth="150.0" text="Obserwuj przebieg">
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="odtworzButton" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Odtwórz przebieg">
+                <Button fx:id="odtworzButton" mnemonicParsing="false" onAction="#odtworzPrzebiegClicked"
+                        prefHeight="25.0" prefWidth="150.0" text="Odtwórz przebieg">
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="nagrajButton" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Nagraj przebieg">
+                <Button fx:id="nagrajButton" mnemonicParsing="false" onAction="#nagrajPrzebiegClicked" prefHeight="25.0"
+                        prefWidth="150.0" text="Nagraj przebieg">
+                    <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="file:Play.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="zapiszButton" mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0" prefWidth="130.0" text="Zapisz przebieg">
+                <Button fx:id="zapiszButton" mnemonicParsing="false" onAction="#zapiszPrzebiegClicked" prefHeight="25.0"
+                        prefWidth="150.0" text="Zapisz przebieg">
+                    <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="file:Stop.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
-                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetClicked" prefHeight="25.0" prefWidth="130.0" text="RESET">
+                <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetClicked" prefHeight="25.0"
+                        prefWidth="150.0" text="RESET">
                     <VBox.margin>
-                        <Insets left="20.0" top="5.0" />
+                        <Insets left="50.0" top="5.0"/>
                     </VBox.margin>
                 </Button>
                 <Label text="OŚ X">
-               <VBox.margin>
-                  <Insets left="110.0" top="5.0" />
-               </VBox.margin>
+                    <VBox.margin>
+                        <Insets left="110.0" top="5.0"/>
+                    </VBox.margin>
                 </Label>
-                <SplitPane dividerPositions="0.5040650406504065" maxWidth="-Infinity" prefHeight="75.0" prefWidth="125.0">
+                <SplitPane dividerPositions="0.5040650406504065" maxWidth="-Infinity" prefHeight="75.0"
+                           prefWidth="150.0">
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="128.0" prefWidth="59.0">
                             <children>
-                                <Button fx:id="left" layoutX="5.0" layoutY="37.0" mnemonicParsing="false" onAction="#leftButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&lt;" />
-                                <Button fx:id="zoomOut" layoutX="5.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="50.0" text="-">
+                                <Button fx:id="left" layoutX="5.0" layoutY="37.0" mnemonicParsing="false"
+                                        onAction="#leftButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&lt;"/>
+                                <Button fx:id="zoomOut" layoutX="5.0" layoutY="1.0" mnemonicParsing="false"
+                                        onAction="#zoomOutClicked" prefHeight="25.0" prefWidth="50.0" text="-">
                                     <padding>
-                                        <Insets left="2.0" top="10.0" />
+                                        <Insets left="2.0" top="10.0"/>
                                     </padding>
                                 </Button>
                             </children>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="75.0" prefWidth="58.0">
                             <children>
-                                <Button fx:id="right" layoutX="4.0" layoutY="37.0" mnemonicParsing="false" onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;" />
-                                <Button fx:id="zoom" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
+                                <Button fx:id="right" layoutX="4.0" layoutY="37.0" mnemonicParsing="false"
+                                        onAction="#rightButtonClicked" prefHeight="25.0" prefWidth="50.0" text="&gt;"/>
+                                <Button fx:id="zoom" layoutX="4.0" layoutY="1.0" mnemonicParsing="false"
+                                        onAction="#zoomClicked" prefHeight="25.0" prefWidth="50.0" text="+">
                                     <padding>
-                                        <Insets left="2.0" top="10.0" />
+                                        <Insets left="2.0" top="10.0"/>
                                     </padding>
                                 </Button>
                             </children>
-                     <padding>
-                        <Insets left="20.0" />
-                     </padding>
+                            <padding>
+                                <Insets left="20.0"/>
+                            </padding>
                         </AnchorPane>
 
                     </items>
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin>
+                    <VBox.margin>
+                        <Insets left="50.0"/>
+                    </VBox.margin>
                 </SplitPane>
-                <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked" prefHeight="25.0" prefWidth="125.0" text="RESET ZOOM">
-               <VBox.margin>
-                  <Insets left="20.0" />
-               </VBox.margin></Button>
+                <Button fx:id="resetZoomButton" mnemonicParsing="false" onAction="#resetZoomButtonClicked"
+                        prefHeight="25.0" prefWidth="150.0" text="RESET ZOOM">
+                    <VBox.margin>
+                        <Insets left="50.0" top="5.0" bottom="5.0"/>
+                    </VBox.margin>
+                </Button>
             </children>
-                <children>
-                    <ImageView
-                            fx:id="imageView"
-                            fitHeight="245.0"
-                            fitWidth="240.0"
-                    >
-                        <image>
-                            <Image
-                                    url="file:SilnikApka.png"
-                                    backgroundLoading="true"
-                            />
-                        </image>
-                    </ImageView>
-                </children>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <TextField fx:id="txt1" />
-                  <TextField fx:id="txt2" GridPane.columnIndex="1" />
-                  <TextField fx:id="txt3" GridPane.columnIndex="2" />
-                  <TextField fx:id="txt4" GridPane.columnIndex="3" />
-                  <TextField fx:id="txt5" GridPane.columnIndex="4" />
-               </children>
-            </GridPane>
+            <children>
+                <ImageView
+                        fx:id="imageView"
+                        fitHeight="245.0"
+                        fitWidth="240.0"
+                >
+                    <image>
+                        <Image
+                                url="file:SilnikApka.png"
+                                backgroundLoading="true"
+                        />
+                    </image>
+                </ImageView>
+            </children>
+            <!--<GridPane>-->
+            <!--<columnConstraints>-->
+            <!--<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+            <!--<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+            <!--<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+            <!--<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+            <!--<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />-->
+            <!--</columnConstraints>-->
+            <!--<rowConstraints>-->
+            <!--<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />-->
+            <!--</rowConstraints>-->
+            <!--<children>-->
+            <!--<TextField fx:id="txt1" />-->
+            <!--<TextField fx:id="txt2" GridPane.columnIndex="1" />-->
+            <!--<TextField fx:id="txt3" GridPane.columnIndex="2" />-->
+            <!--<TextField fx:id="txt4" GridPane.columnIndex="3" />-->
+            <!--<TextField fx:id="txt5" GridPane.columnIndex="4" />-->
+            <!--</children>-->
+            <!--</GridPane>-->
             <!--</children>-->
             <!--<children>-->
-                <!--<ImageView-->
-                        <!--fx:id="imageView"-->
-                        <!--fitHeight="245.0"-->
-                        <!--fitWidth="240.0"-->
-                <!--&gt;-->
-                    <!--<image>-->
-                        <!--<Image-->
-                                <!--url="file:SilnikApka.png"-->
-                                <!--backgroundLoading="true"-->
-                        <!--/>-->
-                    <!--</image>-->
-                <!--</ImageView>-->
+            <!--<ImageView-->
+            <!--fx:id="imageView"-->
+            <!--fitHeight="245.0"-->
+            <!--fitWidth="240.0"-->
+            <!--&gt;-->
+            <!--<image>-->
+            <!--<Image-->
+            <!--url="file:SilnikApka.png"-->
+            <!--backgroundLoading="true"-->
+            <!--/>-->
+            <!--</image>-->
+            <!--</ImageView>-->
             <!--</children>-->
             <!--<children>-->
-                <!--<TextArea fx:id="txt1" layoutX="2.0" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--<TextArea fx:id="txt1" layoutX="2.0" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
             <!--</children>-->
             <!--<children>-->
-                <!--<TextArea fx:id="txt2" layoutX="20.0" layoutY="20.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--<TextArea fx:id="txt2" layoutX="20.0" layoutY="20.0" prefHeight="10.0" prefWidth="1.0" />-->
             <!--</children>-->
             <!--<children>-->
-                <!--<TextArea fx:id="txt3" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--<TextArea fx:id="txt3" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
             <!--</children>-->
             <!--<children>-->
-                <!--<TextArea fx:id="txt4" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--<TextArea fx:id="txt4" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
             <!--</children>-->
             <!--<children>-->
-                <!--<TextArea fx:id="txt5" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--<TextArea fx:id="txt5" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
             <!--</children>-->
             <!--<children>-->
-                <!--<TextArea fx:id="txt6" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
+            <!--<TextArea fx:id="txt6" layoutY="2.0" prefHeight="10.0" prefWidth="1.0" />-->
             <!--</children>-->
         </VBox>
     </left>

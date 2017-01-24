@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import sample.Control.Controller;
 
 /**
- * Created by E6420 on 2017-01-09.
+ * Created by Mateusz.Blaszczak on 2017-01-09.
  */
 public class ChangeNameBox {
 
@@ -21,7 +21,6 @@ public class ChangeNameBox {
     public void init(Controller controller){
         this.controller = controller;
     }
-
 
     public void display(String title, String message){
         Stage window = new Stage();

@@ -227,7 +227,7 @@ public class Controller {
             if (showChartAll == true) {
                 chartek.createChart(file, 25);
             }
-            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ(), chartek.getSeries());
+            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ(), chartek.getSeries());
             System.out.println("lewy");
             //chartek.getDataQ().clear();
             chartek.getSeries().setName(this.getCheckbox().getText());
@@ -247,7 +247,7 @@ public class Controller {
             if (showChartAll == true) {
                 chartek.createChart(file, 25);
             }
-            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ2(), chartek.getSeries2());
+            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ2(), chartek.getSeries2());
             chartek.getSeries2().setName(this.getCheckbox2().getText());
             //chartek.getDataQ2().clear();
         } else if (event.getButton() == MouseButton.SECONDARY) {
@@ -264,7 +264,7 @@ public class Controller {
             if (showChartAll == true) {
                 chartek.createChart(file, 25);
             }
-            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ3(), chartek.getSeries3());
+            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ3(), chartek.getSeries3());
             //chartek.getDataQ3().clear();
             chartek.getSeries3().setName(this.getCheckbox3().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
@@ -285,7 +285,7 @@ public class Controller {
             if (showChartAll == true) {
                 chartek.createChart(file, 25);
             }
-            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ4(), chartek.getSeries4());
+            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ4(), chartek.getSeries4());
 //            chartek.getDataQ4().clear();
             chartek.getSeries4().setName(this.getCheckbox4().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
@@ -302,7 +302,7 @@ public class Controller {
             if (showChartAll == true) {
                 chartek.createChart(file, 25);
             }
-            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ5(), chartek.getSeries5());
+            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ5(), chartek.getSeries5());
 //            chartek.getDataQ5().clear();
             chartek.getSeries5().setName(' ' + this.getCheckbox5().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
@@ -319,7 +319,7 @@ public class Controller {
             if (showChartAll == true) {
                 chartek.createChart(file, 25);
             }
-            chartek.nadrabianko(chartek.getxSeriesData(), chartek.getDataQ6(), chartek.getSeries6());
+            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ6(), chartek.getSeries6());
 //            chartek.getDataQ6().clear();
             chartek.getSeries6().setName(this.getCheckbox6().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
