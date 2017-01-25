@@ -73,8 +73,8 @@ public class Chartek {
         areaChart.getStyleClass().add(styleClass);
     }
 
-//    public Chartek(String styleClass) {
-//        Chartek chartek = new Chartek();
+//    public Plot(String styleClass) {
+//        Plot chartek = new Plot();
 //        chartek.areaChart.getStyleClass().add(styleClass);
 //    }
 

@@ -1,4 +1,4 @@
-package sample.Control;
+package sample.Chart;
 
 import sample.Chart.Series;
 
@@ -8,10 +8,8 @@ import java.util.stream.IntStream;
 /**
  * Created by Mateusz.Blaszczak on 2017-01-17.
  */
-public class Dopasuj {
-    private Series ser;
+public class TimeConstant {
     private double max, min;
-    private int maxIx, minIx;
     double stalaCzasowa;
 
     private double search(double value, List<Double> b) {
@@ -20,7 +18,7 @@ public class Dopasuj {
             Double element = bs.next();
             bs.set(element-min);
         }
-        //Collections.sort(a);
+
         int lo = 0;
         int hi = a.size() - 1;
 
@@ -49,13 +47,5 @@ public class Dopasuj {
         double point = search((max-min)*0.632,  data);
         stalaCzasowa = data.indexOf(point+min)-minIndex;
         return stalaCzasowa;
-    }
-
-    public Series getSer() {
-        return ser;
-    }
-
-    public void setSer(Series ser) {
-        this.ser = ser;
     }
 }

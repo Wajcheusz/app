@@ -8,7 +8,6 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import sample.Control.Communicator;
 import sample.Control.Controller;
-import sample.Control.Dopasuj;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by Mateusz.Blaszczak on 2016-11-30.
  */
-public class Chartek {
+public class Plot {
     public void init(Controller controller) {
         this.controller = controller;
     }
@@ -126,7 +125,6 @@ public class Chartek {
     }
 
     public void createRealtimeChart() {
-        //clearDataQ();
         xSeriesData = 0;
         ser = new Series(LICZBA_CZUJNIKOW);
         kolejka.clear();
@@ -154,9 +152,7 @@ public class Chartek {
         int i = 0;
 
         public void run() {
-            //while (running){
             try {
-                //while (running){
                 Thread.sleep(REFRESH_TIME);
                 try {
                     if (!Communicator.temporary.equals("")) ;
@@ -225,13 +221,12 @@ public class Chartek {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        Dopasuj x = new Dopasuj();
+        TimeConstant x = new TimeConstant();
 
         String line = "";
         try {
             while ((line = br.readLine().trim()) != null) {
                 ser.generateSeries(line);
-//                x.oblicz(ser);
                 if (controller.getCheckboxSelection() == true) {
                     dataQ.add(ser.getCharts().get(0).get(i2));
                     series.getData().add(new XYChart.Data(i2, dataQ.remove()));
@@ -265,7 +260,6 @@ public class Chartek {
             controller.getLogger().clear();
             controller.getLogger().appendText("Koniec nagrania");
         }
-//        x.oblicz(ser.getCharts().get(0));
     }
 
     private class AddToQueueFromText implements Runnable {
@@ -402,10 +396,8 @@ public class Chartek {
             }
         }
 
-
         double down = xAxis.getLowerBound();
         double up = xAxis.getUpperBound();
-        double dif = (up - down) / 2;
         if (down <= 0) {
             controller.getLeft().setDisable(true);
         } else {

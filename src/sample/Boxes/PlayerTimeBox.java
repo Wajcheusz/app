@@ -37,7 +37,6 @@ public class PlayerTimeBox {
         timesMap.put("5 razy szybciej", 5);
         timesMap.put("10 razy szybciej", 10);
         timesMap.put("Pokaż wszystko", 25);
-        //timesMap.put("Pokaż wszystko", 1000);
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);

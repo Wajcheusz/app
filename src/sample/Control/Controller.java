@@ -14,7 +14,8 @@ import javafx.stage.FileChooser;
 import sample.Boxes.ChangeNameBox;
 import sample.Boxes.ConnectBox;
 import sample.Boxes.PlayerTimeBox;
-import sample.Chart.Chartek;
+import sample.Chart.Plot;
+import sample.Chart.TimeConstant;
 import sample.Main;
 
 import java.io.File;
@@ -39,12 +40,12 @@ public class Controller {
         obserwujButton.setDisable(true);
         obliczMenu.setDisable(true);
 
-//        checkbox.setText(chartek.getSeries().getName());
-//        checkbox2.setText(chartek.getSeries2().getName());
-//        checkbox3.setText(chartek.getSeries3().getName());
-//        checkbox4.setText(chartek.getSeries4().getName());
-//        checkbox5.setText(chartek.getSeries5().getName());
-//        checkbox6.setText(chartek.getSeries6().getName());
+//        checkbox.setText(plot.getSeries().getName());
+//        checkbox2.setText(plot.getSeries2().getName());
+//        checkbox3.setText(plot.getSeries3().getName());
+//        checkbox4.setText(plot.getSeries4().getName());
+//        checkbox5.setText(plot.getSeries5().getName());
+//        checkbox6.setText(plot.getSeries6().getName());
 //        checkboxRightClicked();
     }
 
@@ -157,17 +158,17 @@ public class Controller {
     private MenuItem nagrajPrzebiegItem = new MenuItem();
     @FXML
     private MenuItem odtworzPrzebiegItem = new MenuItem();
-    private Chartek chartek = new Chartek();
-    //private Chartek chartek = null;
+    private Plot plot = new Plot();
+    //private Plot plot = null;
     private ConnectBox connectBox = new ConnectBox();
     private PlayerTimeBox playerTimeBox = new PlayerTimeBox();
-    //@FXML private XYChart<Number, Number> XYChart = chartek.getXYChart();
+    //@FXML private XYChart<Number, Number> XYChart = plot.getXYChart();
     public static boolean nagrajPrzebiegClicked = false;
     ChangeNameBox changeNameBox = new ChangeNameBox();
     private boolean runningChart = false;
     private boolean showChartAll = false;
     private File file = null;
-    Dopasuj dopasuj = new Dopasuj();
+    TimeConstant timeConstant = new TimeConstant();
 
     @FXML
     private void connectButtonClicked() {
@@ -183,7 +184,7 @@ public class Controller {
         nagrajButton.setDisable(true);
         odtworzButton.setDisable(false);
         resetButton.setDisable(true);
-        chartek.stop();
+        plot.stop();
         Communicator.commPort.close();
         logger.clear();
         logger.setText("Rozłączono");
@@ -191,59 +192,59 @@ public class Controller {
 
     @FXML
     private void stala1ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(0)));
+        logger.setText("Stała czasowa " + this.checkbox.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(0)));
     }
 
     @FXML
     private void stala2ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox2.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(1)));
+        logger.setText("Stała czasowa " + this.checkbox2.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(1)));
     }
 
     @FXML
     private void stala3ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox3.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(2)));
+        logger.setText("Stała czasowa " + this.checkbox3.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(2)));
     }
 
     @FXML
     private void stala4ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox4.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(3)));
+        logger.setText("Stała czasowa " + this.checkbox4.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(3)));
     }
 
     @FXML
     private void stala5ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox5.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(4)));
+        logger.setText("Stała czasowa " + this.checkbox5.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(4)));
     }
 
     @FXML
     private void stala6ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox6.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(5)));
+        logger.setText("Stała czasowa " + this.checkbox6.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(5)));
     }
 
     @FXML
     private void resetZoomButtonClicked() {
-        chartek.clearKolejka();
+        plot.clearKolejka();
     }
 
 
     @FXML
     private void leftButtonClicked() {
-        chartek.getKolejka().add(3);
+        plot.getKolejka().add(3);
 
     }
 
     @FXML
     private void rightButtonClicked() {
-        chartek.getKolejka().add(4);
+        plot.getKolejka().add(4);
     }
 
     @FXML
     private void zoomClicked() {
-        chartek.getKolejka().add(2);
+        plot.getKolejka().add(2);
     }
 
     @FXML
     private void zoomOutClicked() {
-        chartek.getKolejka().add(1);
+        plot.getKolejka().add(1);
     }
 
 
@@ -276,19 +277,19 @@ public class Controller {
 //        System.out.println(event.getButton().toString());
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             if (showChartAll == true) {
-                chartek.createChart(file, 25);
+                plot.createChart(file, 25);
             }
-            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ(), chartek.getSeries());
+            plot.addSkippedPoints(plot.getxSeriesData(), plot.getDataQ(), plot.getSeries());
             System.out.println("lewy");
-            //chartek.getDataQ().clear();
-            chartek.getSeries().setName(this.getCheckbox().getText());
+            //plot.getDataQ().clear();
+            plot.getSeries().setName(this.getCheckbox().getText());
             //series6.setName(controller.getCheckbox6().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             System.out.println("prawy");
             changeNameBox.setChangedName(checkbox.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox.setText(changeNameBox.getChangedName());
-            chartek.getSeries().setName(changeNameBox.getChangedName());
+            plot.getSeries().setName(changeNameBox.getChangedName());
         }
     }
 
@@ -296,16 +297,16 @@ public class Controller {
     private void checkbox2Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             if (showChartAll == true) {
-                chartek.createChart(file, 25);
+                plot.createChart(file, 25);
             }
-            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ2(), chartek.getSeries2());
-            chartek.getSeries2().setName(this.getCheckbox2().getText());
-            //chartek.getDataQ2().clear();
+            plot.addSkippedPoints(plot.getxSeriesData(), plot.getDataQ2(), plot.getSeries2());
+            plot.getSeries2().setName(this.getCheckbox2().getText());
+            //plot.getDataQ2().clear();
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox2.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox2.setText(changeNameBox.getChangedName());
-            chartek.getSeries2().setName(changeNameBox.getChangedName());
+            plot.getSeries2().setName(changeNameBox.getChangedName());
         }
     }
 
@@ -313,16 +314,16 @@ public class Controller {
     private void checkbox3Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             if (showChartAll == true) {
-                chartek.createChart(file, 25);
+                plot.createChart(file, 25);
             }
-            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ3(), chartek.getSeries3());
-            //chartek.getDataQ3().clear();
-            chartek.getSeries3().setName(this.getCheckbox3().getText());
+            plot.addSkippedPoints(plot.getxSeriesData(), plot.getDataQ3(), plot.getSeries3());
+            //plot.getDataQ3().clear();
+            plot.getSeries3().setName(this.getCheckbox3().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox3.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox3.setText(changeNameBox.getChangedName());
-            chartek.getSeries3().setName(changeNameBox.getChangedName());
+            plot.getSeries3().setName(changeNameBox.getChangedName());
         }
     }
 //
@@ -334,16 +335,16 @@ public class Controller {
     private void checkbox4Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             if (showChartAll == true) {
-                chartek.createChart(file, 25);
+                plot.createChart(file, 25);
             }
-            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ4(), chartek.getSeries4());
-//            chartek.getDataQ4().clear();
-            chartek.getSeries4().setName(this.getCheckbox4().getText());
+            plot.addSkippedPoints(plot.getxSeriesData(), plot.getDataQ4(), plot.getSeries4());
+//            plot.getDataQ4().clear();
+            plot.getSeries4().setName(this.getCheckbox4().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox4.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox4.setText(changeNameBox.getChangedName());
-            chartek.getSeries4().setName(changeNameBox.getChangedName());
+            plot.getSeries4().setName(changeNameBox.getChangedName());
         }
     }
 
@@ -351,16 +352,16 @@ public class Controller {
     private void checkbox5Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             if (showChartAll == true) {
-                chartek.createChart(file, 25);
+                plot.createChart(file, 25);
             }
-            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ5(), chartek.getSeries5());
-//            chartek.getDataQ5().clear();
-            chartek.getSeries5().setName(' ' + this.getCheckbox5().getText());
+            plot.addSkippedPoints(plot.getxSeriesData(), plot.getDataQ5(), plot.getSeries5());
+//            plot.getDataQ5().clear();
+            plot.getSeries5().setName(' ' + this.getCheckbox5().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox5.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox5.setText(changeNameBox.getChangedName());
-            chartek.getSeries5().setName(changeNameBox.getChangedName());
+            plot.getSeries5().setName(changeNameBox.getChangedName());
         }
     }
 
@@ -368,28 +369,28 @@ public class Controller {
     private void checkbox6Selected(MouseEvent event) {
         if (event.getButton() == MouseButton.PRIMARY && runningChart) {
             if (showChartAll == true) {
-                chartek.createChart(file, 25);
+                plot.createChart(file, 25);
             }
-            chartek.addSkippedPoints(chartek.getxSeriesData(), chartek.getDataQ6(), chartek.getSeries6());
-//            chartek.getDataQ6().clear();
-            chartek.getSeries6().setName(this.getCheckbox6().getText());
+            plot.addSkippedPoints(plot.getxSeriesData(), plot.getDataQ6(), plot.getSeries6());
+//            plot.getDataQ6().clear();
+            plot.getSeries6().setName(this.getCheckbox6().getText());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             changeNameBox.setChangedName(checkbox6.getText());
             changeNameBox.display("Zmiana nazwy", "Wpisz nową nazwę");
             checkbox6.setText(changeNameBox.getChangedName());
-            chartek.getSeries6().setName(changeNameBox.getChangedName());
+            plot.getSeries6().setName(changeNameBox.getChangedName());
         }
     }
 
     @FXML
     private void odtworzPrzebiegClicked() {
-  //      chartek.stop();
+  //      plot.stop();
         playerTimeBox.init(this);
         playerTimeBox.display("Wybór prędkości odtwarzania", "Wybierz prędkość z jaką chcesz odtworzyć wykres");
 
 
-        //chartek = new Chartek();
-        chartek.init(this);
+        //plot = new Plot();
+        plot.init(this);
         FileChooser fileChooser = new FileChooser();
 
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Pliki CSV (*.csv)", "*.csv");
@@ -397,7 +398,7 @@ public class Controller {
         File file = fileChooser.showOpenDialog(Main.stage);
         if (file != null) {
             this.file = file;
-            chartek.start();
+            plot.start();
             runningChart = true;
             if (playerTimeBox.getSelectedSpeed() == 25){
                 showChartAll = true;
@@ -406,8 +407,8 @@ public class Controller {
                 showChartAll = false;
                 obliczMenu.setDisable(true);
             }
-            chartek.createChart(file, playerTimeBox.getSelectedSpeed());
-            borderPane.setCenter(chartek.getXYChart());
+            plot.createChart(file, playerTimeBox.getSelectedSpeed());
+            borderPane.setCenter(plot.getXYChart());
             nagrajButton.setDisable(true);
             resetButton.setDisable(false);
             obserwujButton.setDisable(true);
@@ -420,7 +421,7 @@ public class Controller {
         try {
             String nazwaPliku = "test5.csv";
             Path sciezka = Paths.get(nazwaPliku);
-            Files.write(sciezka, chartek.getOut());
+            Files.write(sciezka, plot.getOut());
             nagrajPrzebiegClicked = true;
         } catch (IOException ex) {
             System.out.println("Nie mogę zapisać pliku!");
@@ -431,12 +432,12 @@ public class Controller {
 
     @FXML
     private void obserwujPrzebiegClicked() {
-        chartek.init(this);
-        chartek.start();
+        plot.init(this);
+        plot.start();
         runningChart = true;
         showChartAll = false;
-        chartek.createRealtimeChart();
-        borderPane.setCenter(chartek.getXYChart());
+        plot.createRealtimeChart();
+        borderPane.setCenter(plot.getXYChart());
         obliczMenu.setDisable(true);
         nagrajButton.setDisable(false);
         resetButton.setDisable(false);
@@ -446,11 +447,11 @@ public class Controller {
 
     @FXML
     private void resetClicked() {
-        chartek.stop();
+        plot.stop();
         runningChart = false;
         showChartAll = false;
         nagrajButton.setDisable(true);
-        obserwujButton.setDisable(false);
+        obserwujButton.setDisable(!getConnectButton().isDisabled());
         odtworzButton.setDisable(false);
         resetButton.setDisable(true);
         zapiszButton.setDisable(true);
@@ -466,7 +467,7 @@ public class Controller {
 
         File file = fileChooser.showSaveDialog(Main.stage);
         if (file != null) {
-            SaveFile(chartek.getOut(), file);
+            SaveFile(plot.getOut(), file);
         }
     }
 
