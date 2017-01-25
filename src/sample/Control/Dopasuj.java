@@ -14,7 +14,7 @@ public class Dopasuj {
     private int maxIx, minIx;
     double stalaCzasowa;
 
-    public double search(double value, List<Double> b) {
+    private double search(double value, List<Double> b) {
         List a = new ArrayList(b);
         for (ListIterator<Double> bs = a.listIterator(); bs.hasNext();) {
             Double element = bs.next();
@@ -40,20 +40,14 @@ public class Dopasuj {
         return lastValue;
     }
 
-    public double oblicz(List ser) {
-        int minIndex = ser.lastIndexOf(Collections.min(ser));
-        System.out.println("MinIx " + minIndex + ", value " + ser.getCharts().get(0).get(minIndex));
-        min = ser.getCharts().get(0).get(minIndex);
+    public double oblicz(List<Double> data) {
+        int minIndex = data.lastIndexOf(Collections.min(data));
+        min = data.get(minIndex);
 
-        int maxIndex = ser.getCharts().get(0).indexOf(Collections.max(ser.getCharts().get(0)));
-        System.out.println("MaxIx " + maxIndex + ", value " + ser.getCharts().get(0).get(maxIndex));
-
-        max = ser.getCharts().get(0).get(maxIndex);
-        double point = search((max-min)*0.632,  ser.getCharts().get(0));
-        //System.out.println("Close " + close);
-        //System.out.println(ser.getCharts().get(0).indexOf(close+min));
-        System.out.println(ser.getCharts().get(0).indexOf(point+min)-minIndex);
-        stalaCzasowa = ser.getCharts().get(0).indexOf(point+min)-minIndex;
+        int maxIndex = data.indexOf(Collections.max(data));
+        max = data.get(maxIndex);
+        double point = search((max-min)*0.632,  data);
+        stalaCzasowa = data.indexOf(point+min)-minIndex;
         return stalaCzasowa;
     }
 

@@ -72,7 +72,7 @@
                                 </Menu>
                             </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Oblicz">
+                        <Menu mnemonicParsing="false" text="Oblicz" fx:id="obliczMenu">
                             <items>
                                 <MenuItem fx:id="stala1" mnemonicParsing="false" text="Stała czasowa czujnika 1" onAction="#stala1ButtonClicked"/>
                                 <MenuItem fx:id="stala2" mnemonicParsing="false" text="Stała czasowa czujnika 2" onAction="#stala2ButtonClicked"/>

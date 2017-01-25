@@ -37,6 +37,8 @@ public class Controller {
         resetButton.setDisable(true);
         disconnectButton.setDisable(true);
         obserwujButton.setDisable(true);
+        obliczMenu.setDisable(true);
+
 //        checkbox.setText(chartek.getSeries().getName());
 //        checkbox2.setText(chartek.getSeries2().getName());
 //        checkbox3.setText(chartek.getSeries3().getName());
@@ -92,6 +94,9 @@ public class Controller {
     private MenuItem stala5 = new MenuItem();
     @FXML
     private MenuItem stala6 = new MenuItem();
+
+    @FXML
+    private Menu obliczMenu = new Menu();
 
     @FXML
     private ToggleGroup skalowanie = new ToggleGroup();
@@ -162,6 +167,7 @@ public class Controller {
     private boolean runningChart = false;
     private boolean showChartAll = false;
     private File file = null;
+    Dopasuj dopasuj = new Dopasuj();
 
     @FXML
     private void connectButtonClicked() {
@@ -185,7 +191,32 @@ public class Controller {
 
     @FXML
     private void stala1ButtonClicked(){
-        logger.setText("Stała czasowa " + this.checkbox.getText() + "wynosi: " + );
+        logger.setText("Stała czasowa " + this.checkbox.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(0)));
+    }
+
+    @FXML
+    private void stala2ButtonClicked(){
+        logger.setText("Stała czasowa " + this.checkbox2.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(1)));
+    }
+
+    @FXML
+    private void stala3ButtonClicked(){
+        logger.setText("Stała czasowa " + this.checkbox3.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(2)));
+    }
+
+    @FXML
+    private void stala4ButtonClicked(){
+        logger.setText("Stała czasowa " + this.checkbox4.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(3)));
+    }
+
+    @FXML
+    private void stala5ButtonClicked(){
+        logger.setText("Stała czasowa " + this.checkbox5.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(4)));
+    }
+
+    @FXML
+    private void stala6ButtonClicked(){
+        logger.setText("Stała czasowa " + this.checkbox6.getText() + " wynosi: " + dopasuj.oblicz(chartek.getSer().getCharts().get(5)));
     }
 
     @FXML
@@ -370,8 +401,10 @@ public class Controller {
             runningChart = true;
             if (playerTimeBox.getSelectedSpeed() == 25){
                 showChartAll = true;
+                obliczMenu.setDisable(false);
             } else {
                 showChartAll = false;
+                obliczMenu.setDisable(true);
             }
             chartek.createChart(file, playerTimeBox.getSelectedSpeed());
             borderPane.setCenter(chartek.getXYChart());
@@ -401,8 +434,10 @@ public class Controller {
         chartek.init(this);
         chartek.start();
         runningChart = true;
+        showChartAll = false;
         chartek.createRealtimeChart();
         borderPane.setCenter(chartek.getXYChart());
+        obliczMenu.setDisable(true);
         nagrajButton.setDisable(false);
         resetButton.setDisable(false);
         odtworzButton.setDisable(true);

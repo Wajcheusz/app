@@ -70,7 +70,6 @@ public class Chartek {
         controller.getOpcjeMenu().setDisable(true);
         controller.getSkalowanieMenu().setDisable(true);
         xSeriesData = 0;
-        ser = new Series(LICZBA_CZUJNIKOW);
         xAxis = new NumberAxis(0, MAX_DATA_POINTS, MAX_DATA_POINTS / 10);
         xAxis.setForceZeroInRange(false);
         xAxis.setAutoRanging(false);
@@ -91,7 +90,6 @@ public class Chartek {
         series6.setName(controller.getCheckbox6().getText());
         if (controller.getLineSelection()) {
             XYChart = new LineChart<Number, Number>(xAxis, yAxis) {
-                //Wywalenie Kropek, można dodać
                 // Override to remove symbols on each data point
                 @Override
                 protected void dataItemAdded(Series<Number, Number> series, int itemIndex, Data<Number, Number> item) {
@@ -111,7 +109,9 @@ public class Chartek {
     }
 
     public void createChart(File file, int speed) {
+        xSeriesData = 0;
         kolejka.clear();
+        ser = new Series(LICZBA_CZUJNIKOW);
         //-- Prepare Executor Services
         if (speed != 25) {
             executor = Executors.newCachedThreadPool();
@@ -123,10 +123,12 @@ public class Chartek {
             zoom();
             prepareTimeline();
         }
-
     }
 
     public void createRealtimeChart() {
+        //clearDataQ();
+        xSeriesData = 0;
+        ser = new Series(LICZBA_CZUJNIKOW);
         kolejka.clear();
         //-- Prepare Executor Services
         executor = Executors.newCachedThreadPool();
@@ -263,7 +265,7 @@ public class Chartek {
             controller.getLogger().clear();
             controller.getLogger().appendText("Koniec nagrania");
         }
-        x.oblicz(ser.getCharts().get(0));
+//        x.oblicz(ser.getCharts().get(0));
     }
 
     private class AddToQueueFromText implements Runnable {
@@ -605,5 +607,11 @@ public class Chartek {
     public javafx.scene.chart.XYChart.Series getSeries6() {
         return series6;
     }
+
+    public Series getSer() {
+        return ser;
+    }
+
+
 }
 

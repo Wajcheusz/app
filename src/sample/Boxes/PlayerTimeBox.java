@@ -47,27 +47,16 @@ public class PlayerTimeBox {
         label.setText(message);
 
         Button yesButton = new Button("Wybierz");
-        //Button noButton = new Button("Anuluj");
-
-
 
         combobox.setPromptText("Wybierz prędkość odtwarzania");
         combobox.getItems().addAll(timesMap.keySet());
 
         yesButton.setOnAction(event -> {
-            System.out.println(combobox.getValue());
             selectedSpeed = (int)timesMap.get(combobox.getValue());
             window.close();
-            //CommPort commPort = null;
         });
 
-//        noButton.setOnAction(event -> {
-//
-//            window.close();
-//        });
-
         VBox layout = new VBox(10);
-        //layout.getChildren().addAll(label, combobox, yesButton, noButton);
         layout.getChildren().addAll(label, combobox, yesButton);
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout);
