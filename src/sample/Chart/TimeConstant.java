@@ -10,7 +10,8 @@ import java.util.stream.IntStream;
  */
 public class TimeConstant {
     private double max, min;
-    double stalaCzasowa;
+    private int minIndex, maxIndex;
+    private double stalaCzasowa;
 
     private double search(double value, List<Double> b) {
         List a = new ArrayList(b);
@@ -39,13 +40,56 @@ public class TimeConstant {
     }
 
     public double oblicz(List<Double> data) {
-        int minIndex = data.lastIndexOf(Collections.min(data));
-        min = data.get(minIndex);
+        List<Double> dataWithoutZero = data;
+        //dataWithoutZero.replaceAll();
+        Collections.replaceAll(dataWithoutZero, 0.0, Collections.max(dataWithoutZero)-1);
+        minIndex = dataWithoutZero.lastIndexOf(Collections.min(dataWithoutZero));
+        min = dataWithoutZero.get(minIndex);
 
-        int maxIndex = data.indexOf(Collections.max(data));
+        maxIndex = data.indexOf(Collections.max(data));
         max = data.get(maxIndex);
         double point = search((max-min)*0.632,  data);
         stalaCzasowa = data.indexOf(point+min)-minIndex;
         return stalaCzasowa;
+    }
+
+    public double getMax() {
+        return max;
+    }
+
+    public void setMax(double max) {
+        this.max = max;
+    }
+
+    public double getMin() {
+        return min;
+    }
+
+    public void setMin(double min) {
+        this.min = min;
+    }
+
+    public int getMinIndex() {
+        return minIndex;
+    }
+
+    public void setMinIndex(int minIndex) {
+        this.minIndex = minIndex;
+    }
+
+    public int getMaxIndex() {
+        return maxIndex;
+    }
+
+    public void setMaxIndex(int maxIndex) {
+        this.maxIndex = maxIndex;
+    }
+
+    public double getStalaCzasowa() {
+        return stalaCzasowa;
+    }
+
+    public void setStalaCzasowa(double stalaCzasowa) {
+        this.stalaCzasowa = stalaCzasowa;
     }
 }

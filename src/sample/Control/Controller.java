@@ -10,6 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import sample.Boxes.ChangeNameBox;
 import sample.Boxes.ConnectBox;
@@ -51,6 +54,8 @@ public class Controller {
 
     @FXML
     private BorderPane borderPane = new BorderPane();
+    @FXML
+    private Pane pane = new Pane();
     @FXML
     private TextArea logger = new TextArea();
     @FXML
@@ -191,33 +196,39 @@ public class Controller {
     }
 
     @FXML
-    private void stala1ButtonClicked(){
+    private void stala1ButtonClicked() {
         logger.setText("Stała czasowa " + this.checkbox.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(0)));
+        plot.updateMarker();
     }
 
     @FXML
-    private void stala2ButtonClicked(){
+    private void stala2ButtonClicked() {
         logger.setText("Stała czasowa " + this.checkbox2.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(1)));
+        plot.updateMarker();
     }
 
     @FXML
-    private void stala3ButtonClicked(){
+    private void stala3ButtonClicked() {
         logger.setText("Stała czasowa " + this.checkbox3.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(2)));
+        plot.updateMarker();
     }
 
     @FXML
-    private void stala4ButtonClicked(){
+    private void stala4ButtonClicked() {
         logger.setText("Stała czasowa " + this.checkbox4.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(3)));
+        plot.updateMarker();
     }
 
     @FXML
-    private void stala5ButtonClicked(){
+    private void stala5ButtonClicked() {
         logger.setText("Stała czasowa " + this.checkbox5.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(4)));
+        plot.updateMarker();
     }
 
     @FXML
-    private void stala6ButtonClicked(){
+    private void stala6ButtonClicked() {
         logger.setText("Stała czasowa " + this.checkbox6.getText() + " wynosi: " + timeConstant.oblicz(plot.getSer().getCharts().get(5)));
+        plot.updateMarker();
     }
 
     @FXML
@@ -240,11 +251,16 @@ public class Controller {
     @FXML
     private void zoomClicked() {
         plot.getKolejka().add(2);
+        //plot.updateMarker();
+//        clearLines();
+//        setLinesUnvisible();
     }
 
     @FXML
     private void zoomOutClicked() {
         plot.getKolejka().add(1);
+//        clearLines();
+//        setLinesUnvisible();
     }
 
 
@@ -384,7 +400,7 @@ public class Controller {
 
     @FXML
     private void odtworzPrzebiegClicked() {
-  //      plot.stop();
+        //      plot.stop();
         playerTimeBox.init(this);
         playerTimeBox.display("Wybór prędkości odtwarzania", "Wybierz prędkość z jaką chcesz odtworzyć wykres");
 
@@ -400,7 +416,7 @@ public class Controller {
             this.file = file;
             plot.start();
             runningChart = true;
-            if (playerTimeBox.getSelectedSpeed() == 25){
+            if (playerTimeBox.getSelectedSpeed() == 25) {
                 showChartAll = true;
                 obliczMenu.setDisable(false);
             } else {
@@ -408,7 +424,16 @@ public class Controller {
                 obliczMenu.setDisable(true);
             }
             plot.createChart(file, playerTimeBox.getSelectedSpeed());
-            borderPane.setCenter(plot.getXYChart());
+            if (showChartAll) {
+                //borderPane.getChildren().addAll(plot.getXYChart(), plot.getValueMarker());
+                //Pane pane = new Pane();
+                //pane.setLayoutX();
+                pane.getChildren().addAll(plot.getXYChart(), plot.getValueMarker(), plot.getMaxLine(), plot.getStalaCzasowa(), plot.getText());
+                borderPane.setCenter(pane);
+                //borderPane.setCenter(plot.getValueMarker());
+            } else {
+                borderPane.setCenter(plot.getXYChart());
+            }
             nagrajButton.setDisable(true);
             resetButton.setDisable(false);
             obserwujButton.setDisable(true);
@@ -447,6 +472,7 @@ public class Controller {
 
     @FXML
     private void resetClicked() {
+        pane.getChildren().clear();
         plot.stop();
         runningChart = false;
         showChartAll = false;
@@ -455,6 +481,21 @@ public class Controller {
         odtworzButton.setDisable(false);
         resetButton.setDisable(true);
         zapiszButton.setDisable(true);
+        clearLines();
+    }
+
+    private void clearLines(){
+        plot.setValueMarker(new Line());
+        plot.setStalaCzasowa(new Line());
+        plot.setMaxLine(new Line());
+        plot.setText(new Text());
+    }
+
+    private void setLinesUnvisible(){
+        plot.getMaxLine().setVisible(false);
+        plot.getValueMarker().setVisible(false);
+        plot.getStalaCzasowa().setVisible(false);
+        plot.getText().setVisible(false);
     }
 
     @FXML
@@ -679,5 +720,13 @@ public class Controller {
 
     public TextField getTxt6() {
         return txt6;
+    }
+
+    public TimeConstant getTimeConstant() {
+        return timeConstant;
+    }
+
+    public void setTimeConstant(TimeConstant timeConstant) {
+        this.timeConstant = timeConstant;
     }
 }
